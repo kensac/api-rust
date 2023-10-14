@@ -9,8 +9,6 @@ use axum::{Router, Json};
 
 use prisma::PrismaClient;
 
-use routes::user_routes::{create_user_route, get_first_user_route, get_user_by_id_route};
-
 #[derive(Clone)]
 pub struct AppState {
     client: PrismaClient,
