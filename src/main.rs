@@ -4,29 +4,19 @@ pub mod prisma;
 pub mod routes;
 pub mod utils;
 
-use axum::routing::{get, post};
-use axum::{Router, Json};
+use axum::routing::get;
+use axum::Router;
 
-use prisma::PrismaClient;
-
-#[derive(Clone)]
-pub struct AppState {
-    client: PrismaClient,
-}
 
 #[tokio::main]
 async fn main() {
-    // let client = PrismaClient::_builder()
-    //     .build()
-    //     .await
-    //     .expect("Didn't connect to database");
-    //let state = AppState { client: client };
+
+    let sponsor_routes = routes::sponsor::sponosor_get_router().await;
+
     let app = Router::new()
-        // .route("/users/", post(create_user_route).get(get_first_user_route))
-        // .route("/users/:user_id", get(get_user_by_id_route))
         .route("/", get(utils::hello_world))
-        .route("/test", get(server_side_auth))
-        //.with_state(state)
+        .nest("/sponsor", sponsor_routes)
+        // .route("/test", get(server_side_auth))
         .fallback(get(utils::handler_404));
 
     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
@@ -35,7 +25,7 @@ async fn main() {
         .unwrap();
 }
 
-#[axum::debug_handler]
+/* #[axum::debug_handler]
 pub async fn server_side_auth() -> Json<()>{
 
     dotenv::dotenv().ok();
@@ -44,7 +34,7 @@ pub async fn server_side_auth() -> Json<()>{
     let appwrite_id = std::env::var("APPWRITE_ID").unwrap();
 
     let client = reqwest::Client::new();
-    
+
     let url = format!(
         "https://cloud.appwrite.io/v1/databases/{}/collections/{}/documents","test","sample"
     );
@@ -57,4 +47,4 @@ pub async fn server_side_auth() -> Json<()>{
     println!("{:?}", response.unwrap().text().await.unwrap());
     Json(())
 
-}
+} */
