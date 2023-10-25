@@ -1,7 +1,7 @@
 use std::vec;
 
 use axum::{
-    extract::{Path, State},
+    extract::{Path, Query, State},
     response::Response,
     routing::{get, post},
     Json, Router,
@@ -18,6 +18,12 @@ struct CreateHackathonEntity {
     name: String,
     start_time: chrono::DateTime<FixedOffset>,
     end_time: chrono::DateTime<FixedOffset>,
+}
+
+#[derive(serde::Deserialize)]
+struct Params {
+    #[serde(default)]
+    active: Option<bool>,
 }
 
 #[axum::debug_handler]
@@ -38,16 +44,26 @@ async fn create_hackathon(
 }
 
 #[axum::debug_handler]
-async fn get_hackathon(State(app_state): State<AppState>) -> Result<Json<Vec<Data>>, ()> {
-    match app_state
-        .client
-        .hackathon()
-        .find_many(vec![hackathon::active::equals(false)])
-        .exec()
-        .await
-    {
-        Ok(hackathons) => Ok(Json(hackathons)),
-        Err(_) => Err(()),
+async fn get_hackathon(
+    State(app_state): State<AppState>,
+    Query(params): Query<Params>,
+) -> Result<Json<Vec<Data>>, ()> {
+    if params.active.is_some() {
+        match app_state
+            .client
+            .hackathon()
+            .find_many(vec![hackathon::active::equals(params.active.unwrap())])
+            .exec()
+            .await
+        {
+            Ok(hackathons) => Ok(Json(hackathons)),
+            Err(_) => Err(()),
+        }
+    } else {
+        match app_state.client.hackathon().find_many(vec![]).exec().await {
+            Ok(hackathons) => Ok(Json(hackathons)),
+            Err(_) => Err(()),
+        }
     }
 }
 
