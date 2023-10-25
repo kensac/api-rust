@@ -6,20 +6,21 @@ pub mod utils;
 
 use axum::routing::get;
 use axum::{Router, Json};
-use utils::health_check;
 
 
 #[tokio::main]
 async fn main() {
 
-    let sponsor_routes = routes::sponsor::sponosor_get_router().await;
+    let sponsor_routes = routes::sponsors::sponosor_get_router().await;
+    let hackathon_routes = routes::hackathons::hackathon_get_router().await;
 
     let app = Router::new()
         .route("/", get(utils::hello_world))
-        .route("/health", get(health_check))
+        .route("/health", get(utils::health_check))
         .nest("/sponsor", sponsor_routes)
-        .route("/test", get(server_side_auth))
-        .fallback(get(utils::handler_404));
+        .nest("/hackathon", hackathon_routes)
+        .route("/test", get(server_side_auth));
+        //.fallback(get(utils::handle_404));
 
     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
         .serve(app.into_make_service())
