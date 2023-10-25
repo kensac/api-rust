@@ -11,7 +11,7 @@ use axum::{Router, Json};
 #[tokio::main]
 async fn main() {
 
-    let sponsor_routes = routes::sponsors::sponosor_get_router().await;
+    let sponsor_routes = routes::sponsors::sponsor_get_router().await;
     let hackathon_routes = routes::hackathons::hackathon_get_router().await;
 
     let app = Router::new()

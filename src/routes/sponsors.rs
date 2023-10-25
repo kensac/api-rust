@@ -33,7 +33,7 @@ async fn sponsor_create(
     )
 }
 
-pub async fn sponosor_get_router() -> Router {
+pub async fn sponsor_get_router() -> Router {
     let state = utils::get_app_state().await;
     Router::new()
         .route("/", get(sponsor_create))

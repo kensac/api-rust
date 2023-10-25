@@ -5,6 +5,12 @@
         "./Cargo.toml"
     ],
     "cSpell.words": [
+        "appwrite",
+        "chrono",
+        "dotenv",
+        "hackathon",
+        "hackathons",
+        "reqwest",
         "serde"
     ]
 }
