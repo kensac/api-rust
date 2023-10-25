@@ -5,7 +5,8 @@ pub mod routes;
 pub mod utils;
 
 use axum::routing::get;
-use axum::Router;
+use axum::{Router, Json};
+use utils::health_check;
 
 
 #[tokio::main]
@@ -15,8 +16,9 @@ async fn main() {
 
     let app = Router::new()
         .route("/", get(utils::hello_world))
+        .route("/health", get(health_check))
         .nest("/sponsor", sponsor_routes)
-        // .route("/test", get(server_side_auth))
+        .route("/test", get(server_side_auth))
         .fallback(get(utils::handler_404));
 
     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
@@ -25,7 +27,7 @@ async fn main() {
         .unwrap();
 }
 
-/* #[axum::debug_handler]
+#[axum::debug_handler]
 pub async fn server_side_auth() -> Json<()>{
 
     dotenv::dotenv().ok();
@@ -47,4 +49,4 @@ pub async fn server_side_auth() -> Json<()>{
     println!("{:?}", response.unwrap().text().await.unwrap());
     Json(())
 
-} */
+}

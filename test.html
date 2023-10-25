@@ -2,78 +2,57 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Registration Form</title>
-</head>
-<body>
-    <form id="registration-form">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br>
+  <head>
+    <title>Login Form</title>
+  </head>
+  <body>
+    <form id="login-form">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required /><br />
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required /><br />
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-
-        <button type="submit" id="submit-btn">Submit</button>
+      <button type="submit" id="submit-btn">Submit</button>
     </form>
-
-    <button id="google-btn">Login With Google</button>
 
     <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.0"></script>
     <script>
-        const { Client, Account, ID} = Appwrite;
+      const { Client, Account, Auth, ID } = Appwrite;
 
-        const form = document.getElementById('registration-form');
-        const submitBtn = document.getElementById('submit-btn');
-        const googleBtn = document.getElementById('google-btn');
+      const form = document.getElementById("login-form");
+      const submitBtn = document.getElementById("submit-btn");
 
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
 
-            const client = new Client();
-            client
-                .setEndpoint('https://cloud.appwrite.io/v1')
-                .setProject('6525c36e209741601db5')
-            ;
-            const account = new Account(client);
+        const client = new Client();
+        client
+          .setEndpoint("https://cloud.appwrite.io/v1")
+          .setProject("6525c36e209741601db5");
+        const account = new Account(client);
+        const promise = account.createEmailSession(email, password);
+        promise.then(
+          (response) => {
+            console.log(response); // Success
+          },
+          (error) => {
+            console.log(error); // Failure
+          }
+        );
 
-            account.create(name, email, password, 'string')
-                .then(response => {
-                    console.log(response);
-                    // do something with the response data
-                })
-                .catch(error => {
-                    console.error(error);
-                    // handle the error
-                });
-        });
-
-        googleBtn.addEventListener('click', loginWithGoogle);
-
-        function loginWithGoogle() {
-            const client = new Client();
-            client
-                .setEndpoint('https://cloud.appwrite.io/v1')
-                .setProject('6525c36e209741601db5')
-            ;
-            const account = new Account(client);
-
-            account.createOAuth2Session('google', 'http://127.0.0.1:5500/test.html', 'http://localhost:3000')
-                .then(response => {
-                    console.log(response);
-                    // do something with the response data
-                })
-                .catch(error => {
-                    console.error(error);
-                    // handle the error
-                });
-        }
+        account.createJWT().then(
+          (response) => {
+            console.log(response); // Success
+          },
+          (error) => {
+            console.log(error); // Failure
+          }
+        );
+      });
     </script>
-</body>
+  </body>
 </html>

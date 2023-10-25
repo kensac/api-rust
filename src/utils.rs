@@ -1,4 +1,4 @@
-use axum::{routing::MethodRouter, Router};
+use axum::{routing::MethodRouter, Router, response::Response, http::status};
 
 use crate::prisma::PrismaClient;
 
@@ -17,6 +17,10 @@ pub async fn handler_404() -> &'static str {
 #[axum::debug_handler]
 pub async fn hello_world() -> &'static str {
     "Hello, World!"
+}
+
+pub async fn health_check() -> status::StatusCode {
+    return status::StatusCode::OK
 }
 
 pub async fn get_app_state() -> AppState {
