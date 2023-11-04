@@ -66,6 +66,7 @@ model Hackathon {
   Registration     Registration[]
   Scan             Scan[]
   Sponsor          Sponsor[]
+  Score            Score[]
 }
 
 model Location {
@@ -84,19 +85,22 @@ enum Role {
 }
 
 model Organizer {
-  id        String @id
+  id        String  @id
   firstName String
   lastName  String
   email     String
   privilege Role
   Scan      Scan[]
+  Score     Score[]
 }
 
 model Project {
-  id          Int       @id @default(autoincrement())
-  name        String
-  hackathon   Hackathon @relation(fields: [hackathonId], references: [id])
-  hackathonId Int
+  id           Int            @id @default(autoincrement())
+  name         String
+  hackathon    Hackathon      @relation(fields: [hackathonId], references: [id])
+  hackathonId  Int
+  Score        Score[]
+  Registration Registration[]
 }
 
 model Registration {
@@ -113,7 +117,8 @@ model Registration {
   mlhCoc                     Boolean
   mlhDcp                     Boolean
   reference                  String?
-  //project 
+  projectId                  Int?
+  project                    Project?  @relation(fields: [projectId], references: [id])
   expectations               String?
   shareAddressMlh            Boolean?
   shareAddressSponsors       Boolean?
@@ -166,4 +171,24 @@ model User {
   ExtraCreditAssignment ExtraCreditAssignment[]
   Registration          Registration[]
   Scan                  Scan[]
+}
+
+model Score {
+  hackathonId    Int
+  hackathon      Hackathon @relation(fields: [hackathonId], references: [id])
+  projectID      Int
+  project        Project   @relation(fields: [projectID], references: [id])
+  judgeID        String
+  judge          Organizer @relation(fields: [judgeID], references: [id])
+  submitted      Boolean
+  creativity     Int
+  technicality   Int
+  implementation Int
+  clarity        Int
+  growth         Int
+  challenge1     Int
+  challenge2     Int
+  challenge3     Int
+
+  @@unique([projectID, judgeID])
 }

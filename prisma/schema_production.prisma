@@ -1,0 +1,145 @@
+generator client {
+  provider = "cargo prisma"
+  output   = "../src/prisma.rs"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model events {
+  id                 String  @id @db.VarChar(45)
+  hackathon_id       String  @db.VarChar(45)
+  name               String  @db.VarChar(100)
+  start_time         BigInt
+  end_time           BigInt
+  description        String? @db.LongText
+  location_id        Int
+  type               String  @db.VarChar(45)
+  icon               String? @db.VarChar(45)
+  ws_presenter_names String? @db.VarChar(200)
+  ws_relevant_skills String? @db.VarChar(45)
+  ws_skill_level     String? @db.VarChar(45)
+  ws_urls            String? @db.VarChar(45)
+}
+
+model extra_credit_assignments {
+  user_id  String @id @db.VarChar(45)
+  class_id Int
+}
+
+model extra_credit_classes {
+  id           Int    @id @default(autoincrement())
+  hackathon_id String @db.VarChar(45)
+  name         String @db.VarChar(20)
+}
+
+model hackathons {
+  id         String @id @db.VarChar(45)
+  name       String @db.VarChar(45)
+  active     Int    @db.TinyInt
+  start_time BigInt
+  end_time   BigInt
+}
+
+model locations {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(45)
+}
+
+model organizers {
+  id               String  @id @db.VarChar(45)
+  email            String  @db.VarChar(45)
+  first_name       String  @db.VarChar(45)
+  last_name        String  @db.VarChar(45)
+  award            String? @db.VarChar(45)
+  judging_location String? @db.VarChar(45)
+  team             String? @db.VarChar(45)
+}
+
+model projects {
+  id           Int    @id @default(autoincrement())
+  hackathon_id String @db.VarChar(45)
+  name         String @db.VarChar(200)
+}
+
+model registrations {
+  id                           Int     @default(1)
+  hackathon_id                 String  @db.VarChar(45)
+  user_id                      String  @db.VarChar(45)
+  travel_reimbursement         Int?    @db.TinyInt
+  driving                      Int?    @db.TinyInt
+  first_hackathon              Int?    @db.TinyInt
+  academic_year                String  @db.VarChar(45)
+  educational_institution_type String  @db.VarChar(45)
+  coding_experience            String? @db.VarChar(45)
+  eighteen_before_event        Int     @db.TinyInt
+  mlh_coc                      Int     @db.TinyInt
+  mlh_dcp                      Int     @db.TinyInt
+  referral                     String? @db.LongText
+  project                      String? @db.LongText
+  expectations                 String? @db.LongText
+  share_address_mlh            Int     @default(0) @db.TinyInt
+  share_address_sponsors       Int     @default(0) @db.TinyInt
+  share_email_mlh              Int     @default(0) @db.TinyInt
+  veteran                      String? @db.VarChar(45)
+  time                         BigInt?
+
+  @@id([hackathon_id, user_id])
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model scans {
+  event_id     String @db.VarChar(45)
+  hackathon_id String @db.VarChar(45)
+  user_id      String @db.VarChar(45)
+  organizer_id String @db.VarChar(45)
+
+  @@ignore
+}
+
+model scores {
+  hackathon_id   String @db.VarChar(45)
+  judge_id       String @db.VarChar(45)
+  project_id     String @db.VarChar(45)
+  submitted      Int    @default(0) @db.TinyInt
+  creativity     Int    @default(-1)
+  technical      Int    @default(-1)
+  implementation Int    @default(-1)
+  clarity        Int    @default(-1)
+  growth         Int    @default(-1)
+  challenge1     Int?
+  challenge2     Int?
+  challenge3     Int?
+
+  @@id([judge_id, project_id, hackathon_id])
+}
+
+model sponsors {
+  id           Int     @id @default(autoincrement())
+  hackathon_id String  @db.VarChar(45)
+  name         String  @db.VarChar(45)
+  level        String? @db.VarChar(45)
+  order        Int     @default(1000)
+  light_logo   String? @db.VarChar(500)
+  dark_logo    String? @db.VarChar(500)
+  link         String? @db.VarChar(500)
+}
+
+model users {
+  id                  String  @id @unique(map: "id_UNIQUE") @db.VarChar(45)
+  email               String  @db.VarChar(45)
+  first_name          String  @db.VarChar(45)
+  last_name           String  @db.VarChar(45)
+  gender              String  @db.VarChar(45)
+  shirt_size          String? @db.VarChar(10)
+  dietary_restriction String? @db.LongText
+  allergies           String? @db.VarChar(200)
+  university          String? @db.VarChar(100)
+  major               String? @db.VarChar(100)
+  phone               String? @db.VarChar(45)
+  country             String? @db.VarChar(100)
+  race                String? @db.VarChar(300)
+  resume              String? @db.LongText
+}
