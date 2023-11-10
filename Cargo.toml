@@ -22,6 +22,7 @@ prisma-client-rust-cli = { git = "https://github.com/Brendonovich/prisma-client-
 reqwest = { version = "0.11", features = ["blocking"] }
 chrono = "0.4"
 validator = { version = "0.15", features = ["derive"] }
-utoipa = {version="3" , features = ["chrono"]}
-utoipa-redoc = { version = "0.1", features = ["axum"] }
+utoipa = {version="4" , features = ["chrono", "debug"]}
+utoipa-redoc = { version = "1", features = ["axum"] }
+uuid = { version = "1.5.0", features = ["serde", "v4"] }
 

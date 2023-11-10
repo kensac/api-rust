@@ -1,2 +1,2 @@
-pub mod sponsors;
 pub mod hackathons;
+pub mod sponsors;

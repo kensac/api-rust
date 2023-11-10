@@ -8,7 +8,8 @@ use axum::{
 };
 use chrono::FixedOffset;
 use hyper::StatusCode;
-use utoipa::{ToSchema, IntoParams};
+use utoipa::{IntoParams, ToSchema};
+use uuid::Uuid;
 
 use crate::{
     prisma::hackathon::{self, Data, UniqueWhereParam},
@@ -38,7 +39,7 @@ async fn create_hackathon(
     match app_state
         .client
         .hackathon()
-        .create(body.name, body.start_time, body.end_time, false, vec![])
+        .create(Uuid::new_v4().to_string(), body.name, body.start_time, body.end_time, false, vec![])
         .exec()
         .await
     {
@@ -73,10 +74,10 @@ async fn get_hackathon(
 }
 
 #[axum::debug_handler]
-#[utoipa::path(get, path = "/hackathon/{id}", responses((status = 200, description = "Returns hackathon with id"), (status=404, description = "No hackathon found")), params(("id" = i32, Path, description = "id of hackathon to get")))]
+#[utoipa::path(get, path = "/hackathon/{id}", responses((status = 200, description = "Returns hackathon with id"), (status=404, description = "No hackathon found")), params(("id" = String, Path, description = "id of hackathon to get")))]
 async fn get_hackathon_by_id(
     State(app_state): State<AppState>,
-    Path(id): Path<i32>,
+    Path(id): Path<String>,
 ) -> Result<Json<Vec<Data>>, StatusCode> {
     match app_state
         .client
@@ -97,7 +98,7 @@ async fn get_hackathon_by_id(
 #[utoipa::path(delete, path = "/hackathon/{id}", responses((status = 204, description = "Delete hackathon with id")))]
 async fn delete_hackathon_by_id(
     State(app_state): State<AppState>,
-    Path(id): Path<i32>,
+    Path(id): Path<String>,
 ) -> Result<StatusCode, StatusCode> {
     match app_state
         .client
@@ -115,7 +116,7 @@ async fn delete_hackathon_by_id(
 #[utoipa::path(post, path = "/hackathon/{id}/active", responses((status = 200, description = "Set hackathon with id to active")))]
 async fn set_active_hackathon(
     State(app_state): State<AppState>,
-    Path(id): Path<i32>,
+    Path(id): Path<String>,
 ) -> Result<StatusCode, StatusCode> {
     match app_state
         .client
