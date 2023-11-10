@@ -1,4 +1,4 @@
-use axum::{routing::MethodRouter, Router, http::status};
+use axum::{http::status, routing::MethodRouter, Router};
 
 use crate::prisma::PrismaClient;
 
@@ -14,8 +14,9 @@ pub async fn hello_world() -> &'static str {
     "Hello, World!"
 }
 
+#[utoipa::path(get, path = "/health", responses((status = 200, description = "Service is Alive")))]
 pub async fn health_check() -> status::StatusCode {
-    return status::StatusCode::OK
+    return status::StatusCode::OK;
 }
 
 #[derive(Clone)]

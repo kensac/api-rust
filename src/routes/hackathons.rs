@@ -3,31 +3,33 @@ use std::vec;
 use axum::{
     extract::{Path, Query, State},
     response::Response,
-    routing::{get, post, patch},
+    routing::{get, patch, post},
     Json, Router,
 };
 use chrono::FixedOffset;
 use hyper::StatusCode;
+use utoipa::{ToSchema, IntoParams};
 
 use crate::{
     prisma::hackathon::{self, Data, UniqueWhereParam},
     utils::{get_app_state, AppState},
 };
 
-#[derive(serde::Deserialize)]
-struct CreateHackathonEntity {
+#[derive(serde::Deserialize, ToSchema)]
+pub struct CreateHackathonEntity {
     name: String,
     start_time: chrono::DateTime<FixedOffset>,
     end_time: chrono::DateTime<FixedOffset>,
 }
 
-#[derive(serde::Deserialize)]
+#[derive(serde::Deserialize, IntoParams)]
 struct Params {
     #[serde(default)]
     active: Option<bool>,
 }
 
 #[axum::debug_handler]
+#[utoipa::path(post, path = "/hackathon", responses((status = 200, description = "Create a new hackathon", body = String), (status=400, description = "Bad request")), request_body = CreateHackathonEntity)]
 async fn create_hackathon(
     State(app_state): State<AppState>,
     Json(body): Json<CreateHackathonEntity>,
@@ -46,6 +48,7 @@ async fn create_hackathon(
 }
 
 #[axum::debug_handler]
+#[utoipa::path(get, path = "/hackathon", responses((status = 200, description = "Returns all hackathons"), (status=404, description = "No hackathon found")) , params(Params), request_body = CreateHackathonEntity)]
 async fn get_hackathon(
     State(app_state): State<AppState>,
     Query(params): Query<Params>,
@@ -70,6 +73,7 @@ async fn get_hackathon(
 }
 
 #[axum::debug_handler]
+#[utoipa::path(get, path = "/hackathon/{id}", responses((status = 200, description = "Returns hackathon with id"), (status=404, description = "No hackathon found")), params(("id" = i32, Path, description = "id of hackathon to get")))]
 async fn get_hackathon_by_id(
     State(app_state): State<AppState>,
     Path(id): Path<i32>,
@@ -90,6 +94,7 @@ async fn get_hackathon_by_id(
 }
 
 #[axum::debug_handler]
+#[utoipa::path(delete, path = "/hackathon/{id}", responses((status = 204, description = "Delete hackathon with id")))]
 async fn delete_hackathon_by_id(
     State(app_state): State<AppState>,
     Path(id): Path<i32>,
@@ -107,6 +112,7 @@ async fn delete_hackathon_by_id(
 }
 
 #[axum::debug_handler]
+#[utoipa::path(post, path = "/hackathon/{id}/active", responses((status = 200, description = "Set hackathon with id to active")))]
 async fn set_active_hackathon(
     State(app_state): State<AppState>,
     Path(id): Path<i32>,
