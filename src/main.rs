@@ -1,4 +1,5 @@
 pub mod database;
+pub mod docs;
 #[allow(warnings)]
 pub mod prisma;
 pub mod routes;
@@ -6,34 +7,25 @@ pub mod utils;
 
 use axum::routing::get;
 use axum::{Json, Router};
+use docs::ApiDoc;
 use utoipa::OpenApi;
 use utoipa_redoc::{Redoc, Servable};
 
 #[tokio::main]
 async fn main() {
-    #[derive(OpenApi)]
-    #[openapi(
-        paths(
-            utils::health_check,
-            routes::hackathons::create_hackathon,
-            routes::hackathons::get_hackathon,
-            routes::hackathons::get_hackathon_by_id,
-            routes::hackathons::delete_hackathon_by_id,
-            routes::hackathons::set_active_hackathon
-        ),
-        components(schemas(routes::hackathons::CreateHackathonEntity))
-    )]
-    struct ApiDoc;
-
     let sponsor_routes = routes::sponsors::sponsor_get_router().await;
     let hackathon_routes = routes::hackathons::hackathon_get_router().await;
+    let extra_credit_class_routes = routes::extra_credit_classes::extra_credit_class_get_router().await;
+    let location_routes = routes::locations::location_get_router().await;
 
     let app = Router::new()
         .route("/", get(utils::hello_world))
         .route("/health", get(utils::health_check))
-        .nest("/sponsor", sponsor_routes)
-        .nest("/hackathon", hackathon_routes)
-        .merge(Redoc::with_url("/redoc", ApiDoc::openapi()))
+        .nest("/sponsors", sponsor_routes)
+        .nest("/hackathons", hackathon_routes)
+        .nest("/extra_credit/classes", extra_credit_class_routes)
+        .nest("/locations", location_routes)
+        .merge(Redoc::with_url("/docs", ApiDoc::openapi()))
         .route("/test", get(server_side_auth));
     //.fallback(get(utils::handle_404));
 

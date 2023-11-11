@@ -1,37 +1,67 @@
-use axum::{extract::State, routing::get, Json, Router};
+use axum::{
+    extract::{Json, State},
+    routing::post,
+    Router,
+};
+use serde::{Deserialize, Serialize};
+use utoipa::ToSchema;
 
 use crate::{
-    prisma::{hackathon, sponsor},
-    utils::{self, AppState},
+    prisma::{
+        hackathon::UniqueWhereParam,
+        sponsor::{self, Data},
+    },
+    utils::{get_app_state, AppState},
 };
 
+#[derive(Serialize, Deserialize, ToSchema)]
+pub struct CreateSponsorEntity {
+    name: String,
+    level: String,
+    link: Option<String>,
+    dark_logo: String,
+    light_logo: String,
+    order: i32,
+    hackathon_id: String,
+}
+
 #[axum::debug_handler]
-async fn sponsor_create(
+pub async fn create_sponsor(Json(body): Json<CreateSponsorEntity>) -> Result<String, String> {
+    let state = get_app_state().await;
+
+    match state
+        .client
+        .sponsor()
+        .create(
+            body.name,
+            body.level,
+            body.dark_logo,
+            body.light_logo,
+            body.order,
+            UniqueWhereParam::IdEquals(body.hackathon_id),
+            vec![sponsor::link::set(body.link)],
+        )
+        .exec()
+        .await
+    {
+        Ok(_sponsor) => Ok("Created sponsor succesfully".to_string()),
+        Err(_err) => Err("Error creating sponsor".to_string()),
+    }
+}
+
+#[axum::debug_handler]
+pub async fn get_all_sponsors(
     State(app_state): State<AppState>,
-    Json(data): Json<sponsor::Data>,
-) -> Json<sponsor::Data> {
-    Json(
-        app_state
-            .client
-            .sponsor()
-            .create(
-                data.name,
-                data.level,
-                data.dark_logo,
-                data.light_logo,
-                data.order,
-                hackathon::UniqueWhereParam::IdEquals(data.hackathon_id),
-                vec![],
-            )
-            .exec()
-            .await
-            .unwrap(),
-    )
+) -> Result<Json<Vec<Data>>, String> {
+    match app_state.client.sponsor().find_many(vec![]).exec().await {
+        Ok(sponsors) => Ok(Json(sponsors)),
+        Err(_err) => Err("Error getting all sponsors".to_string()),
+    }
 }
 
 pub async fn sponsor_get_router() -> Router {
-    let state = utils::get_app_state().await;
+    let state = get_app_state().await;
     Router::new()
-        .route("/", get(sponsor_create))
+        .route("/", post(create_sponsor).get(get_all_sponsors))
         .with_state(state)
 }

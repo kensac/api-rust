@@ -20,12 +20,12 @@ enum EventType {
 }
 
 model Event {
-  id               Int       @id @default(autoincrement())
+  id               String    @id @default(uuid())
   name             String
   type             EventType
   description      String
   location         Location  @relation(fields: [locationId], references: [id])
-  locationId       Int
+  locationId       String
   icon             String?
   startTime        DateTime
   endTime          DateTime
@@ -35,19 +35,20 @@ model Event {
   wsUrls           String?
   hackathon        Hackathon @relation(fields: [hackathonId], references: [id])
   hackathonId      String
+  scan             Scan[]
 }
 
 model ExtraCreditAssignment {
   user    User             @relation(fields: [userId], references: [id])
-  userId  Int
+  userId  String
   class   ExtraCreditClass @relation(fields: [classId], references: [id])
-  classId Int
+  classId String
 
   @@unique([userId, classId])
 }
 
 model ExtraCreditClass {
-  id                    Int                     @id @default(autoincrement())
+  id                    String                  @id @default(uuid())
   name                  String
   hackathon             Hackathon               @relation(fields: [hackathonId], references: [id])
   hackathonId           String
@@ -55,7 +56,7 @@ model ExtraCreditClass {
 }
 
 model Hackathon {
-  id               String                @id @default(uuid())
+  id               String             @id @default(uuid())
   name             String
   startTime        DateTime
   endTime          DateTime
@@ -64,13 +65,11 @@ model Hackathon {
   ExtraCreditClass ExtraCreditClass[]
   Project          Project[]
   Registration     Registration[]
-  Scan             Scan[]
   Sponsor          Sponsor[]
-  Score            Score[]
 }
 
 model Location {
-  id    Int     @id @default(autoincrement())
+  id    String  @id @default(uuid())
   name  String
   Event Event[]
 }
@@ -95,7 +94,7 @@ model Organizer {
 }
 
 model Project {
-  id           Int            @id @default(autoincrement())
+  id           String         @id @default(uuid())
   name         String
   hackathon    Hackathon      @relation(fields: [hackathonId], references: [id])
   hackathonId  String
@@ -104,9 +103,9 @@ model Project {
 }
 
 model Registration {
-  id                         Int       @id @default(autoincrement())
+  id                         String    @id @default(uuid())
   user                       User      @relation(fields: [userId], references: [id])
-  userId                     Int
+  userId                     String
   travelReimbursement        Boolean
   driving                    Boolean
   firstHackathon             Boolean
@@ -117,7 +116,7 @@ model Registration {
   mlhCoc                     Boolean
   mlhDcp                     Boolean
   reference                  String?
-  projectId                  Int?
+  projectId                  String?
   project                    Project?  @relation(fields: [projectId], references: [id])
   expectations               String?
   shareAddressMlh            Boolean?
@@ -130,19 +129,19 @@ model Registration {
 }
 
 model Scan {
-  eventId     Int
+  eventId     String
   user        User      @relation(fields: [userId], references: [id])
-  userId      Int
+  userId      String
   organizer   Organizer @relation(fields: [organizerId], references: [id])
   organizerId String
-  hackathon   Hackathon @relation(fields: [hackathonId], references: [id])
   hackathonId String
+  Event       Event     @relation(fields: [eventId], references: [id])
 
   @@unique([eventId, userId])
 }
 
 model Sponsor {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(uuid())
   name        String
   level       String
   link        String?
@@ -154,7 +153,7 @@ model Sponsor {
 }
 
 model User {
-  id                    Int                     @id @default(autoincrement())
+  id                    String                  @id @default(uuid())
   firstName             String
   lastName              String
   gender                String
@@ -175,8 +174,7 @@ model User {
 
 model Score {
   hackathonId    String
-  hackathon      Hackathon @relation(fields: [hackathonId], references: [id])
-  projectID      Int
+  projectID      String
   project        Project   @relation(fields: [projectID], references: [id])
   judgeID        String
   judge          Organizer @relation(fields: [judgeID], references: [id])

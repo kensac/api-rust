@@ -1,6 +1,6 @@
 use axum::{http::status, routing::MethodRouter, Router};
 
-use crate::prisma::PrismaClient;
+use crate::prisma::{hackathon, PrismaClient};
 
 pub fn route(path: &str, method_router: MethodRouter) -> Router {
     return Router::new().route(path, method_router);
@@ -32,4 +32,22 @@ pub async fn get_app_state() -> AppState {
 
     let state = AppState { client: client };
     return state;
+}
+
+pub async fn get_current_active_hackathon_uuid() -> Result<String, String> {
+    let state = get_app_state().await;
+
+    match state
+        .client
+        .hackathon()
+        .find_first(vec![hackathon::active::equals(true)])
+        .exec()
+        .await
+    {
+        Ok(hackathon) => match hackathon {
+            Some(hackathon) => Ok(hackathon.id),
+            None => Err(String::from("No active hackathon found")),
+        },
+        Err(err) => Err(format!("Error finding active hackathon: {}", err)),
+    }
 }

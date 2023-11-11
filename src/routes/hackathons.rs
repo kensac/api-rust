@@ -9,12 +9,28 @@ use axum::{
 use chrono::FixedOffset;
 use hyper::StatusCode;
 use utoipa::{IntoParams, ToSchema};
-use uuid::Uuid;
 
 use crate::{
     prisma::hackathon::{self, Data, UniqueWhereParam},
     utils::{get_app_state, AppState},
 };
+
+#[derive(serde::Deserialize, ToSchema)]
+/* #[serde(remote = "Data")] */
+pub struct HackathonEntity {
+    id: String,
+    name: String,
+    start_time: chrono::DateTime<FixedOffset>,
+    end_time: chrono::DateTime<FixedOffset>,
+    active: bool,
+    /*     event: Option<Vec<prisma::event::Data>>,
+    extra_credit_class: Option<Vec<prisma::extra_credit_class::Data>>,
+    project: Option<Vec<prisma::project::Data>>,
+    sponsor: Option<Vec<prisma::sponsor::Data>>,
+    registration: Option<Vec<prisma::registration::Data>>,
+    scan: Option<Vec<prisma::scan::Data>>,
+    score: Option<Vec<prisma::score::Data>>, */
+}
 
 #[derive(serde::Deserialize, ToSchema)]
 pub struct CreateHackathonEntity {
@@ -36,10 +52,11 @@ async fn create_hackathon(
     Json(body): Json<CreateHackathonEntity>,
 ) -> Result<Response<String>, StatusCode> {
     //add event that also serves as check-in for hackathon
+
     match app_state
         .client
         .hackathon()
-        .create(Uuid::new_v4().to_string(), body.name, body.start_time, body.end_time, false, vec![])
+        .create(body.name, body.start_time, body.end_time, false, vec![])
         .exec()
         .await
     {
@@ -49,7 +66,7 @@ async fn create_hackathon(
 }
 
 #[axum::debug_handler]
-#[utoipa::path(get, path = "/hackathon", responses((status = 200, description = "Returns all hackathons"), (status=404, description = "No hackathon found")) , params(Params), request_body = CreateHackathonEntity)]
+#[utoipa::path(get, path = "/hackathon", responses((status = 200, description = "Returns all hackathons", body = Vec<HackathonEntity>), (status=404, description = "No hackathon found")) , params(Params), request_body = CreateHackathonEntity)]
 async fn get_hackathon(
     State(app_state): State<AppState>,
     Query(params): Query<Params>,
@@ -74,7 +91,7 @@ async fn get_hackathon(
 }
 
 #[axum::debug_handler]
-#[utoipa::path(get, path = "/hackathon/{id}", responses((status = 200, description = "Returns hackathon with id"), (status=404, description = "No hackathon found")), params(("id" = String, Path, description = "id of hackathon to get")))]
+#[utoipa::path(get, path = "/hackathon/{id}", responses((status = 200, description = "Returns hackathon with id", body = HackathonEntity), (status=404, description = "No hackathon found")), params(("id" = String, Path, description = "id of hackathon to get")))]
 async fn get_hackathon_by_id(
     State(app_state): State<AppState>,
     Path(id): Path<String>,
@@ -129,7 +146,7 @@ async fn set_active_hackathon(
         .await
     {
         Ok(_) => Ok(StatusCode::OK),
-        Err(_) => Err(StatusCode::INTERNAL_SERVER_ERROR),
+        Err(_) => Err(StatusCode::BAD_REQUEST),
     }
 }
 
