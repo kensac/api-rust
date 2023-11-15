@@ -6,8 +6,8 @@ use axum::{
 use hyper::StatusCode;
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
+use uuid::Uuid;
 use validator::Validate;
-use crate::utils::UUID;
 
 use crate::{
     prisma::{
@@ -26,16 +26,19 @@ pub struct CreateSponsorEntity {
     dark_logo: String,
     light_logo: String,
     order: i32,
-    #[validate(regex = "UUID")]
-    hackathon_id: String,
+    hackathon_id: Uuid,
 }
 
 #[axum::debug_handler]
-pub async fn create_sponsor(Json(body): Json<CreateSponsorEntity>) -> Result<String, (StatusCode, String)> {
-
+pub async fn create_sponsor(
+    Json(body): Json<CreateSponsorEntity>,
+) -> Result<String, (StatusCode, String)> {
     match body.validate() {
         Ok(_) => {}
-        Err(err) => return Err((StatusCode::BAD_REQUEST ,err.to_string())),
+        Err(err) => {
+            println!("{}", err);
+            return Err((StatusCode::BAD_REQUEST, err.to_string()));
+        }
     };
 
     let state = get_app_state().await;
@@ -49,7 +52,7 @@ pub async fn create_sponsor(Json(body): Json<CreateSponsorEntity>) -> Result<Str
             body.dark_logo,
             body.light_logo,
             body.order,
-            UniqueWhereParam::IdEquals(body.hackathon_id),
+            UniqueWhereParam::IdEquals(body.hackathon_id.to_string()),
             vec![sponsor::link::set(body.link)],
         )
         .exec()

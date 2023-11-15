@@ -7,6 +7,7 @@ use axum::{
 use hyper::StatusCode;
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
+use uuid::Uuid;
 
 use crate::{
     prisma::{self, extra_credit_class::Data},
@@ -16,7 +17,7 @@ use crate::{
 #[derive(Serialize, Deserialize, ToSchema)]
 pub struct CreateExtraCreditClassEntity {
     name: String,
-    hackathon_id: String,
+    hackathon_id: Uuid,
 }
 #[axum::debug_handler]
 #[utoipa::path(post, path = "/extra_credit_class", responses((status = 200, description = "Create a new extra credit class", body = String), (status=400, description = "Bad request")), request_body = CreateExtraCreditClassEntity)]
@@ -29,14 +30,14 @@ async fn create_extra_credit_class(
         .extra_credit_class()
         .create(
             body.name,
-            prisma::hackathon::UniqueWhereParam::IdEquals(body.hackathon_id),
+            prisma::hackathon::UniqueWhereParam::IdEquals(body.hackathon_id.to_string()),
             vec![],
         )
         .exec()
         .await
     {
         Ok(_hackathon) => Ok(Response::new(
-            "Created extra credit class succesfully".to_string(),
+            "Created extra credit class successfully".to_string(),
         )),
         Err(_err) => Err(StatusCode::BAD_REQUEST),
     }

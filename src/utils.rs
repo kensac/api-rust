@@ -1,14 +1,15 @@
 use axum::{http::status, routing::MethodRouter, Router};
+use hyper::StatusCode;
 use regex::Regex;
 
-use crate::prisma::{hackathon, PrismaClient};
+use crate::prisma::PrismaClient;
 
 pub fn route(path: &str, method_router: MethodRouter) -> Router {
     return Router::new().route(path, method_router);
 }
 
-pub async fn handle_404() -> &'static str {
-    return "404";
+pub async fn handle_404() -> (StatusCode, &'static str) {
+    return (StatusCode::NOT_FOUND, "The requested resource was not found.");
 }
 
 pub async fn hello_world() -> &'static str {
@@ -35,23 +36,6 @@ pub async fn get_app_state() -> AppState {
     return state;
 }
 
-pub async fn get_current_active_hackathon_uuid() -> Result<String, String> {
-    let state = get_app_state().await;
-
-    match state
-        .client
-        .hackathon()
-        .find_first(vec![hackathon::active::equals(true)])
-        .exec()
-        .await
-    {
-        Ok(hackathon) => match hackathon {
-            Some(hackathon) => Ok(hackathon.id),
-            None => Err(String::from("No active hackathon found")),
-        },
-        Err(err) => Err(format!("Error finding active hackathon: {}", err)),
-    }
-}
 
 lazy_static! {
     pub static ref UUID: Regex = Regex::new(r"[a-z]{2}$").unwrap();

@@ -22,11 +22,10 @@ prisma-client-rust-cli = { git = "https://github.com/Brendonovich/prisma-client-
 reqwest = { version = "0.11", features = ["blocking"] }
 chrono = "0.4"
 validator = { version = "0.15", features = ["derive"] }
-utoipa = {version="4" , features = ["chrono", "debug"]}
-utoipa-redoc = { version = "1", features = ["axum"] }
+utoipa = {version="4" , features = ["chrono", "debug", "uuid"]}
+utoipa-redoc = { version = "1", features = ["axum"]}
 uuid = { version = "1.5.0", features = ["serde", "v4"] }
 axum_typed_multipart = "0.10.1"
 axum-valid = "0.11.0"
 lazy_static = "1.4.0"
 regex = "1.10.2"
-

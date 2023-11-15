@@ -29,8 +29,8 @@ async fn main() {
         .nest("/extra_credit/classes", extra_credit_class_routes)
         .nest("/locations", location_routes)
         .merge(Redoc::with_url("/docs", ApiDoc::openapi()))
-        .route("/test", get(server_side_auth));
-    //.fallback(get(utils::handle_404));
+        .route("/test", get(server_side_auth))
+        .fallback(get(utils::handle_404));
 
     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
         .serve(app.into_make_service())
