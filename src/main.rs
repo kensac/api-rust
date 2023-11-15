@@ -5,9 +5,18 @@ pub mod prisma;
 pub mod routes;
 pub mod utils;
 
+use std::net::SocketAddr;
+use std::time::Duration;
+
+use axum::error_handling::HandleErrorLayer;
 use axum::routing::get;
-use axum::{ Json, Router };
+use axum::{ BoxError, Json, Router };
 use docs::ApiDoc;
+use hyper::StatusCode;
+use tower::buffer::BufferLayer;
+use tower::limit::RateLimitLayer;
+use tower::ServiceBuilder;
+
 use utoipa::OpenApi;
 use utoipa_redoc::{ Redoc, Servable };
 
@@ -16,6 +25,14 @@ extern crate lazy_static;
 
 #[tokio::main]
 async fn main() {
+    dotenv::dotenv().ok();
+
+    let port = std::env
+        ::var("PORT")
+        .ok()
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(3000);
+
     let sponsor_routes = routes::sponsors::sponsor_get_router().await;
     let hackathon_routes = routes::hackathons::hackathon_get_router().await;
     let extra_credit_class_routes =
@@ -33,12 +50,20 @@ async fn main() {
         .nest("/events", event_routes)
         .merge(Redoc::with_url("/docs", ApiDoc::openapi()))
         .route("/test", get(server_side_auth))
+        .layer(
+            ServiceBuilder::new()
+                .layer(
+                    HandleErrorLayer::new(|err: BoxError| async move {
+                        (StatusCode::INTERNAL_SERVER_ERROR, format!("Unhandled error: {}", err))
+                    })
+                )
+                .layer(BufferLayer::new(1024))
+                .layer(RateLimitLayer::new(100, Duration::from_secs(5)))
+        )
         .fallback(get(utils::handle_404));
+    let address = SocketAddr::from(([0, 0, 0, 0], port));
 
-    axum::Server
-        ::bind(&"0.0.0.0:3000".parse().unwrap())
-        .serve(app.into_make_service()).await
-        .unwrap();
+    axum::Server::bind(&address).serve(app.into_make_service()).await.unwrap();
 }
 
 #[axum::debug_handler]

@@ -1,2 +1,5 @@
 [alias]
 prisma = "run --bin prisma --"
+start = "run --package api-rust --bin api-rust"
+# dev doesn't actually work, it just exists so that you can copy paste the dev command
+dev = "cargo watch -c -w src -x 'run --package api-rust --bin api-rust'"
