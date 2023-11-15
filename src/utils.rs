@@ -1,4 +1,5 @@
 use axum::{http::status, routing::MethodRouter, Router};
+use regex::Regex;
 
 use crate::prisma::{hackathon, PrismaClient};
 
@@ -50,4 +51,8 @@ pub async fn get_current_active_hackathon_uuid() -> Result<String, String> {
         },
         Err(err) => Err(format!("Error finding active hackathon: {}", err)),
     }
+}
+
+lazy_static! {
+    pub static ref UUID: Regex = Regex::new(r"[a-z]{2}$").unwrap();
 }

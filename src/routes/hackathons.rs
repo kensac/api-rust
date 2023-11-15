@@ -18,11 +18,11 @@ use crate::{
 #[derive(serde::Deserialize, ToSchema)]
 /* #[serde(remote = "Data")] */
 pub struct HackathonEntity {
-    id: String,
-    name: String,
-    start_time: chrono::DateTime<FixedOffset>,
-    end_time: chrono::DateTime<FixedOffset>,
-    active: bool,
+    _id: String,
+    _name: String,
+    _start_time: chrono::DateTime<FixedOffset>,
+    _end_time: chrono::DateTime<FixedOffset>,
+    _active: bool,
     /*     event: Option<Vec<prisma::event::Data>>,
     extra_credit_class: Option<Vec<prisma::extra_credit_class::Data>>,
     project: Option<Vec<prisma::project::Data>>,

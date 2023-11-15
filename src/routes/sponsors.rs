@@ -3,8 +3,11 @@ use axum::{
     routing::post,
     Router,
 };
+use hyper::StatusCode;
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
+use validator::Validate;
+use crate::utils::UUID;
 
 use crate::{
     prisma::{
@@ -14,19 +17,27 @@ use crate::{
     utils::{get_app_state, AppState},
 };
 
-#[derive(Serialize, Deserialize, ToSchema)]
+#[derive(Serialize, Deserialize, ToSchema, Validate)]
 pub struct CreateSponsorEntity {
     name: String,
     level: String,
+    #[validate(url)]
     link: Option<String>,
     dark_logo: String,
     light_logo: String,
     order: i32,
+    #[validate(regex = "UUID")]
     hackathon_id: String,
 }
 
 #[axum::debug_handler]
-pub async fn create_sponsor(Json(body): Json<CreateSponsorEntity>) -> Result<String, String> {
+pub async fn create_sponsor(Json(body): Json<CreateSponsorEntity>) -> Result<String, (StatusCode, String)> {
+
+    match body.validate() {
+        Ok(_) => {}
+        Err(err) => return Err((StatusCode::BAD_REQUEST ,err.to_string())),
+    };
+
     let state = get_app_state().await;
 
     match state
@@ -44,8 +55,8 @@ pub async fn create_sponsor(Json(body): Json<CreateSponsorEntity>) -> Result<Str
         .exec()
         .await
     {
-        Ok(_sponsor) => Ok("Created sponsor succesfully".to_string()),
-        Err(_err) => Err("Error creating sponsor".to_string()),
+        Ok(_sponsor) => Ok("Created sponsor successfully".to_string()),
+        Err(_err) => Err((StatusCode::BAD_REQUEST, _err.to_string())),
     }
 }
 

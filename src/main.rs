@@ -11,6 +11,9 @@ use docs::ApiDoc;
 use utoipa::OpenApi;
 use utoipa_redoc::{Redoc, Servable};
 
+#[macro_use]
+extern crate lazy_static;
+
 #[tokio::main]
 async fn main() {
     let sponsor_routes = routes::sponsors::sponsor_get_router().await;
