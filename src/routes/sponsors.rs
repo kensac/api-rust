@@ -23,10 +23,10 @@ pub struct CreateSponsorEntity {
 }
 
 #[axum::debug_handler]
-pub async fn create_sponsor(Json(body): Json<CreateSponsorEntity>) -> Result<
-    String,
-    (StatusCode, String)
-> {
+pub async fn create_sponsor(
+    State(state): State<AppState>,
+    Json(body): Json<CreateSponsorEntity>
+) -> Result<String, (StatusCode, String)> {
     match body.validate() {
         Ok(_) => {}
         Err(err) => {
@@ -34,8 +34,6 @@ pub async fn create_sponsor(Json(body): Json<CreateSponsorEntity>) -> Result<
             return Err((StatusCode::BAD_REQUEST, err.to_string()));
         }
     }
-
-    let state = get_app_state().await;
 
     match
         state.client

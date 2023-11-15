@@ -21,6 +21,7 @@ async fn main() {
     let extra_credit_class_routes =
         routes::extra_credit_classes::extra_credit_class_get_router().await;
     let location_routes = routes::locations::location_get_router().await;
+    let event_routes = routes::events::events_get_router().await;
 
     let app = Router::new()
         .route("/", get(utils::hello_world))
@@ -29,6 +30,7 @@ async fn main() {
         .nest("/hackathons", hackathon_routes)
         .nest("/extra_credit/classes", extra_credit_class_routes)
         .nest("/locations", location_routes)
+        .nest("/events", event_routes)
         .merge(Redoc::with_url("/docs", ApiDoc::openapi()))
         .route("/test", get(server_side_auth))
         .fallback(get(utils::handle_404));
