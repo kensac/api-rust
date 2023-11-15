@@ -6,10 +6,10 @@ pub mod routes;
 pub mod utils;
 
 use axum::routing::get;
-use axum::{Json, Router};
+use axum::{ Json, Router };
 use docs::ApiDoc;
 use utoipa::OpenApi;
-use utoipa_redoc::{Redoc, Servable};
+use utoipa_redoc::{ Redoc, Servable };
 
 #[macro_use]
 extern crate lazy_static;
@@ -18,7 +18,8 @@ extern crate lazy_static;
 async fn main() {
     let sponsor_routes = routes::sponsors::sponsor_get_router().await;
     let hackathon_routes = routes::hackathons::hackathon_get_router().await;
-    let extra_credit_class_routes = routes::extra_credit_classes::extra_credit_class_get_router().await;
+    let extra_credit_class_routes =
+        routes::extra_credit_classes::extra_credit_class_get_router().await;
     let location_routes = routes::locations::location_get_router().await;
 
     let app = Router::new()
@@ -32,9 +33,9 @@ async fn main() {
         .route("/test", get(server_side_auth))
         .fallback(get(utils::handle_404));
 
-    axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
-        .serve(app.into_make_service())
-        .await
+    axum::Server
+        ::bind(&"0.0.0.0:3000".parse().unwrap())
+        .serve(app.into_make_service()).await
         .unwrap();
 }
 
@@ -49,14 +50,14 @@ pub async fn server_side_auth() -> Json<()> {
 
     let url = format!(
         "https://cloud.appwrite.io/v1/databases/{}/collections/{}/documents",
-        "test", "sample"
+        "test",
+        "sample"
     );
     let response = client
         .get(&url)
         .header("X-Appwrite-Project", appwrite_id)
         .header("X-Appwrite-Key", appwrite_secret)
-        .send()
-        .await;
+        .send().await;
 
     println!("{:?}", response.unwrap().text().await.unwrap());
     Json(())

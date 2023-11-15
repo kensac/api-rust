@@ -1,4 +1,4 @@
-use axum::{http::status, routing::MethodRouter, Router};
+use axum::{ http::status, routing::MethodRouter, Router };
 use hyper::StatusCode;
 use regex::Regex;
 
@@ -27,15 +27,11 @@ pub struct AppState {
 }
 
 pub async fn get_app_state() -> AppState {
-    let client = PrismaClient::_builder()
-        .build()
-        .await
-        .expect("Didn't connect to database");
+    let client = PrismaClient::_builder().build().await.expect("Didn't connect to database");
 
     let state = AppState { client: client };
     return state;
 }
-
 
 lazy_static! {
     pub static ref UUID: Regex = Regex::new(r"[a-z]{2}$").unwrap();
