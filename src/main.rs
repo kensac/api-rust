@@ -17,6 +17,7 @@ use tower::buffer::BufferLayer;
 use tower::limit::RateLimitLayer;
 use tower::ServiceBuilder;
 
+use utils::get_port;
 use utoipa::OpenApi;
 use utoipa_redoc::{ Redoc, Servable };
 
@@ -27,12 +28,15 @@ extern crate lazy_static;
 async fn main() {
     dotenv::dotenv().ok();
 
-    let port = std::env
-        ::var("PORT")
-        .ok()
-        .and_then(|s| s.parse().ok())
-        .unwrap_or(3000);
+    let port = get_port();
 
+    let app = new_app().await;
+    let address = SocketAddr::from(([0, 0, 0, 0], port));
+
+    axum::Server::bind(&address).serve(app.into_make_service()).await.unwrap();
+}
+
+async fn new_app() -> Router {
     let sponsor_routes = routes::sponsors::sponsor_get_router().await;
     let hackathon_routes = routes::hackathons::hackathon_get_router().await;
     let extra_credit_class_routes =
@@ -40,7 +44,7 @@ async fn main() {
     let location_routes = routes::locations::location_get_router().await;
     let event_routes = routes::events::events_get_router().await;
 
-    let app = Router::new()
+    Router::new()
         .route("/", get(utils::hello_world))
         .route("/health", get(utils::health_check))
         .nest("/sponsors", sponsor_routes)
@@ -49,7 +53,7 @@ async fn main() {
         .nest("/locations", location_routes)
         .nest("/events", event_routes)
         .merge(Redoc::with_url("/docs", ApiDoc::openapi()))
-        .route("/test", get(server_side_auth))
+        /*         .route("/test", get(server_side_auth)) */
         .layer(
             ServiceBuilder::new()
                 .layer(
@@ -60,32 +64,5 @@ async fn main() {
                 .layer(BufferLayer::new(1024))
                 .layer(RateLimitLayer::new(100, Duration::from_secs(5)))
         )
-        .fallback(get(utils::handle_404));
-    let address = SocketAddr::from(([0, 0, 0, 0], port));
-
-    axum::Server::bind(&address).serve(app.into_make_service()).await.unwrap();
-}
-
-#[axum::debug_handler]
-pub async fn server_side_auth() -> Json<()> {
-    dotenv::dotenv().ok();
-
-    let appwrite_secret = std::env::var("APPWRITE_SECRET").unwrap();
-    let appwrite_id = std::env::var("APPWRITE_ID").unwrap();
-
-    let client = reqwest::Client::new();
-
-    let url = format!(
-        "https://cloud.appwrite.io/v1/databases/{}/collections/{}/documents",
-        "test",
-        "sample"
-    );
-    let response = client
-        .get(&url)
-        .header("X-Appwrite-Project", appwrite_id)
-        .header("X-Appwrite-Key", appwrite_secret)
-        .send().await;
-
-    println!("{:?}", response.unwrap().text().await.unwrap());
-    Json(())
+        .fallback(get(utils::handle_404))
 }
