@@ -8,8 +8,9 @@ pub fn route(path: &str, method_router: MethodRouter) -> Router {
     return Router::new().route(path, method_router);
 }
 
+#[axum::debug_handler]
 pub async fn handle_404() -> (StatusCode, &'static str) {
-    return (StatusCode::NOT_FOUND, "The requested resource was not found.");
+    return (StatusCode::INTERNAL_SERVER_ERROR, "The requested resource was not found.");
 }
 
 pub async fn hello_world() -> &'static str {
@@ -44,7 +45,7 @@ pub async fn get_app_state() -> AppState {
 }
 
 lazy_static! {
-    pub static ref UUID: Regex = Regex::new(r"[a-z]{2}$").unwrap();
+    pub static ref UUID_VALIDATOR: Regex = Regex::new(r"[a-z]{2}$").unwrap();
 }
 
 #[axum::debug_handler]

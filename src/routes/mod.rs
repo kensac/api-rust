@@ -3,3 +3,4 @@ pub mod hackathons;
 pub mod locations;
 pub mod sponsors;
 pub mod events;
+pub mod scans;

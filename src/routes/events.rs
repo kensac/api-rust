@@ -61,6 +61,7 @@ pub async fn get_events(State(app_state): State<AppState>) -> Result<
         app_state.client
             .event()
             .find_many(vec![])
+            .with(event::scan::fetch(vec![]))
             .exec().await
     {
         Ok(events) => Ok(Json(events)),
@@ -110,8 +111,7 @@ pub struct CheckInUserToEventEntity {
 
 pub async fn check_in_user_to_event(
     State(app_state): State<AppState>,
-    Path(event_id): Path<Uuid>,
-    Path(user_id): Path<Uuid>,
+    Path((event_id, user_id)): Path<(Uuid,Uuid)>,
     Json(body): Json<CheckInUserToEventEntity>
 ) -> Result<String, (StatusCode, String)> {
     match
