@@ -22,6 +22,7 @@ pub async fn get_all_scans(State(app_state): State<AppState>) -> Result<
 }
 
 #[derive(Deserialize, ToSchema)]
+#[serde(rename_all = "camelCase")]
 pub struct ScanIdEntity {
     event_id: Uuid,
     user_id: Uuid,

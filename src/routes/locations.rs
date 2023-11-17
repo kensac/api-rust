@@ -6,6 +6,7 @@ use utoipa::ToSchema;
 use crate::{ prisma::{ self, location::Data }, utils::{ get_app_state, AppState } };
 
 #[derive(Deserialize, ToSchema)]
+#[serde(rename_all = "camelCase")]
 pub struct CreateLocationEntity {
     name: String,
 }

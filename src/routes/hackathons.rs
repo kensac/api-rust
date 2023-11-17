@@ -17,6 +17,7 @@ use crate::{
 };
 
 #[derive(serde::Deserialize, ToSchema)]
+#[serde(rename_all = "camelCase")]
 /* #[serde(remote = "Data")] */
 pub struct HackathonEntity {
     _id: String,
@@ -34,6 +35,7 @@ pub struct HackathonEntity {
 }
 
 #[derive(serde::Deserialize, ToSchema)]
+#[serde(rename_all = "camelCase")]
 pub struct CreateHackathonEntity {
     name: String,
     start_time: chrono::DateTime<FixedOffset>,
@@ -74,7 +76,7 @@ async fn create_hackathon(
 }
 
 #[axum::debug_handler]
-#[utoipa::path(get, path = "/hackathon", responses((status = 200, description = "Returns all hackathons", body = Vec<HackathonEntity>), (status=404, description = "No hackathon found")) , params(Params), request_body = CreateHackathonEntity)]
+#[utoipa::path(get, path = "/hackathon", responses((status = 200, description = "Returns all hackathons", body = Vec<HackathonEntity>), (status=404, description = "No hackathon found")) , params(Params))]
 async fn get_hackathon(
     State(app_state): State<AppState>,
     Query(params): Query<Params>

@@ -11,6 +11,7 @@ use crate::{
 };
 
 #[derive(Serialize, Deserialize, ToSchema, Validate)]
+#[serde(rename_all = "camelCase")]
 pub struct CreateSponsorEntity {
     name: String,
     level: String,

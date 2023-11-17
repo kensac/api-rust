@@ -7,6 +7,7 @@ use uuid::Uuid;
 use crate::{ prisma::{ self, extra_credit_class::Data }, utils::{ get_app_state, AppState } };
 
 #[derive(Serialize, Deserialize, ToSchema)]
+#[serde(rename_all = "camelCase")]
 pub struct CreateExtraCreditClassEntity {
     name: String,
     hackathon_id: Uuid,

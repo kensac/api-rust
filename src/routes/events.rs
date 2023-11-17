@@ -7,6 +7,7 @@ use uuid::Uuid;
 use crate::{ prisma::{ self, event, hackathon, location, EventType }, utils::{AppState, get_app_state} };
 
 #[derive(serde::Deserialize, ToSchema)]
+#[serde(rename_all = "camelCase")]
 pub struct CreateEventEntity {
     name: String,
     r#type: EventType,
