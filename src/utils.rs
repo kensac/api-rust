@@ -1,4 +1,4 @@
-use axum::{ http::status, routing::MethodRouter, Router, Json };
+use axum::{http::status, routing::MethodRouter, Json, Router};
 use hyper::StatusCode;
 use regex::Regex;
 
@@ -10,7 +10,10 @@ pub fn route(path: &str, method_router: MethodRouter) -> Router {
 
 #[axum::debug_handler]
 pub async fn handle_404() -> (StatusCode, &'static str) {
-    return (StatusCode::INTERNAL_SERVER_ERROR, "The requested resource was not found.");
+    return (
+        StatusCode::INTERNAL_SERVER_ERROR,
+        "The requested resource was not found.",
+    );
 }
 
 pub async fn hello_world() -> &'static str {
@@ -18,8 +21,7 @@ pub async fn hello_world() -> &'static str {
 }
 
 pub fn get_port() -> u16 {
-    let port = std::env
-        ::var("PORT")
+    let port = std::env::var("PORT")
         .ok()
         .and_then(|s| s.parse().ok())
         .unwrap_or(3000);
@@ -38,7 +40,10 @@ pub struct AppState {
 }
 
 pub async fn get_app_state() -> AppState {
-    let client = PrismaClient::_builder().build().await.expect("Didn't connect to database");
+    let client = PrismaClient::_builder()
+        .build()
+        .await
+        .expect("Didn't connect to database");
 
     let state = AppState { client: client };
     return state;
@@ -59,14 +64,14 @@ pub async fn server_side_auth() -> Json<()> {
 
     let url = format!(
         "https://cloud.appwrite.io/v1/databases/{}/collections/{}/documents",
-        "test",
-        "sample"
+        "test", "sample"
     );
     let response = client
         .get(&url)
         .header("X-Appwrite-Project", appwrite_id)
         .header("X-Appwrite-Key", appwrite_secret)
-        .send().await;
+        .send()
+        .await;
 
     println!("{:?}", response.unwrap().text().await.unwrap());
     Json(())

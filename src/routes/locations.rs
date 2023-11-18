@@ -1,9 +1,17 @@
-use axum::{ extract::{ Path, State }, response::Response, routing::get, Json, Router };
+use axum::{
+    extract::{Path, State},
+    response::Response,
+    routing::get,
+    Json, Router,
+};
 use hyper::StatusCode;
 use serde::Deserialize;
 use utoipa::ToSchema;
 
-use crate::{ prisma::{ self, location::Data }, utils::{ get_app_state, AppState } };
+use crate::{
+    prisma::{self, location::Data},
+    utils::{get_app_state, AppState},
+};
 
 #[derive(Deserialize, ToSchema)]
 #[serde(rename_all = "camelCase")]
@@ -23,13 +31,14 @@ pub struct CreateLocationEntity {
 )]
 async fn create_location(
     State(app_state): State<AppState>,
-    Json(body): Json<CreateLocationEntity>
+    Json(body): Json<CreateLocationEntity>,
 ) -> Result<Response<String>, StatusCode> {
-    match
-        app_state.client
-            .location()
-            .create(body.name, vec![])
-            .exec().await
+    match app_state
+        .client
+        .location()
+        .create(body.name, vec![])
+        .exec()
+        .await
     {
         Ok(_location) => Ok(Response::new("Created location succesfully".to_string())),
         Err(_err) => Err(StatusCode::BAD_REQUEST),
@@ -44,16 +53,10 @@ async fn create_location(
         (status = 400, description = "Bad request")
     )
 )]
-async fn get_all_locations(State(app_state): State<AppState>) -> Result<
-    Json<Vec<Data>>,
-    StatusCode
-> {
-    match
-        app_state.client
-            .location()
-            .find_many(vec![])
-            .exec().await
-    {
+async fn get_all_locations(
+    State(app_state): State<AppState>,
+) -> Result<Json<Vec<Data>>, StatusCode> {
+    match app_state.client.location().find_many(vec![]).exec().await {
         Ok(locations) => Ok(Json(locations)),
         Err(_err) => Err(StatusCode::BAD_REQUEST),
     }
@@ -69,19 +72,19 @@ async fn get_all_locations(State(app_state): State<AppState>) -> Result<
 )]
 async fn get_location_by_id(
     State(app_state): State<AppState>,
-    Path(id): Path<String>
+    Path(id): Path<String>,
 ) -> Result<Json<Data>, (StatusCode, String)> {
-    match
-        app_state.client
-            .location()
-            .find_unique(prisma::location::UniqueWhereParam::IdEquals(id))
-            .exec().await
+    match app_state
+        .client
+        .location()
+        .find_unique(prisma::location::UniqueWhereParam::IdEquals(id))
+        .exec()
+        .await
     {
-        Ok(location) =>
-            match location {
-                Some(location) => Ok(Json(location)),
-                None => Err((StatusCode::NOT_FOUND, "".to_string())),
-            }
+        Ok(location) => match location {
+            Some(location) => Ok(Json(location)),
+            None => Err((StatusCode::NOT_FOUND, "".to_string())),
+        },
         Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
@@ -96,13 +99,14 @@ async fn get_location_by_id(
 )]
 async fn delete_location_by_id(
     State(app_state): State<AppState>,
-    Path(id): Path<String>
+    Path(id): Path<String>,
 ) -> Result<Response<String>, StatusCode> {
-    match
-        app_state.client
-            .location()
-            .delete(prisma::location::UniqueWhereParam::IdEquals(id))
-            .exec().await
+    match app_state
+        .client
+        .location()
+        .delete(prisma::location::UniqueWhereParam::IdEquals(id))
+        .exec()
+        .await
     {
         Ok(_) => Ok(Response::new("Deleted location succesfully".to_string())),
         Err(_err) => Err(StatusCode::BAD_REQUEST),
@@ -113,7 +117,10 @@ pub async fn location_get_router() -> Router {
     let state = get_app_state().await;
     let router = Router::new()
         .route("/", get(get_all_locations).post(create_location))
-        .route("/{id}", get(get_location_by_id).delete(delete_location_by_id))
+        .route(
+            "/{id}",
+            get(get_location_by_id).delete(delete_location_by_id),
+        )
         .with_state(state);
     return router;
 }

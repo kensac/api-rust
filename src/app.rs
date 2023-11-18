@@ -2,7 +2,7 @@ use std::time::Duration;
 
 use axum::error_handling::HandleErrorLayer;
 use axum::routing::get;
-use axum::{ BoxError, Router };
+use axum::{BoxError, Router};
 use docs::ApiDoc;
 use hyper::StatusCode;
 use tower::buffer::BufferLayer;
@@ -11,14 +11,12 @@ use tower::ServiceBuilder;
 use tower_http::trace::TraceLayer;
 
 use utoipa::OpenApi;
-use utoipa_redoc::{ Redoc, Servable };
+use utoipa_redoc::{Redoc, Servable};
 
-use crate::{ routes, utils, docs };
+use crate::{docs, routes, utils};
 
 pub async fn new_app() -> Router {
-    
     let service_layer = new_service_layer();
-    
 
     let sponsor_routes = routes::sponsors::sponsor_get_router().await;
     let hackathon_routes = routes::hackathons::hackathon_get_router().await;
@@ -47,13 +45,14 @@ pub async fn new_app() -> Router {
 fn new_service_layer() -> Router {
     let layer = Router::new().layer(
         ServiceBuilder::new()
-            .layer(
-                HandleErrorLayer::new(|err: BoxError| async move {
-                    (StatusCode::INTERNAL_SERVER_ERROR, format!("Unhandled error: {}", err))
-                })
-            )
+            .layer(HandleErrorLayer::new(|err: BoxError| async move {
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    format!("Unhandled error: {}", err),
+                )
+            }))
             .layer(BufferLayer::new(1024))
-            .layer(RateLimitLayer::new(100, Duration::from_secs(5)))
+            .layer(RateLimitLayer::new(100, Duration::from_secs(5))),
     );
     return layer;
 }

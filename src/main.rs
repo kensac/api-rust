@@ -1,10 +1,10 @@
+pub mod app;
 pub mod database;
 pub mod docs;
 #[allow(warnings)]
 pub mod prisma;
 pub mod routes;
 pub mod utils;
-pub mod app;
 
 use std::net::SocketAddr;
 
@@ -17,7 +17,9 @@ extern crate lazy_static;
 
 #[tokio::main]
 async fn main() {
-    tracing_subscriber::fmt().with_max_level(tracing::Level::ERROR).init();
+    tracing_subscriber::fmt()
+        .with_max_level(tracing::Level::ERROR)
+        .init();
 
     dotenv::dotenv().ok();
 
@@ -26,5 +28,8 @@ async fn main() {
     let app = new_app().await;
     let address = SocketAddr::from(([0, 0, 0, 0], port));
 
-    axum::Server::bind(&address).serve(app.into_make_service()).await.unwrap();
+    axum::Server::bind(&address)
+        .serve(app.into_make_service())
+        .await
+        .unwrap();
 }

@@ -1,21 +1,22 @@
-use axum::{ extract::{ State, Path }, Json, Router, routing::get };
+use axum::{
+    extract::{Path, State},
+    routing::get,
+    Json, Router,
+};
 use hyper::StatusCode;
 use serde::Deserialize;
-use uuid::Uuid;
 use utoipa::ToSchema;
+use uuid::Uuid;
 
-use crate::{ utils::{ AppState, get_app_state }, prisma::{ scan, event } };
+use crate::{
+    prisma::{event, scan},
+    utils::{get_app_state, AppState},
+};
 
-pub async fn get_all_scans(State(app_state): State<AppState>) -> Result<
-    Json<Vec<scan::Data>>,
-    StatusCode
-> {
-    match
-        app_state.client
-            .scan()
-            .find_many(vec![])
-            .exec().await
-    {
+pub async fn get_all_scans(
+    State(app_state): State<AppState>,
+) -> Result<Json<Vec<scan::Data>>, StatusCode> {
+    match app_state.client.scan().find_many(vec![]).exec().await {
         Ok(scans) => Ok(Json(scans)),
         Err(_) => Err(StatusCode::BAD_REQUEST),
     }
@@ -30,37 +31,36 @@ pub struct ScanIdEntity {
 
 pub async fn get_scan_by_id(
     State(app_state): State<AppState>,
-    Path(path): Path<ScanIdEntity>
+    Path(path): Path<ScanIdEntity>,
 ) -> Result<Json<Vec<scan::Data>>, StatusCode> {
-    match
-        app_state.client
-            .scan()
-            .find_unique(
-                scan::UniqueWhereParam::EventIdUserIdEquals(
-                    path.event_id.to_string(),
-                    path.user_id.to_string()
-                )
-            )
-            .exec().await
+    match app_state
+        .client
+        .scan()
+        .find_unique(scan::UniqueWhereParam::EventIdUserIdEquals(
+            path.event_id.to_string(),
+            path.user_id.to_string(),
+        ))
+        .exec()
+        .await
     {
-        Ok(scan) =>
-            match scan {
-                Some(scan) => Ok(Json(vec![scan])),
-                None => Err(StatusCode::NOT_FOUND),
-            }
+        Ok(scan) => match scan {
+            Some(scan) => Ok(Json(vec![scan])),
+            None => Err(StatusCode::NOT_FOUND),
+        },
         Err(_) => Err(StatusCode::INTERNAL_SERVER_ERROR),
     }
 }
 
 pub async fn get_scans_by_organizer_id(
     State(app_state): State<AppState>,
-    Path(id): Path<Uuid>
+    Path(id): Path<Uuid>,
 ) -> Result<Json<Vec<scan::Data>>, StatusCode> {
-    match
-        app_state.client
-            .scan()
-            .find_many(vec![scan::organizer_id::equals(id.to_string())])
-            .exec().await
+    match app_state
+        .client
+        .scan()
+        .find_many(vec![scan::organizer_id::equals(id.to_string())])
+        .exec()
+        .await
     {
         Ok(scans) => Ok(Json(scans)),
         Err(_) => Err(StatusCode::BAD_REQUEST),
@@ -69,29 +69,30 @@ pub async fn get_scans_by_organizer_id(
 
 pub async fn get_scans_by_user_id(
     State(app_state): State<AppState>,
-    Path(id): Path<Uuid>
+    Path(id): Path<Uuid>,
 ) -> Result<Json<Vec<scan::Data>>, StatusCode> {
-    match
-        app_state.client
-            .scan()
-            .find_many(vec![scan::user_id::equals(id.to_string())])
-            .exec().await
+    match app_state
+        .client
+        .scan()
+        .find_many(vec![scan::user_id::equals(id.to_string())])
+        .exec()
+        .await
     {
         Ok(scans) => Ok(Json(scans)),
         Err(_) => Err(StatusCode::BAD_REQUEST),
     }
 }
 
-pub async fn get_all_events_with_scans(State(app_state): State<AppState>) -> Result<
-    Json<Vec<event::Data>>,
-    StatusCode
-> {
-    match
-        app_state.client
-            .event()
-            .find_many(vec![])
-            .with(event::scan::fetch(vec![]))
-            .exec().await
+pub async fn get_all_events_with_scans(
+    State(app_state): State<AppState>,
+) -> Result<Json<Vec<event::Data>>, StatusCode> {
+    match app_state
+        .client
+        .event()
+        .find_many(vec![])
+        .with(event::scan::fetch(vec![]))
+        .exec()
+        .await
     {
         Ok(events) => Ok(Json(events)),
         Err(_) => Err(StatusCode::BAD_REQUEST),
@@ -100,20 +101,20 @@ pub async fn get_all_events_with_scans(State(app_state): State<AppState>) -> Res
 
 pub async fn get_event_with_scans_by_id(
     State(app_state): State<AppState>,
-    Path(id): Path<Uuid>
+    Path(id): Path<Uuid>,
 ) -> Result<Json<Vec<event::Data>>, StatusCode> {
-    match
-        app_state.client
-            .event()
-            .find_unique(event::UniqueWhereParam::IdEquals(id.to_string()))
-            .with(event::scan::fetch(vec![]))
-            .exec().await
+    match app_state
+        .client
+        .event()
+        .find_unique(event::UniqueWhereParam::IdEquals(id.to_string()))
+        .with(event::scan::fetch(vec![]))
+        .exec()
+        .await
     {
-        Ok(event) =>
-            match event {
-                Some(event) => Ok(Json(vec![event])),
-                None => Err(StatusCode::NOT_FOUND),
-            }
+        Ok(event) => match event {
+            Some(event) => Ok(Json(vec![event])),
+            None => Err(StatusCode::NOT_FOUND),
+        },
         Err(_) => Err(StatusCode::INTERNAL_SERVER_ERROR),
     }
 }

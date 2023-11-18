@@ -1,6 +1,9 @@
-use utoipa::OpenApi;
+use utoipa::openapi::security::{
+    ApiKey, ApiKeyValue, Flow, HttpAuthScheme, HttpBuilder, Password, Scopes, SecurityScheme,
+};
+use utoipa::{Modify, OpenApi};
 
-use crate::routes::{ extra_credit_classes, hackathons, locations };
+use crate::routes::{extra_credit_classes, hackathons, locations};
 use crate::utils;
 
 #[derive(OpenApi)]
@@ -29,6 +32,7 @@ use crate::utils;
             locations::CreateLocationEntity
         )
     ),
+    modifiers(&SecurityAddon),
     tags(
         (name = "hackathons", description = "Hackathon related operations"),
         (name = "extra_credit_class", description = "Extra Credit Class related operations"),
@@ -36,3 +40,37 @@ use crate::utils;
     )
 )]
 pub struct ApiDoc;
+
+impl Modify for SecurityAddon {
+    fn modify(&self, openapi: &mut utoipa::openapi::OpenApi) {
+        if let Some(components) = openapi.components.as_mut() {
+            components.add_security_scheme(
+                "api_key",
+                SecurityScheme::Http(
+                    HttpBuilder::new()
+                        .scheme(HttpAuthScheme::Bearer)
+                        .bearer_format("JWT")
+                        .build(),
+                ),
+            );
+            components.add_security_scheme(
+                "OAuth2",
+                SecurityScheme::OAuth2(utoipa::openapi::security::OAuth2::new(vec![
+                    Flow::Password(Password::new(
+                        "/registration",
+                        Scopes::from_iter(vec![
+                            ("None".to_string(), "None".to_string()),
+                            ("Volunteer".to_string(), "Volunteer".to_string()),
+                            ("Team".to_string(), "Team".to_string()),
+                            ("Exec".to_string(), "Exec".to_string()),
+                            ("Tech".to_string(), "Tech".to_string()),
+                            ("Finance".to_string(), "Finance".to_string()),
+                        ]),
+                    )),
+                ])),
+            );
+        }
+    }
+}
+
+pub struct SecurityAddon;

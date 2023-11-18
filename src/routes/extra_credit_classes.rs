@@ -1,10 +1,18 @@
-use axum::{ extract::{ Path, State }, response::Response, routing::get, Json, Router };
+use axum::{
+    extract::{Path, State},
+    response::Response,
+    routing::get,
+    Json, Router,
+};
 use hyper::StatusCode;
-use serde::{ Deserialize, Serialize };
+use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 use uuid::Uuid;
 
-use crate::{ prisma::{ self, extra_credit_class::Data }, utils::{ get_app_state, AppState } };
+use crate::{
+    prisma::{self, extra_credit_class::Data},
+    utils::{get_app_state, AppState},
+};
 
 #[derive(Serialize, Deserialize, ToSchema)]
 #[serde(rename_all = "camelCase")]
@@ -24,19 +32,22 @@ pub struct CreateExtraCreditClassEntity {
 )]
 async fn create_extra_credit_class(
     State(app_state): State<AppState>,
-    Json(body): Json<CreateExtraCreditClassEntity>
+    Json(body): Json<CreateExtraCreditClassEntity>,
 ) -> Result<Response<String>, StatusCode> {
-    match
-        app_state.client
-            .extra_credit_class()
-            .create(
-                body.name,
-                prisma::hackathon::UniqueWhereParam::IdEquals(body.hackathon_id.to_string()),
-                vec![]
-            )
-            .exec().await
+    match app_state
+        .client
+        .extra_credit_class()
+        .create(
+            body.name,
+            prisma::hackathon::UniqueWhereParam::IdEquals(body.hackathon_id.to_string()),
+            vec![],
+        )
+        .exec()
+        .await
     {
-        Ok(_hackathon) => Ok(Response::new("Created extra credit class successfully".to_string())),
+        Ok(_hackathon) => Ok(Response::new(
+            "Created extra credit class successfully".to_string(),
+        )),
         Err(_err) => Err(StatusCode::BAD_REQUEST),
     }
 }
@@ -49,15 +60,15 @@ async fn create_extra_credit_class(
         (status = 400, description = "Bad request")
     )
 )]
-async fn get_all_extra_credit_classes(State(app_state): State<AppState>) -> Result<
-    Json<Vec<Data>>,
-    StatusCode
-> {
-    match
-        app_state.client
-            .extra_credit_class()
-            .find_many(vec![])
-            .exec().await
+async fn get_all_extra_credit_classes(
+    State(app_state): State<AppState>,
+) -> Result<Json<Vec<Data>>, StatusCode> {
+    match app_state
+        .client
+        .extra_credit_class()
+        .find_many(vec![])
+        .exec()
+        .await
     {
         Ok(extra_credit_classes) => Ok(Json(extra_credit_classes)),
         Err(_err) => Err(StatusCode::BAD_REQUEST),
@@ -74,19 +85,19 @@ async fn get_all_extra_credit_classes(State(app_state): State<AppState>) -> Resu
 )]
 async fn get_extra_credit_class_by_id(
     State(app_state): State<AppState>,
-    Path(id): Path<String>
+    Path(id): Path<String>,
 ) -> Result<Json<Data>, (StatusCode, String)> {
-    match
-        app_state.client
-            .extra_credit_class()
-            .find_unique(prisma::extra_credit_class::UniqueWhereParam::IdEquals(id))
-            .exec().await
+    match app_state
+        .client
+        .extra_credit_class()
+        .find_unique(prisma::extra_credit_class::UniqueWhereParam::IdEquals(id))
+        .exec()
+        .await
     {
-        Ok(extra_credit_class) =>
-            match extra_credit_class {
-                Some(extra_credit_class) => Ok(Json(extra_credit_class)),
-                None => Err((StatusCode::NOT_FOUND, "".to_string())),
-            }
+        Ok(extra_credit_class) => match extra_credit_class {
+            Some(extra_credit_class) => Ok(Json(extra_credit_class)),
+            None => Err((StatusCode::NOT_FOUND, "".to_string())),
+        },
         Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
@@ -102,13 +113,14 @@ async fn get_extra_credit_class_by_id(
 )]
 async fn delete_extra_credit_class_by_id(
     State(app_state): State<AppState>,
-    Path(id): Path<String>
+    Path(id): Path<String>,
 ) -> Result<StatusCode, (StatusCode, String)> {
-    match
-        app_state.client
-            .extra_credit_class()
-            .delete(prisma::extra_credit_class::UniqueWhereParam::IdEquals(id))
-            .exec().await
+    match app_state
+        .client
+        .extra_credit_class()
+        .delete(prisma::extra_credit_class::UniqueWhereParam::IdEquals(id))
+        .exec()
+        .await
     {
         Ok(_) => Ok(StatusCode::NO_CONTENT),
         Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
@@ -118,7 +130,13 @@ async fn delete_extra_credit_class_by_id(
 pub async fn extra_credit_class_get_router() -> Router {
     let state = get_app_state().await;
     Router::new()
-        .route("/", get(get_all_extra_credit_classes).post(create_extra_credit_class))
-        .route("/:id", get(get_extra_credit_class_by_id).delete(delete_extra_credit_class_by_id))
+        .route(
+            "/",
+            get(get_all_extra_credit_classes).post(create_extra_credit_class),
+        )
+        .route(
+            "/:id",
+            get(get_extra_credit_class_by_id).delete(delete_extra_credit_class_by_id),
+        )
         .with_state(state)
 }
