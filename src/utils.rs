@@ -5,15 +5,15 @@ use regex::Regex;
 use crate::prisma::PrismaClient;
 
 pub fn route(path: &str, method_router: MethodRouter) -> Router {
-    return Router::new().route(path, method_router);
+    Router::new().route(path, method_router)
 }
 
 #[axum::debug_handler]
 pub async fn handle_404() -> (StatusCode, &'static str) {
-    return (
+    (
         StatusCode::INTERNAL_SERVER_ERROR,
         "The requested resource was not found.",
-    );
+    )
 }
 
 pub async fn hello_world() -> &'static str {
@@ -21,17 +21,15 @@ pub async fn hello_world() -> &'static str {
 }
 
 pub fn get_port() -> u16 {
-    let port = std::env::var("PORT")
+    std::env::var("PORT")
         .ok()
         .and_then(|s| s.parse().ok())
-        .unwrap_or(3000);
-
-    return port;
+        .unwrap_or(3000)
 }
 
 #[utoipa::path(get, path = "/health", responses((status = 200, description = "Service is Alive")))]
 pub async fn health_check() -> status::StatusCode {
-    return status::StatusCode::OK;
+    status::StatusCode::OK
 }
 
 #[derive(Clone)]
@@ -45,8 +43,7 @@ pub async fn get_app_state() -> AppState {
         .await
         .expect("Didn't connect to database");
 
-    let state = AppState { client: client };
-    return state;
+    AppState { client }
 }
 
 lazy_static! {

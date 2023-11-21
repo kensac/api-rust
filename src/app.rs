@@ -43,7 +43,7 @@ pub async fn new_app() -> Router {
 }
 
 fn new_service_layer() -> Router {
-    let layer = Router::new().layer(
+    Router::new().layer(
         ServiceBuilder::new()
             .layer(HandleErrorLayer::new(|err: BoxError| async move {
                 (
@@ -53,6 +53,5 @@ fn new_service_layer() -> Router {
             }))
             .layer(BufferLayer::new(1024))
             .layer(RateLimitLayer::new(100, Duration::from_secs(5))),
-    );
-    return layer;
+    )
 }

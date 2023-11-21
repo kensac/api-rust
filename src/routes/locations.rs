@@ -115,12 +115,11 @@ async fn delete_location_by_id(
 
 pub async fn location_get_router() -> Router {
     let state = get_app_state().await;
-    let router = Router::new()
+    Router::new()
         .route("/", get(get_all_locations).post(create_location))
         .route(
             "/{id}",
             get(get_location_by_id).delete(delete_location_by_id),
         )
-        .with_state(state);
-    return router;
+        .with_state(state)
 }
