@@ -32,7 +32,7 @@ pub struct LogInWithEmailStructResponse {
 pub async fn log_in_with_email_and_password(
     cookies: Cookies,
     Json(body): Json<LogInWithEmailStruct>,
-) -> Result<(StatusCode), (StatusCode, String)> {
+) -> Result<StatusCode, (StatusCode, String)> {
     let client = reqwest::Client::new();
     let firebase_api_key = std::env::var("FIREBASE_API_KEY").unwrap();
     let log_in_url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="
