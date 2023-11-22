@@ -5,6 +5,7 @@ pub mod docs;
 pub mod prisma;
 pub mod routes;
 pub mod utils;
+pub mod auth;
 
 use std::net::SocketAddr;
 
