@@ -6,6 +6,7 @@ pub mod prisma;
 pub mod routes;
 pub mod utils;
 pub mod auth;
+pub mod auth_new;
 
 use std::net::SocketAddr;
 

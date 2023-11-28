@@ -1,4 +1,4 @@
-use axum::{http::status, routing::MethodRouter, Json, Router};
+use axum::{http::status, routing::MethodRouter, Json, Router, response::Response};
 use hyper::StatusCode;
 use regex::Regex;
 
@@ -49,6 +49,8 @@ pub async fn get_app_state() -> AppState {
 lazy_static! {
     pub static ref UUID_VALIDATOR: Regex = Regex::new(r"[a-z]{2}$").unwrap();
 }
+
+pub type BaseReturnType<T> = Result<(StatusCode, T), (StatusCode, String)>;
 
 #[axum::debug_handler]
 pub async fn server_side_auth() -> Json<()> {

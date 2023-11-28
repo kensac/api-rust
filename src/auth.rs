@@ -3,7 +3,7 @@ use std::{sync::Arc, vec};
 use axum::{http::response, routing::post, Json, Router};
 use axum_extra::extract::cookie;
 use hyper::{client, StatusCode};
-use reqwest::cookie::{CookieStore, Jar};
+use reqwest::{cookie::{CookieStore, Jar}, Url};
 use serde::{Deserialize, Serialize};
 use tower_cookies::{Cookie, Cookies};
 use utoipa::ToSchema;
@@ -102,6 +102,8 @@ pub async fn get_jwt(cookies: Cookies) -> Result<StatusCode, StatusCode> {
             &reqwest::Url::parse("https://cloud.appwrite.io").unwrap(),
         );
     }
+
+    println!("{:?}", jar.cookies(&Url::parse("https://cloud.appwrite.io").unwrap()));
 
     let response = client
         .header("X-Appwrite-Project", appwrite_id)
