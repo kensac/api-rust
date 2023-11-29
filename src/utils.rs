@@ -1,10 +1,10 @@
-use axum::{http::status, routing::MethodRouter, Json, Router, response::Response};
+use axum::{http::status, routing::MethodRouter, Json, Router};
 use hyper::StatusCode;
 use regex::Regex;
 
 use crate::prisma::PrismaClient;
 
-pub fn route(path: &str, method_router: MethodRouter) -> Router {
+fn _route(path: &str, method_router: MethodRouter) -> Router {
     Router::new().route(path, method_router)
 }
 
@@ -20,16 +20,16 @@ pub async fn hello_world() -> &'static str {
     "Hello, World!"
 }
 
+#[utoipa::path(get, path = "/health", responses((status = 200, description = "Service is Alive")))]
+pub async fn health_check() -> status::StatusCode {
+    status::StatusCode::OK
+}
+
 pub fn get_port() -> u16 {
     std::env::var("PORT")
         .ok()
         .and_then(|s| s.parse().ok())
         .unwrap_or(3000)
-}
-
-#[utoipa::path(get, path = "/health", responses((status = 200, description = "Service is Alive")))]
-pub async fn health_check() -> status::StatusCode {
-    status::StatusCode::OK
 }
 
 #[derive(Clone)]
@@ -48,30 +48,4 @@ pub async fn get_app_state() -> AppState {
 
 lazy_static! {
     pub static ref UUID_VALIDATOR: Regex = Regex::new(r"[a-z]{2}$").unwrap();
-}
-
-pub type BaseReturnType<T> = Result<(StatusCode, T), (StatusCode, String)>;
-
-#[axum::debug_handler]
-pub async fn server_side_auth() -> Json<()> {
-    dotenv::dotenv().ok();
-
-    let appwrite_secret = std::env::var("APPWRITE_SECRET").unwrap();
-    let appwrite_id = std::env::var("APPWRITE_ID").unwrap();
-
-    let client = reqwest::Client::new();
-
-    let url = format!(
-        "https://cloud.appwrite.io/v1/databases/{}/collections/{}/documents",
-        "test", "sample"
-    );
-    let response = client
-        .get(&url)
-        .header("X-Appwrite-Project", appwrite_id)
-        .header("X-Appwrite-Key", appwrite_secret)
-        .send()
-        .await;
-
-    println!("{:?}", response.unwrap().text().await.unwrap());
-    Json(())
 }

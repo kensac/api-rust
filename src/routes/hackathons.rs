@@ -11,6 +11,7 @@ use hyper::StatusCode;
 use utoipa::{IntoParams, ToSchema};
 
 use crate::{
+    base_types::{BaseError, BaseResponse, DeleteResponse, StandardResponse},
     prisma::hackathon::{self, Data, UniqueWhereParam},
     utils::{get_app_state, AppState},
 };
@@ -113,7 +114,7 @@ async fn get_hackathon(
 async fn get_hackathon_by_id(
     State(app_state): State<AppState>,
     Path(id): Path<String>,
-) -> Result<Json<Vec<Data>>, StatusCode> {
+) -> StandardResponse<Json<Vec<Data>>> {
     match app_state
         .client
         .hackathon()
@@ -122,10 +123,19 @@ async fn get_hackathon_by_id(
         .await
     {
         Ok(hackathons) => match hackathons {
-            Some(hackathon) => Ok(Json(vec![hackathon])),
-            None => Err(StatusCode::NOT_FOUND),
+            Some(hackathon) => Ok(BaseResponse::get_response(
+                StatusCode::OK,
+                Json(vec![hackathon]),
+            )),
+            None => Err(BaseError::base_error(
+                StatusCode::NOT_FOUND,
+                "No hackathon found".to_string(),
+            )),
         },
-        Err(_) => Err(StatusCode::INTERNAL_SERVER_ERROR),
+        Err(e) => Err(BaseError::base_error(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            e.to_string(),
+        )),
     }
 }
 
@@ -138,7 +148,7 @@ async fn get_hackathon_by_id(
 async fn delete_hackathon_by_id(
     State(app_state): State<AppState>,
     Path(id): Path<String>,
-) -> Result<StatusCode, StatusCode> {
+) -> DeleteResponse {
     match app_state
         .client
         .hackathon()
@@ -146,8 +156,11 @@ async fn delete_hackathon_by_id(
         .exec()
         .await
     {
-        Ok(_) => Ok(StatusCode::NO_CONTENT),
-        Err(_) => Err(StatusCode::INTERNAL_SERVER_ERROR),
+        Ok(_) => Ok(BaseResponse::delete_response(StatusCode::NO_CONTENT)),
+        Err(e) => Err(BaseError::base_error(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            e.to_string(),
+        )),
     }
 }
 

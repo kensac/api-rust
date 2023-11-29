@@ -1,9 +1,12 @@
-use std::{sync::Arc, vec};
+use std::sync::Arc;
 
-use axum::{http::response, routing::post, Json, Router};
-use axum_extra::extract::cookie;
-use hyper::{client, StatusCode};
-use reqwest::{cookie::{CookieStore, Jar}, Url};
+use axum::{routing::post, Json, Router};
+
+use hyper::StatusCode;
+use reqwest::{
+    cookie::{CookieStore, Jar},
+    Url,
+};
 use serde::{Deserialize, Serialize};
 use tower_cookies::{Cookie, Cookies};
 use utoipa::ToSchema;
@@ -81,7 +84,6 @@ pub async fn log_in_with_email_and_password(
 
 #[axum::debug_handler]
 pub async fn get_jwt(cookies: Cookies) -> Result<StatusCode, StatusCode> {
-
     let jar = Arc::new(Jar::default());
 
     let client = reqwest::Client::builder()
@@ -103,7 +105,10 @@ pub async fn get_jwt(cookies: Cookies) -> Result<StatusCode, StatusCode> {
         );
     }
 
-    println!("{:?}", jar.cookies(&Url::parse("https://cloud.appwrite.io").unwrap()));
+    println!(
+        "{:?}",
+        jar.cookies(&Url::parse("https://cloud.appwrite.io").unwrap())
+    );
 
     let response = client
         .header("X-Appwrite-Project", appwrite_id)

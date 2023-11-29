@@ -3,14 +3,60 @@ Things we need in auth:
 Verify if user we received from header is in database
  */
 
+use hyper::StatusCode;
 use serde::{Deserialize, Serialize};
 
-use crate::prisma::Role;
+use crate::{
+    prisma::{organizer, Role},
+    utils::AppState,
+};
 
-pub fn auth_user_from_header(id_token: String, roles: Vec<Role>) -> bool {
+pub async fn auth_user_from_header(
+    app_state: AppState,
+    id_token: String,
+    roles: Vec<Role>,
+) -> bool {
+    if roles.len() == 0 {
+        return true;
+    }
+
     //check if user exists with firebase
-    //check if user exists in database
-    //check if user has role
+    let user_data = reqwest::Client::new()
+        .post(std::env::var("FIREBASE_USER_DATA_ENDPOINT").unwrap())
+        .query(&[("key", std::env::var("FIREBASE_API_KEY").unwrap())])
+        .json(&serde_json::json!({
+            "idToken": id_token
+        }))
+        .send()
+        .await
+        .unwrap();
+
+    if user_data.status() != StatusCode::OK {
+        return false;
+    }
+
+    let res: FirebaseUserResult = serde_json::from_str(&user_data.text().await.unwrap()).unwrap();
+
+    let user_uid = res.users[0].local_id.clone();
+
+    match app_state
+        .client
+        .organizer()
+        .find_unique(organizer::UniqueWhereParam::GcpIdEquals(user_uid))
+        .exec()
+        .await
+        .unwrap()
+    {
+        Some(organizer) => {
+            for role in roles {
+                if organizer.privilege != role {
+                    return false;
+                }
+            }
+        }
+        None => return false,
+    }
+
     true
 }
 
@@ -30,33 +76,19 @@ pub fn auth_user_from_header_with_restrictions(
     true
 }
 
-/* localId	string	The uid of the current user.
-email	string	The email of the account.
-emailVerified	boolean	Whether or not the account's email has been verified.
-displayName	string	The display name for the account.
-providerUserInfo	List of JSON objects	List of all linked provider objects which contain "providerId" and "federatedId".
-photoUrl	string	The photo Url for the account.
-passwordHash	string	Hash version of password.
-passwordUpdatedAt	double	The timestamp, in milliseconds, that the account password was last changed.
-validSince	string	The timestamp, in seconds, which marks a boundary, before which Firebase ID token are considered revoked.
-disabled	boolean	Whether the account is disabled or not.
-lastLoginAt	string	The timestamp, in milliseconds, that the account last logged in at.
-createdAt	string	The timestamp, in milliseconds, that the account was created at.
-customAuth	boolean	Whether the account is authenticated by the developer. */
-
 #[derive(Deserialize, Serialize, Debug, Clone, Default)]
+#[serde(rename_all = "camelCase")]
 pub struct FirebaseUserResponse {
     local_id: String,
     email: String,
     email_verified: bool,
-    display_name: String,
-    provider_user_info: Vec<String>,
-    photo_url: String,
-    password_hash: String,
-    password_updated_at: String,
     valid_since: String,
     disabled: bool,
     last_login_at: String,
-    created_at: String,
-    custom_auth: bool,
+}
+
+#[derive(Deserialize, Serialize, Debug, Clone)]
+pub struct FirebaseUserResult {
+    kind: String,
+    users: Vec<FirebaseUserResponse>,
 }

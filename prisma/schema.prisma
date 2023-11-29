@@ -84,11 +84,12 @@ enum Role {
 }
 
 model Organizer {
-  id        String  @id
+  id        String  @id @default(uuid())
   firstName String
   lastName  String
-  email     String
+  email     String  @unique
   privilege Role
+  gcpId     String  @unique
   Scan      Scan[]
   Score     Score[]
 }

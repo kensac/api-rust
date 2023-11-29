@@ -1,12 +1,13 @@
 pub mod app;
+pub mod auth;
+pub mod auth_new;
+pub mod base_types;
 pub mod database;
 pub mod docs;
 #[allow(warnings)]
 pub mod prisma;
 pub mod routes;
 pub mod utils;
-pub mod auth;
-pub mod auth_new;
 
 use std::net::SocketAddr;
 
