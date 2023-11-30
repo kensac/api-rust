@@ -65,14 +65,13 @@ pub type GetResponse<T> = Result<BaseResponse<T>, BaseError>;
 
 
 
-// Will migrate to this version of app_state later
 #[derive(Clone)]
 pub struct AppState {
     pub client: PrismaClient,
 }
 
 impl AppState {
-    pub async fn get_app_state() -> AppState {
+    pub async fn new() -> AppState {
         let client = PrismaClient::_builder()
             .build()
             .await

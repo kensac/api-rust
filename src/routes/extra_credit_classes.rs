@@ -11,7 +11,7 @@ use uuid::Uuid;
 
 use crate::{
     prisma::{self, extra_credit_class::Data},
-    utils::{get_app_state, AppState},
+    base_types::AppState,
 };
 
 #[derive(Serialize, Deserialize, ToSchema)]
@@ -128,7 +128,7 @@ async fn delete_extra_credit_class_by_id(
 }
 
 pub async fn extra_credit_class_get_router() -> Router {
-    let state = get_app_state().await;
+    let state = AppState::new().await;
     Router::new()
         .route(
             "/",

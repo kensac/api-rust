@@ -11,7 +11,7 @@ use uuid::Uuid;
 
 use crate::{
     prisma::{self, event, hackathon, location, EventType},
-    utils::{get_app_state, AppState},
+    base_types::AppState,
 };
 
 #[derive(serde::Deserialize, ToSchema)]
@@ -144,7 +144,7 @@ pub async fn check_in_user_to_event(
 }
 
 pub async fn events_get_router() -> Router {
-    let state = get_app_state().await;
+    let state = AppState::new().await;
 
     Router::new()
         .route("/", post(create_event).get(get_events))

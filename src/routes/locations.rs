@@ -10,7 +10,7 @@ use utoipa::ToSchema;
 
 use crate::{
     prisma::{self, location::Data},
-    utils::{get_app_state, AppState},
+    base_types::AppState,
 };
 
 #[derive(Deserialize, ToSchema)]
@@ -114,7 +114,7 @@ async fn delete_location_by_id(
 }
 
 pub async fn location_get_router() -> Router {
-    let state = get_app_state().await;
+    let state = AppState::new().await;
     Router::new()
         .route("/", get(get_all_locations).post(create_location))
         .route(

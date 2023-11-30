@@ -14,7 +14,7 @@ use crate::{
         hackathon::UniqueWhereParam,
         sponsor::{self, Data},
     },
-    utils::{get_app_state, AppState},
+    base_types::AppState,
 };
 
 #[derive(Serialize, Deserialize, ToSchema, Validate)]
@@ -74,7 +74,7 @@ pub async fn get_all_sponsors(
 }
 
 pub async fn sponsor_get_router() -> Router {
-    let state = get_app_state().await;
+    let state = AppState::new().await;
     Router::new()
         .route("/", post(create_sponsor).get(get_all_sponsors))
         .with_state(state)
