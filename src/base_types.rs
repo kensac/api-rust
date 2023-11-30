@@ -65,7 +65,6 @@ pub type GetResponse<T> = Result<BaseResponse<T>, BaseError>;
 
 
 
-// Will migrate to this version of app_state later
 #[derive(Clone)]
 pub struct AppState {
     pub client: PrismaClient,
