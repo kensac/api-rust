@@ -71,7 +71,7 @@ pub struct AppState {
     pub client: PrismaClient,
 }
 
-impl AppState {
+
     pub async fn get_app_state() -> AppState {
         let client = PrismaClient::_builder()
             .build()
@@ -80,4 +80,3 @@ impl AppState {
 
         AppState { client }
     }
-}

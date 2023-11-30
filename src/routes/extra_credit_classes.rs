@@ -11,7 +11,7 @@ use uuid::Uuid;
 
 use crate::{
     prisma::{self, extra_credit_class::Data},
-    utils::{get_app_state, AppState},
+    base_types::{get_app_state, AppState},
 };
 
 #[derive(Serialize, Deserialize, ToSchema)]

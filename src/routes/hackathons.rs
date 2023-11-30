@@ -18,7 +18,7 @@ use crate::{
         hackathon::{self, Data, UniqueWhereParam},
         organizer, Role,
     },
-    utils::{get_app_state, AppState},
+    base_types::{get_app_state, AppState},
 };
 
 #[derive(serde::Deserialize, ToSchema)]

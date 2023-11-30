@@ -2,8 +2,6 @@ use axum::{http::status, routing::MethodRouter, Router};
 use hyper::StatusCode;
 use regex::Regex;
 
-use crate::prisma::PrismaClient;
-
 fn _route(path: &str, method_router: MethodRouter) -> Router {
     Router::new().route(path, method_router)
 }
@@ -32,19 +30,7 @@ pub fn get_port() -> u16 {
         .unwrap_or(3000)
 }
 
-#[derive(Clone)]
-pub struct AppState {
-    pub client: PrismaClient,
-}
 
-pub async fn get_app_state() -> AppState {
-    let client = PrismaClient::_builder()
-        .build()
-        .await
-        .expect("Didn't connect to database");
-
-    AppState { client }
-}
 
 lazy_static! {
     pub static ref UUID_VALIDATOR: Regex = Regex::new(r"[a-z]{2}$").unwrap();

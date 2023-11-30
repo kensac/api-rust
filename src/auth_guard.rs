@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     prisma::{organizer, user, Role},
-    utils::{get_app_state, AppState},
+    base_types::{get_app_state, AppState},
 };
 
 #[derive(Deserialize, Serialize, Debug, Clone, Default)]

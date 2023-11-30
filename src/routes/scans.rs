@@ -10,7 +10,7 @@ use uuid::Uuid;
 
 use crate::{
     prisma::{event, scan},
-    utils::{get_app_state, AppState},
+    base_types::{get_app_state, AppState},
 };
 
 pub async fn get_all_scans(

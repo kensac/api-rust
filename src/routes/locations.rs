@@ -10,7 +10,7 @@ use utoipa::ToSchema;
 
 use crate::{
     prisma::{self, location::Data},
-    utils::{get_app_state, AppState},
+    base_types::{get_app_state, AppState},
 };
 
 #[derive(Deserialize, ToSchema)]

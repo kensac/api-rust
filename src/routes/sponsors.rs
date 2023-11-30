@@ -14,7 +14,7 @@ use crate::{
         hackathon::UniqueWhereParam,
         sponsor::{self, Data},
     },
-    utils::{get_app_state, AppState},
+    base_types::{get_app_state, AppState},
 };
 
 #[derive(Serialize, Deserialize, ToSchema, Validate)]
