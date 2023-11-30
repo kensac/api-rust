@@ -1,7 +1,8 @@
 use std::vec;
 
 use axum::{
-    extract::{Path, Query, State},
+    extract::{Path, Query, State, Extension},
+    middleware,
     response::Response,
     routing::{get, patch, post},
     Json, Router,
@@ -11,8 +12,9 @@ use hyper::StatusCode;
 use utoipa::{IntoParams, ToSchema};
 
 use crate::{
+    auth_guard::{self, RequestUser, permission_check},
     base_types::{BaseError, BaseResponse, DeleteResponse, StandardResponse},
-    prisma::hackathon::{self, Data, UniqueWhereParam},
+    prisma::{hackathon::{self, Data, UniqueWhereParam}, organizer, Role},
     utils::{get_app_state, AppState},
 };
 
@@ -81,7 +83,9 @@ async fn create_hackathon(
 async fn get_hackathon(
     State(app_state): State<AppState>,
     Query(params): Query<Params>,
+    Extension(organizer): Extension<RequestUser>,
 ) -> Result<Json<Vec<Data>>, StatusCode> {
+
     if params.active.is_some() {
         match app_state
             .client
@@ -198,6 +202,10 @@ pub async fn hackathon_get_router() -> Router {
     let state = get_app_state().await;
     Router::new()
         .route("/", post(create_hackathon).get(get_hackathon))
+        .route_layer(middleware::from_fn_with_state(
+            state.clone(),
+            auth_guard::require_auth,
+        ))
         .route(
             "/:id",
             get(get_hackathon_by_id).delete(delete_hackathon_by_id),
