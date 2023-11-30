@@ -10,7 +10,7 @@ members = ["prisma-cli"]
 resolver = "2"
 
 [dependencies]
-axum = { version = "0.6.20", features = ["macros"] }
+axum = { version = "0.7.1", features = ["macros"] }
 axum-extra = { version = "0.8.0", features = ["cookie"] }
 hyper = { version = "0.14.27", features = ["full"] }
 serde = { version = "1.0.188", features = ["derive"] }
