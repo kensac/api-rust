@@ -9,6 +9,6 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
-    versioning-strategy: increase
+    versioning-strategy: auto
     reviewers:
-      -"kensac"
+      - "kensac"
