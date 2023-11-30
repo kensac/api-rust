@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     prisma::{organizer, user, Role},
-    base_types::{get_app_state, AppState},
+    base_types::AppState,
 };
 
 #[derive(Deserialize, Serialize, Debug, Clone, Default)]
@@ -130,7 +130,7 @@ where T: Future<Output = bool>{
 
 // Doesn't work that's why it's private. Will try to fix later as that will reduce code duplication
 async fn _auth_router_layer() -> Router {
-    let state = get_app_state().await;
+    let state = AppState::new().await;
 
     Router::new().route_layer(middleware::from_fn_with_state(state.clone(), require_auth))
 }

@@ -18,7 +18,7 @@ use crate::{
         hackathon::{self, Data, UniqueWhereParam},
         organizer, Role,
     },
-    base_types::{get_app_state, AppState},
+    base_types::AppState,
 };
 
 #[derive(serde::Deserialize, ToSchema)]
@@ -200,7 +200,7 @@ async fn set_active_hackathon(
 }
 
 pub async fn hackathon_get_router() -> Router {
-    let state = get_app_state().await;
+    let state = AppState::new().await;
     Router::new()
         .route("/", post(create_hackathon).get(get_hackathon))
         .route_layer(middleware::from_fn_with_state(

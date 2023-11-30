@@ -10,7 +10,7 @@ use uuid::Uuid;
 
 use crate::{
     prisma::{event, scan},
-    base_types::{get_app_state, AppState},
+    base_types::AppState,
 };
 
 pub async fn get_all_scans(
@@ -120,7 +120,7 @@ pub async fn get_event_with_scans_by_id(
 }
 
 pub async fn scans_get_router() -> Router {
-    let state = get_app_state().await;
+    let state = AppState::new().await;
     Router::new()
         .route("/", get(get_all_scans))
         .route("/:event_id/:user_id", get(get_scan_by_id))
