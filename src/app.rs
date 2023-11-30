@@ -14,7 +14,7 @@ use tower_http::trace::TraceLayer;
 use utoipa::OpenApi;
 use utoipa_redoc::{Redoc, Servable};
 
-use crate::{docs, routes, utils, auth};
+use crate::{docs, routes, utils};
 
 pub async fn new_app() -> Router {
     let service_layer = new_service_layer();
@@ -26,7 +26,6 @@ pub async fn new_app() -> Router {
     let location_routes = routes::locations::location_get_router().await;
     let event_routes = routes::events::events_get_router().await;
     let scans_routes = routes::scans::scans_get_router().await;
-    let auth_routes = auth::get_auth_routes().await;
 
     Router::new()
         .route("/", get(utils::hello_world))
@@ -37,12 +36,10 @@ pub async fn new_app() -> Router {
         .nest("/locations", location_routes)
         .nest("/events", event_routes)
         .nest("/scans", scans_routes)
-        .nest("/auth", auth_routes)
         .merge(Redoc::with_url("/docs", ApiDoc::openapi()))
         .merge(service_layer)
         .layer(TraceLayer::new_for_http())
         .layer(CookieManagerLayer::new())
-        /*         .route("/test", get(server_side_auth)) */
         .fallback(get(utils::handle_404))
 }
 

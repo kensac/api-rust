@@ -1,5 +1,4 @@
 pub mod app;
-pub mod auth;
 pub mod base_types;
 pub mod database;
 pub mod docs;
@@ -30,9 +29,7 @@ async fn main() {
 
     let app = new_app().await;
     let address = SocketAddr::from(([0, 0, 0, 0], port));
+    let listener = tokio::net::TcpListener::bind(address).await.unwrap();
 
-    axum::Server::bind(&address)
-        .serve(app.into_make_service())
-        .await
-        .unwrap();
+    axum::serve(listener, app).await.unwrap();
 }

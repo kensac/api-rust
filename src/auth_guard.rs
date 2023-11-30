@@ -7,7 +7,7 @@ use axum::{
     Router,
 };
 use hyper::{HeaderMap, Request, StatusCode};
-use serde::{de, Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 
 use crate::{
     prisma::{organizer, user, Role},
@@ -31,11 +31,11 @@ pub struct FirebaseUserResult {
     users: Vec<FirebaseUserResponse>,
 }
 
-pub async fn require_auth<T>(
+pub async fn require_auth(
     State(app_state): State<AppState>,
     headers: HeaderMap,
-    mut request: Request<T>,
-    next: Next<T>,
+    mut request: Request<axum::body::Body>,
+    next: Next,
 ) -> Result<Response, StatusCode> {
     let auth_header = match headers.get("Authorization") {
         Some(header) => header.to_str().unwrap().split(" ").collect::<Vec<&str>>()[1],
@@ -52,7 +52,7 @@ pub async fn require_auth<T>(
         .await
         .unwrap();
 
-    if user_data.status() != StatusCode::OK {
+    if user_data.status() != reqwest::StatusCode::OK {
         return Err(StatusCode::UNAUTHORIZED);
     }
 
