@@ -13,12 +13,12 @@ use utoipa::{IntoParams, ToSchema};
 
 use crate::{
     auth_guard::{self, permission_check, RequestUser},
+    base_types::AppState,
     base_types::{BaseError, BaseResponse, DeleteResponse, StandardResponse},
     prisma::{
         hackathon::{self, Data, UniqueWhereParam},
         organizer, Role,
     },
-    base_types::AppState,
 };
 
 #[derive(serde::Deserialize, ToSchema)]
