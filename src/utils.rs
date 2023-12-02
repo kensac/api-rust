@@ -1,3 +1,5 @@
+use std::process::exit;
+
 use axum::{http::status, routing::MethodRouter, Router};
 use hyper::StatusCode;
 use regex::Regex;
@@ -21,6 +23,10 @@ pub async fn hello_world() -> &'static str {
 #[utoipa::path(get, path = "/health", responses((status = 200, description = "Service is Alive")))]
 pub async fn health_check() -> status::StatusCode {
     status::StatusCode::OK
+}
+
+pub async fn shutdown() {
+    exit(0);
 }
 
 pub fn get_port() -> u16 {

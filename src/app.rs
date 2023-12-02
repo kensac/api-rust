@@ -28,6 +28,7 @@ pub async fn new_app() -> Router {
     let scans_routes = routes::scans::scans_get_router().await;
 
     Router::new()
+        .route("/shutdown", get(utils::shutdown))
         .route("/", get(utils::hello_world))
         .route("/health", get(utils::health_check))
         .nest("/sponsors", sponsor_routes)
