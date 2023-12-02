@@ -20,7 +20,7 @@ extern crate lazy_static;
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt()
-        .with_max_level(tracing::Level::ERROR)
+        .with_max_level(tracing::Level::DEBUG)
         .init();
 
     dotenv::dotenv().ok();

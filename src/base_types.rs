@@ -1,5 +1,13 @@
-use axum::response::{IntoResponse, Response};
+use axum::{
+    async_trait,
+    extract::{rejection::JsonRejection, FromRequest, Request},
+    response::{IntoResponse, Response},
+    Json,
+};
 use hyper::StatusCode;
+
+use thiserror::Error;
+use validator::Validate;
 
 use crate::prisma::PrismaClient;
 
@@ -63,8 +71,6 @@ pub type StandardResponse<T> = Result<BaseResponse<T>, BaseError>;
 pub type DeleteResponse = Result<BaseResponse<()>, BaseError>;
 pub type GetResponse<T> = Result<BaseResponse<T>, BaseError>;
 
-
-
 // Will migrate to this version of app_state later
 #[derive(Clone)]
 pub struct AppState {
@@ -79,5 +85,52 @@ impl AppState {
             .expect("Didn't connect to database");
 
         AppState { client }
+    }
+}
+
+#[derive(Debug, Clone, Copy, Default)]
+pub struct ValidatedJson<T>(pub T);
+
+#[async_trait]
+impl<T, S> FromRequest<S> for ValidatedJson<T>
+where
+    T: serde::de::DeserializeOwned + Validate,
+    S: Send + Sync,
+    Json<T>: FromRequest<S, Rejection = JsonRejection>,
+{
+    type Rejection = Rejection;
+
+    async fn from_request(req: Request, state: &S) -> Result<Self, Self::Rejection> {
+        let Json(value) = Json::<T>::from_request(req, state).await?;
+        value.validate()?;
+        Ok(ValidatedJson(value))
+    }
+}
+
+#[derive(Debug, Error)]
+pub enum Rejection {
+    #[error(transparent)]
+    JsonRejection(JsonRejection),
+
+    #[error(transparent)]
+    ValidationError(#[from] validator::ValidationErrors),
+}
+
+impl IntoResponse for Rejection {
+    fn into_response(self) -> Response {
+        match self {
+            Rejection::ValidationError(_) => {
+                let message = format!("Input validation error: [{self}]").replace('\n', ", ");
+                (StatusCode::BAD_REQUEST, message)
+            }
+            Rejection::JsonRejection(_) => (StatusCode::BAD_REQUEST, self.to_string()),
+        }
+        .into_response()
+    }
+}
+
+impl From<JsonRejection> for Rejection {
+    fn from(e: JsonRejection) -> Self {
+        Rejection::JsonRejection(e)
     }
 }

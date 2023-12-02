@@ -14,7 +14,7 @@ use crate::{
         hackathon::UniqueWhereParam,
         sponsor::{self, Data},
     },
-    utils::{get_app_state, AppState},
+    utils::{get_app_state, AppState}, base_types::ValidatedJson,
 };
 
 #[derive(Serialize, Deserialize, ToSchema, Validate)]
@@ -33,15 +33,8 @@ pub struct CreateSponsorEntity {
 #[axum::debug_handler]
 pub async fn create_sponsor(
     State(state): State<AppState>,
-    Json(body): Json<CreateSponsorEntity>,
+    ValidatedJson(body): ValidatedJson<CreateSponsorEntity>,
 ) -> Result<String, (StatusCode, String)> {
-    match body.validate() {
-        Ok(_) => {}
-        Err(err) => {
-            println!("{}", err);
-            return Err((StatusCode::BAD_REQUEST, err.to_string()));
-        }
-    }
 
     match state
         .client
