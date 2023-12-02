@@ -30,8 +30,6 @@ pub fn get_port() -> u16 {
         .unwrap_or(3000)
 }
 
-
-
 lazy_static! {
     pub static ref UUID_VALIDATOR: Regex = Regex::new(r"[a-z]{2}$").unwrap();
 }

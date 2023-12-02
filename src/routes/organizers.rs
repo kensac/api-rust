@@ -72,5 +72,3 @@ async fn get_organizer_by_id(
         Err(_) => Err(StatusCode::BAD_REQUEST),
     }
 }
-
-

@@ -9,8 +9,8 @@ use utoipa::ToSchema;
 use uuid::Uuid;
 
 use crate::{
-    prisma::{event, scan},
     base_types::AppState,
+    prisma::{event, scan},
 };
 
 pub async fn get_all_scans(

@@ -9,8 +9,8 @@ use serde::Deserialize;
 use utoipa::ToSchema;
 
 use crate::{
-    prisma::{self, location::Data},
     base_types::AppState,
+    prisma::{self, location::Data},
 };
 
 #[derive(Deserialize, ToSchema)]

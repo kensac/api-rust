@@ -10,11 +10,11 @@ use uuid::Uuid;
 use validator::Validate;
 
 use crate::{
+    base_types::AppState,
     prisma::{
         hackathon::UniqueWhereParam,
         sponsor::{self, Data},
     },
-    base_types::AppState,
 };
 
 #[derive(Serialize, Deserialize, ToSchema, Validate)]

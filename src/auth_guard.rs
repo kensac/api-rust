@@ -10,8 +10,8 @@ use hyper::{HeaderMap, Request, StatusCode};
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    prisma::{organizer, user, Role},
     base_types::AppState,
+    prisma::{organizer, user, Role},
 };
 
 #[derive(Deserialize, Serialize, Debug, Clone, Default)]
@@ -38,7 +38,7 @@ pub async fn require_auth(
     next: Next,
 ) -> Result<Response, StatusCode> {
     let auth_header = match headers.get("Authorization") {
-        Some(header) => header.to_str().unwrap().split(" ").collect::<Vec<&str>>()[1],
+        Some(header) => header.to_str().unwrap().split(' ').collect::<Vec<&str>>()[1],
         None => return Err(StatusCode::UNAUTHORIZED),
     };
 
@@ -105,8 +105,8 @@ pub fn permission_check(
     }
 }
 
-/* Async version of the code is available in case you need to do async checks. 
-Not sure if it works. I think I added the right traits to make it work but we'll find 
+/* Async version of the code is available in case you need to do async checks.
+Not sure if it works. I think I added the right traits to make it work but we'll find
 out when we try to use it.
  */
 pub async fn permission_check_async<T>(
@@ -114,7 +114,9 @@ pub async fn permission_check_async<T>(
     organizer_roles: Vec<Role>,
     user_additional_check: fn(user::Data) -> T,
 ) -> bool
-where T: Future<Output = bool>{
+where
+    T: Future<Output = bool>,
+{
     match user {
         RequestUser::Organizer(organizer) => {
             for role in organizer_roles {

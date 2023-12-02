@@ -10,8 +10,8 @@ use utoipa::ToSchema;
 use uuid::Uuid;
 
 use crate::{
-    prisma::{self, event, hackathon, location, EventType},
     base_types::AppState,
+    prisma::{self, event, hackathon, location, EventType},
 };
 
 #[derive(serde::Deserialize, ToSchema)]

@@ -63,8 +63,6 @@ pub type StandardResponse<T> = Result<BaseResponse<T>, BaseError>;
 pub type DeleteResponse = Result<BaseResponse<()>, BaseError>;
 pub type GetResponse<T> = Result<BaseResponse<T>, BaseError>;
 
-
-
 #[derive(Clone)]
 pub struct AppState {
     pub client: PrismaClient,

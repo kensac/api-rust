@@ -10,8 +10,8 @@ use utoipa::ToSchema;
 use uuid::Uuid;
 
 use crate::{
-    prisma::{self, extra_credit_class::Data},
     base_types::AppState,
+    prisma::{self, extra_credit_class::Data},
 };
 
 #[derive(Serialize, Deserialize, ToSchema)]
