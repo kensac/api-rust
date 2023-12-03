@@ -3,6 +3,7 @@ use axum::{
     routing::post,
     Router,
 };
+use axum_valid::Valid;
 use hyper::StatusCode;
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
@@ -33,15 +34,8 @@ pub struct CreateSponsorEntity {
 #[axum::debug_handler]
 pub async fn create_sponsor(
     State(state): State<AppState>,
-    Json(body): Json<CreateSponsorEntity>,
+    Valid(Json(body)): Valid<Json<CreateSponsorEntity>>,
 ) -> Result<String, (StatusCode, String)> {
-    match body.validate() {
-        Ok(_) => {}
-        Err(err) => {
-            println!("{}", err);
-            return Err((StatusCode::BAD_REQUEST, err.to_string()));
-        }
-    }
 
     match state
         .client

@@ -14,8 +14,7 @@ impl IntoResponse for BaseError {
     }
 }
 impl BaseError {
-    // get rid of exposing this as public function later
-    pub fn base_error(status_code: StatusCode, message: String) -> BaseError {
+    pub fn new(status_code: StatusCode, message: String) -> BaseError {
         BaseError {
             status_code,
             message,
@@ -59,9 +58,22 @@ impl BaseResponse<()> {
     }
 }
 
-pub type StandardResponse<T> = Result<BaseResponse<T>, BaseError>;
-pub type DeleteResponse = Result<BaseResponse<()>, BaseError>;
-pub type GetResponse<T> = Result<BaseResponse<T>, BaseError>;
+/* impl<T> From<(StatusCode, T)> for BaseResponse<T>
+where
+    T: IntoResponse,
+{
+    fn from((status_code, data): (StatusCode, T)) -> BaseResponse<T> {
+        BaseResponse { status_code, data }
+    }
+} */
+
+// Still unsure about which method to use for the responses
+pub type StandardResponse<T> = Result<(StatusCode, T), (StatusCode, String)>;
+pub type GetResponse<T> = Result<(StatusCode, T), (StatusCode, String)>;
+pub type CreateResponse = Result<(StatusCode, ()), (StatusCode, String)>;
+pub type DeleteResponse = Result<(StatusCode, ()), (StatusCode, String)>;
+
+pub type UpdateResponse<T> = Result<BaseResponse<T>, BaseError>;
 
 #[derive(Clone)]
 pub struct AppState {

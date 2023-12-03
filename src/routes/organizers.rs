@@ -1,14 +1,14 @@
 use axum::{
     extract::{Path, State},
     response::Response,
-    Json,
+    Json, Router, routing::{post, get, delete},
 };
 use hyper::StatusCode;
 use serde::Deserialize;
 use utoipa::ToSchema;
 
 use crate::{
-    base_types::{AppState, StandardResponse},
+    base_types::{AppState, CreateResponse, DeleteResponse, GetResponse, StandardResponse},
     prisma::{organizer::Data, Role},
 };
 
@@ -25,7 +25,7 @@ struct CreateOrganizerEntity {
 async fn create_organizer(
     State(app_state): State<AppState>,
     Json(body): Json<CreateOrganizerEntity>,
-) -> Result<Response<String>, StatusCode> {
+) -> CreateResponse {
     match app_state
         .client
         .organizer()
@@ -40,24 +40,22 @@ async fn create_organizer(
         .exec()
         .await
     {
-        Ok(_) => Ok(Response::new("Created Organizer successfully".to_string())),
-        Err(_) => Err(StatusCode::BAD_REQUEST),
+        Ok(_organizer) => Ok((StatusCode::CREATED, ())),
+        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
     }
 }
 
-async fn get_all_organizers(
-    State(app_state): State<AppState>,
-) -> Result<Json<Vec<Data>>, StatusCode> {
+async fn get_all_organizers(State(app_state): State<AppState>) -> GetResponse<Json<Vec<Data>>> {
     match app_state.client.organizer().find_many(vec![]).exec().await {
-        Ok(organizers) => Ok(Json(organizers)),
-        Err(_) => Err(StatusCode::BAD_REQUEST),
+        Ok(organizers) => Ok((StatusCode::OK, Json(organizers))),
+        Err(e) => Err((StatusCode::NOT_FOUND, e.to_string())),
     }
 }
 
 async fn get_organizer_by_id(
     State(app_state): State<AppState>,
     Path(id): Path<String>,
-) -> Result<Json<Data>, StatusCode> {
+) -> GetResponse<Json<Data>> {
     match app_state
         .client
         .organizer()
@@ -66,9 +64,36 @@ async fn get_organizer_by_id(
         .await
     {
         Ok(organizer) => match organizer {
-            Some(organizer) => Ok(Json(organizer)),
-            None => Err(StatusCode::NOT_FOUND),
+            Some(organizer) => Ok((StatusCode::OK, Json(organizer))),
+            None => Err((StatusCode::NOT_FOUND, "No organizer found".to_string())),
         },
-        Err(_) => Err(StatusCode::BAD_REQUEST),
+        Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
     }
+}
+
+async fn delete_organizer_by_id(
+    State(app_state): State<AppState>,
+    Path(id): Path<String>,
+) -> DeleteResponse {
+    match app_state
+        .client
+        .organizer()
+        .delete(crate::prisma::organizer::UniqueWhereParam::IdEquals(id))
+        .exec()
+        .await
+    {
+        Ok(_) => Ok((StatusCode::NO_CONTENT, ())),
+        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
+    }
+}
+
+pub async fn routes() -> Router {
+    let state = AppState::new().await;
+
+    axum::Router::new()
+        .route("/", post(create_organizer))
+        .route("/", get(get_all_organizers))
+        .route("/:id", get(get_organizer_by_id))
+        .route("/:id", delete(delete_organizer_by_id))
+        .with_state(state)
 }

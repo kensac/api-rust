@@ -3,7 +3,6 @@ use std::vec;
 use axum::{
     extract::{Extension, Path, Query, State},
     middleware,
-    response::Response,
     routing::{get, patch, post},
     Json, Router,
 };
@@ -12,13 +11,12 @@ use hyper::StatusCode;
 use utoipa::{IntoParams, ToSchema};
 
 use crate::{
-    auth_guard::{self, permission_check, RequestUser},
+    auth_guard::{self, RequestUser},
     base_types::AppState,
-    base_types::{BaseError, BaseResponse, DeleteResponse, StandardResponse},
-    prisma::{
-        hackathon::{self, Data, UniqueWhereParam},
-        organizer, Role,
+    base_types::{
+        CreateResponse, DeleteResponse, GetResponse,
     },
+    prisma::hackathon::{self, Data, UniqueWhereParam},
 };
 
 #[derive(serde::Deserialize, ToSchema)]
@@ -66,7 +64,7 @@ struct Params {
 async fn create_hackathon(
     State(app_state): State<AppState>,
     Json(body): Json<CreateHackathonEntity>,
-) -> Result<Response<String>, StatusCode> {
+) -> CreateResponse {
     //add event that also serves as check-in for hackathon
 
     match app_state
@@ -76,8 +74,8 @@ async fn create_hackathon(
         .exec()
         .await
     {
-        Ok(_) => Ok(Response::new("Created hackathon successfully".to_string())),
-        Err(_) => Err(StatusCode::BAD_REQUEST),
+        Ok(_hackathon) => Ok((StatusCode::OK, ())),
+        Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
     }
 }
 
@@ -87,7 +85,7 @@ async fn get_hackathon(
     State(app_state): State<AppState>,
     Query(params): Query<Params>,
     Extension(request_user): Extension<RequestUser>,
-) -> Result<Json<Vec<Data>>, StatusCode> {
+) -> GetResponse<Json<Vec<Data>>> {
     if params.active.is_some() {
         match app_state
             .client
@@ -96,13 +94,13 @@ async fn get_hackathon(
             .exec()
             .await
         {
-            Ok(hackathons) => Ok(Json(hackathons)),
-            Err(_) => Err(StatusCode::NOT_FOUND),
+            Ok(hackathons) => Ok((StatusCode::OK, Json(hackathons))),
+            Err(_) => Err((StatusCode::NOT_FOUND, "No hackathon found".to_string())),
         }
     } else {
         match app_state.client.hackathon().find_many(vec![]).exec().await {
-            Ok(hackathons) => Ok(Json(hackathons)),
-            Err(_) => Err(StatusCode::NOT_FOUND),
+            Ok(hackathons) => Ok((StatusCode::OK, Json(hackathons))),
+            Err(_) => Err((StatusCode::NOT_FOUND, "No hackathon found".to_string())),
         }
     }
 }
@@ -120,7 +118,7 @@ async fn get_hackathon(
 async fn get_hackathon_by_id(
     State(app_state): State<AppState>,
     Path(id): Path<String>,
-) -> StandardResponse<Json<Vec<Data>>> {
+) -> GetResponse<Json<Data>> {
     match app_state
         .client
         .hackathon()
@@ -129,19 +127,11 @@ async fn get_hackathon_by_id(
         .await
     {
         Ok(hackathons) => match hackathons {
-            Some(hackathon) => Ok(BaseResponse::get_response(
-                StatusCode::OK,
-                Json(vec![hackathon]),
-            )),
-            None => Err(BaseError::base_error(
-                StatusCode::NOT_FOUND,
-                "No hackathon found".to_string(),
-            )),
+            Some(hackathon) => Ok((StatusCode::OK, Json(hackathon))),
+            None => Err((StatusCode::NOT_FOUND, "No hackathon found".to_string())),
         },
-        Err(e) => Err(BaseError::base_error(
-            StatusCode::INTERNAL_SERVER_ERROR,
-            e.to_string(),
-        )),
+        Err(e) =>
+            Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
     }
 }
 
@@ -162,11 +152,8 @@ async fn delete_hackathon_by_id(
         .exec()
         .await
     {
-        Ok(_) => Ok(BaseResponse::delete_response(StatusCode::NO_CONTENT)),
-        Err(e) => Err(BaseError::base_error(
-            StatusCode::INTERNAL_SERVER_ERROR,
-            e.to_string(),
-        )),
+        Ok(_) => Ok((StatusCode::NO_CONTENT, ())),
+        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
     }
 }
 
