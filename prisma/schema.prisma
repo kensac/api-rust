@@ -172,6 +172,7 @@ model User {
   Registration          Registration[]
   Scan                  Scan[]
   gcpId                 String                  @unique
+  role                       Role     @default(NONE)
 }
 
 model Score {
