@@ -49,7 +49,7 @@ impl Modify for SecurityAddon {
                 SecurityScheme::Http(
                     HttpBuilder::new()
                         .scheme(HttpAuthScheme::Bearer)
-                        .bearer_format("JWT")
+                        .description(Some("GCP IdToken of the user"))
                         .build(),
                 ),
             );

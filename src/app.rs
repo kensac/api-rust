@@ -1,24 +1,26 @@
 use std::time::Duration;
 
 use axum::error_handling::HandleErrorLayer;
+use axum::http::HeaderValue;
 use axum::routing::get;
 use axum::{BoxError, Router};
 use docs::ApiDoc;
-use hyper::StatusCode;
+use hyper::{Method, StatusCode};
 use tower::buffer::BufferLayer;
 use tower::limit::RateLimitLayer;
 use tower::ServiceBuilder;
 use tower_cookies::CookieManagerLayer;
+use tower_http::cors::CorsLayer;
 use tower_http::trace::TraceLayer;
 
 use utoipa::OpenApi;
 use utoipa_redoc::{Redoc, Servable};
 
-use crate::prisma::organizer;
 use crate::{docs, routes, utils};
 
 pub async fn new_app() -> Router {
     let service_layer = new_service_layer();
+    let cors_layer = new_cors_layer();
 
     let sponsor_routes = routes::sponsors::sponsor_get_router().await;
     let hackathon_routes = routes::hackathons::hackathon_get_router().await;
@@ -42,6 +44,7 @@ pub async fn new_app() -> Router {
         .nest("/organizers", organizer_routes)
         .merge(Redoc::with_url("/docs", ApiDoc::openapi()))
         .merge(service_layer)
+        .merge(cors_layer)
         .layer(TraceLayer::new_for_http())
         .layer(CookieManagerLayer::new())
         .fallback(get(utils::handle_404))
@@ -58,5 +61,14 @@ fn new_service_layer() -> Router {
             }))
             .layer(BufferLayer::new(1024))
             .layer(RateLimitLayer::new(100, Duration::from_secs(5))),
+    )
+}
+
+fn new_cors_layer() -> Router {
+    Router::new().layer(
+        CorsLayer::new()
+            .allow_methods([Method::GET, Method::POST, Method::DELETE])
+            .allow_origin("http://localhost:3000".parse::<HeaderValue>().unwrap())
+            .allow_credentials(true),
     )
 }

@@ -9968,36 +9968,36 @@ pub mod registration {
             }
         }
     }
-    pub mod coding_exoerience {
+    pub mod coding_experience {
         use super::super::*;
         use super::_prisma::*;
         use super::{
             OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
         };
-        pub const NAME: &str = "codingExoerience";
+        pub const NAME: &str = "codingExperience";
         pub struct Set(pub Option<String>);
         impl From<Set> for SetParam {
             fn from(Set(v): Set) -> Self {
-                Self::SetCodingExoerience(v)
+                Self::SetCodingExperience(v)
             }
         }
         impl From<Set> for UncheckedSetParam {
             fn from(Set(v): Set) -> Self {
-                Self::CodingExoerience(v)
+                Self::CodingExperience(v)
             }
         }
         pub fn set<T: From<Set>>(value: Option<String>) -> T {
             Set(value).into()
         }
         pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
-            OrderByParam::CodingExoerience(direction)
+            OrderByParam::CodingExperience(direction)
         }
         pub fn equals(value: Option<String>) -> WhereParam {
-            WhereParam::CodingExoerience(_prisma::read_filters::StringNullableFilter::Equals(value))
+            WhereParam::CodingExperience(_prisma::read_filters::StringNullableFilter::Equals(value))
         }
         ::prisma_client_rust::scalar_where_param_fns!(
             _prisma::read_filters::StringNullableFilter,
-            CodingExoerience,
+            CodingExperience,
             {
                 fn in_vec(_: Vec<String>) -> InVec;
                 fn not_in_vec(_: Vec<String>) -> NotInVec;
@@ -10014,7 +10014,7 @@ pub mod registration {
         pub struct Include;
         impl Into<super::IncludeParam> for Include {
             fn into(self) -> super::IncludeParam {
-                super::IncludeParam::CodingExoerience(self)
+                super::IncludeParam::CodingExperience(self)
             }
         }
         impl Include {
@@ -10025,7 +10025,207 @@ pub mod registration {
         pub struct Select;
         impl Into<super::SelectParam> for Select {
             fn into(self) -> super::SelectParam {
-                super::SelectParam::CodingExoerience(self)
+                super::SelectParam::CodingExperience(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod shirt_size {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "shirtSize";
+        pub struct Set(pub String);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetShirtSize(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::ShirtSize(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: String) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::ShirtSize(direction)
+        }
+        pub fn equals(value: String) -> WhereParam {
+            WhereParam::ShirtSize(_prisma::read_filters::StringFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::StringFilter,
+            ShirtSize,
+            {
+                fn in_vec(_: Vec<String>) -> InVec;
+                fn not_in_vec(_: Vec<String>) -> NotInVec;
+                fn lt(_: String) -> Lt;
+                fn lte(_: String) -> Lte;
+                fn gt(_: String) -> Gt;
+                fn gte(_: String) -> Gte;
+                fn contains(_: String) -> Contains;
+                fn starts_with(_: String) -> StartsWith;
+                fn ends_with(_: String) -> EndsWith;
+                fn not(_: String) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::ShirtSize(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::ShirtSize(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod dietary_restrictions {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "dietaryRestrictions";
+        pub struct Set(pub Option<String>);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetDietaryRestrictions(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::DietaryRestrictions(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: Option<String>) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::DietaryRestrictions(direction)
+        }
+        pub fn equals(value: Option<String>) -> WhereParam {
+            WhereParam::DietaryRestrictions(_prisma::read_filters::StringNullableFilter::Equals(
+                value,
+            ))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::StringNullableFilter,
+            DietaryRestrictions,
+            {
+                fn in_vec(_: Vec<String>) -> InVec;
+                fn not_in_vec(_: Vec<String>) -> NotInVec;
+                fn lt(_: String) -> Lt;
+                fn lte(_: String) -> Lte;
+                fn gt(_: String) -> Gt;
+                fn gte(_: String) -> Gte;
+                fn contains(_: String) -> Contains;
+                fn starts_with(_: String) -> StartsWith;
+                fn ends_with(_: String) -> EndsWith;
+                fn not(_: Option<String>) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::DietaryRestrictions(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::DietaryRestrictions(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod allergies {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "allergies";
+        pub struct Set(pub Option<String>);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetAllergies(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::Allergies(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: Option<String>) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::Allergies(direction)
+        }
+        pub fn equals(value: Option<String>) -> WhereParam {
+            WhereParam::Allergies(_prisma::read_filters::StringNullableFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::StringNullableFilter,
+            Allergies,
+            {
+                fn in_vec(_: Vec<String>) -> InVec;
+                fn not_in_vec(_: Vec<String>) -> NotInVec;
+                fn lt(_: String) -> Lt;
+                fn lte(_: String) -> Lte;
+                fn gt(_: String) -> Gt;
+                fn gte(_: String) -> Gte;
+                fn contains(_: String) -> Contains;
+                fn starts_with(_: String) -> StartsWith;
+                fn ends_with(_: String) -> EndsWith;
+                fn not(_: Option<String>) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::Allergies(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::Allergies(self)
             }
         }
         impl Select {
@@ -10255,6 +10455,204 @@ pub mod registration {
         impl Into<super::SelectParam> for Select {
             fn into(self) -> super::SelectParam {
                 super::SelectParam::Reference(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod resume {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "resume";
+        pub struct Set(pub Option<String>);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetResume(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::Resume(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: Option<String>) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::Resume(direction)
+        }
+        pub fn equals(value: Option<String>) -> WhereParam {
+            WhereParam::Resume(_prisma::read_filters::StringNullableFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::StringNullableFilter,
+            Resume,
+            {
+                fn in_vec(_: Vec<String>) -> InVec;
+                fn not_in_vec(_: Vec<String>) -> NotInVec;
+                fn lt(_: String) -> Lt;
+                fn lte(_: String) -> Lte;
+                fn gt(_: String) -> Gt;
+                fn gte(_: String) -> Gte;
+                fn contains(_: String) -> Contains;
+                fn starts_with(_: String) -> StartsWith;
+                fn ends_with(_: String) -> EndsWith;
+                fn not(_: Option<String>) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::Resume(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::Resume(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod university {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "university";
+        pub struct Set(pub String);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetUniversity(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::University(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: String) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::University(direction)
+        }
+        pub fn equals(value: String) -> WhereParam {
+            WhereParam::University(_prisma::read_filters::StringFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::StringFilter,
+            University,
+            {
+                fn in_vec(_: Vec<String>) -> InVec;
+                fn not_in_vec(_: Vec<String>) -> NotInVec;
+                fn lt(_: String) -> Lt;
+                fn lte(_: String) -> Lte;
+                fn gt(_: String) -> Gt;
+                fn gte(_: String) -> Gte;
+                fn contains(_: String) -> Contains;
+                fn starts_with(_: String) -> StartsWith;
+                fn ends_with(_: String) -> EndsWith;
+                fn not(_: String) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::University(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::University(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod major {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "major";
+        pub struct Set(pub String);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetMajor(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::Major(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: String) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::Major(direction)
+        }
+        pub fn equals(value: String) -> WhereParam {
+            WhereParam::Major(_prisma::read_filters::StringFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::StringFilter,
+            Major,
+            {
+                fn in_vec(_: Vec<String>) -> InVec;
+                fn not_in_vec(_: Vec<String>) -> NotInVec;
+                fn lt(_: String) -> Lt;
+                fn lte(_: String) -> Lte;
+                fn gt(_: String) -> Gt;
+                fn gte(_: String) -> Gte;
+                fn contains(_: String) -> Contains;
+                fn starts_with(_: String) -> StartsWith;
+                fn ends_with(_: String) -> EndsWith;
+                fn not(_: String) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::Major(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::Major(self)
             }
         }
         impl Select {
@@ -11023,9 +11421,12 @@ pub mod registration {
         first_hackathon: bool,
         academic_year: String,
         educational_institution_type: String,
+        shirt_size: String,
         eighteen_before_event: bool,
         mlh_coc: bool,
         mlh_dcp: bool,
+        university: String,
+        major: String,
         veteran: bool,
         hackathon: super::hackathon::UniqueWhereParam,
         time: ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -11037,9 +11438,12 @@ pub mod registration {
         bool,
         String,
         String,
+        String,
         bool,
         bool,
         bool,
+        String,
+        String,
         bool,
         super::hackathon::UniqueWhereParam,
         ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -11052,9 +11456,12 @@ pub mod registration {
             first_hackathon,
             academic_year,
             educational_institution_type,
+            shirt_size,
             eighteen_before_event,
             mlh_coc,
             mlh_dcp,
+            university,
+            major,
             veteran,
             hackathon,
             time,
@@ -11068,9 +11475,12 @@ pub mod registration {
         first_hackathon: bool,
         academic_year: String,
         educational_institution_type: String,
+        shirt_size: String,
         eighteen_before_event: bool,
         mlh_coc: bool,
         mlh_dcp: bool,
+        university: String,
+        major: String,
         veteran: bool,
         hackathon_id: String,
         time: ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -11082,9 +11492,12 @@ pub mod registration {
         bool,
         String,
         String,
+        String,
         bool,
         bool,
         bool,
+        String,
+        String,
         bool,
         String,
         ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -11097,9 +11510,12 @@ pub mod registration {
             first_hackathon,
             academic_year,
             educational_institution_type,
+            shirt_size,
             eighteen_before_event,
             mlh_coc,
             mlh_dcp,
+            university,
+            major,
             veteran,
             hackathon_id,
             time,
@@ -11107,7 +11523,7 @@ pub mod registration {
         )
     }
     #[macro_export]
-    macro_rules ! _select_registration { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: registration :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: registration :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: registration :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: registration :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: registration :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: registration :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , user , user_id , travel_reimbursement , driving , first_hackathon , academic_year , educational_institution_type , coding_exoerience , eighteen_before_event , mlh_coc , mlh_dcp , reference , project_id , project , expectations , share_address_mlh , share_address_sponsors , share_email_mlh , veteran , hackathon , hackathon_id , time } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: registration :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: registration :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: registration :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: registration :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "user" , "userId" , "travelReimbursement" , "driving" , "firstHackathon" , "academicYear" , "educationalInstitutionType" , "codingExoerience" , "eighteenBeforeEvent" , "mlhCoc" , "mlhDcp" , "reference" , "projectId" , "project" , "expectations" , "shareAddressMlh" , "shareAddressSponsors" , "shareEmailMlh" , "veteran" , "hackathon" , "hackathonId" , "time"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: registration :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { String } ; (@ field_type ; user : $ selection_mode : ident { $ ($ selections : tt) + }) => { user :: Data } ; (@ field_type ; user) => { crate :: prisma :: user :: Data } ; (@ field_type ; user_id) => { String } ; (@ field_type ; travel_reimbursement) => { bool } ; (@ field_type ; driving) => { bool } ; (@ field_type ; first_hackathon) => { bool } ; (@ field_type ; academic_year) => { String } ; (@ field_type ; educational_institution_type) => { String } ; (@ field_type ; coding_exoerience) => { Option < String > } ; (@ field_type ; eighteen_before_event) => { bool } ; (@ field_type ; mlh_coc) => { bool } ; (@ field_type ; mlh_dcp) => { bool } ; (@ field_type ; reference) => { Option < String > } ; (@ field_type ; project_id) => { Option < String > } ; (@ field_type ; project : $ selection_mode : ident { $ ($ selections : tt) + }) => { Option < project :: Data > } ; (@ field_type ; project) => { Option < crate :: prisma :: project :: Data > } ; (@ field_type ; expectations) => { Option < String > } ; (@ field_type ; share_address_mlh) => { Option < bool > } ; (@ field_type ; share_address_sponsors) => { Option < bool > } ; (@ field_type ; share_email_mlh) => { Option < bool > } ; (@ field_type ; veteran) => { bool } ; (@ field_type ; hackathon : $ selection_mode : ident { $ ($ selections : tt) + }) => { hackathon :: Data } ; (@ field_type ; hackathon) => { crate :: prisma :: hackathon :: Data } ; (@ field_type ; hackathon_id) => { String } ; (@ field_type ; time) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "Registration" , available relations are "id, user, user_id, travel_reimbursement, driving, first_hackathon, academic_year, educational_institution_type, coding_exoerience, eighteen_before_event, mlh_coc, mlh_dcp, reference, project_id, project, expectations, share_address_mlh, share_address_sponsors, share_email_mlh, veteran, hackathon, hackathon_id, time")) } ; (@ field_module ; user : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: user :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; project : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: project :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; hackathon : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: hackathon :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: id :: Select) } ; (@ selection_field_to_selection_param ; user $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: user :: Select :: $ selection_mode (crate :: prisma :: user :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; user $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: user :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; user_id) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: user_id :: Select) } ; (@ selection_field_to_selection_param ; travel_reimbursement) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: travel_reimbursement :: Select) } ; (@ selection_field_to_selection_param ; driving) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: driving :: Select) } ; (@ selection_field_to_selection_param ; first_hackathon) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: first_hackathon :: Select) } ; (@ selection_field_to_selection_param ; academic_year) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: academic_year :: Select) } ; (@ selection_field_to_selection_param ; educational_institution_type) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: educational_institution_type :: Select) } ; (@ selection_field_to_selection_param ; coding_exoerience) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: coding_exoerience :: Select) } ; (@ selection_field_to_selection_param ; eighteen_before_event) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: eighteen_before_event :: Select) } ; (@ selection_field_to_selection_param ; mlh_coc) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: mlh_coc :: Select) } ; (@ selection_field_to_selection_param ; mlh_dcp) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: mlh_dcp :: Select) } ; (@ selection_field_to_selection_param ; reference) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: reference :: Select) } ; (@ selection_field_to_selection_param ; project_id) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: project_id :: Select) } ; (@ selection_field_to_selection_param ; project $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: project :: Select :: $ selection_mode (crate :: prisma :: project :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; project $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: project :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; expectations) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: expectations :: Select) } ; (@ selection_field_to_selection_param ; share_address_mlh) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: share_address_mlh :: Select) } ; (@ selection_field_to_selection_param ; share_address_sponsors) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: share_address_sponsors :: Select) } ; (@ selection_field_to_selection_param ; share_email_mlh) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: share_email_mlh :: Select) } ; (@ selection_field_to_selection_param ; veteran) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: veteran :: Select) } ; (@ selection_field_to_selection_param ; hackathon $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: hackathon :: Select :: $ selection_mode (crate :: prisma :: hackathon :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; hackathon $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: hackathon :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; hackathon_id) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: hackathon_id :: Select) } ; (@ selection_field_to_selection_param ; time) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: time :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: registration :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; user) => { "user" } ; (@ field_serde_name ; user_id) => { "userId" } ; (@ field_serde_name ; travel_reimbursement) => { "travelReimbursement" } ; (@ field_serde_name ; driving) => { "driving" } ; (@ field_serde_name ; first_hackathon) => { "firstHackathon" } ; (@ field_serde_name ; academic_year) => { "academicYear" } ; (@ field_serde_name ; educational_institution_type) => { "educationalInstitutionType" } ; (@ field_serde_name ; coding_exoerience) => { "codingExoerience" } ; (@ field_serde_name ; eighteen_before_event) => { "eighteenBeforeEvent" } ; (@ field_serde_name ; mlh_coc) => { "mlhCoc" } ; (@ field_serde_name ; mlh_dcp) => { "mlhDcp" } ; (@ field_serde_name ; reference) => { "reference" } ; (@ field_serde_name ; project_id) => { "projectId" } ; (@ field_serde_name ; project) => { "project" } ; (@ field_serde_name ; expectations) => { "expectations" } ; (@ field_serde_name ; share_address_mlh) => { "shareAddressMlh" } ; (@ field_serde_name ; share_address_sponsors) => { "shareAddressSponsors" } ; (@ field_serde_name ; share_email_mlh) => { "shareEmailMlh" } ; (@ field_serde_name ; veteran) => { "veteran" } ; (@ field_serde_name ; hackathon) => { "hackathon" } ; (@ field_serde_name ; hackathon_id) => { "hackathonId" } ; (@ field_serde_name ; time) => { "time" } ; }
+    macro_rules ! _select_registration { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: registration :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: registration :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: registration :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: registration :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: registration :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: registration :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , user , user_id , travel_reimbursement , driving , first_hackathon , academic_year , educational_institution_type , coding_experience , shirt_size , dietary_restrictions , allergies , eighteen_before_event , mlh_coc , mlh_dcp , reference , resume , university , major , project_id , project , expectations , share_address_mlh , share_address_sponsors , share_email_mlh , veteran , hackathon , hackathon_id , time } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: registration :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: registration :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: registration :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: registration :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "user" , "userId" , "travelReimbursement" , "driving" , "firstHackathon" , "academicYear" , "educationalInstitutionType" , "codingExperience" , "shirtSize" , "dietaryRestrictions" , "allergies" , "eighteenBeforeEvent" , "mlhCoc" , "mlhDcp" , "reference" , "resume" , "university" , "major" , "projectId" , "project" , "expectations" , "shareAddressMlh" , "shareAddressSponsors" , "shareEmailMlh" , "veteran" , "hackathon" , "hackathonId" , "time"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: registration :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { String } ; (@ field_type ; user : $ selection_mode : ident { $ ($ selections : tt) + }) => { user :: Data } ; (@ field_type ; user) => { crate :: prisma :: user :: Data } ; (@ field_type ; user_id) => { String } ; (@ field_type ; travel_reimbursement) => { bool } ; (@ field_type ; driving) => { bool } ; (@ field_type ; first_hackathon) => { bool } ; (@ field_type ; academic_year) => { String } ; (@ field_type ; educational_institution_type) => { String } ; (@ field_type ; coding_experience) => { Option < String > } ; (@ field_type ; shirt_size) => { String } ; (@ field_type ; dietary_restrictions) => { Option < String > } ; (@ field_type ; allergies) => { Option < String > } ; (@ field_type ; eighteen_before_event) => { bool } ; (@ field_type ; mlh_coc) => { bool } ; (@ field_type ; mlh_dcp) => { bool } ; (@ field_type ; reference) => { Option < String > } ; (@ field_type ; resume) => { Option < String > } ; (@ field_type ; university) => { String } ; (@ field_type ; major) => { String } ; (@ field_type ; project_id) => { Option < String > } ; (@ field_type ; project : $ selection_mode : ident { $ ($ selections : tt) + }) => { Option < project :: Data > } ; (@ field_type ; project) => { Option < crate :: prisma :: project :: Data > } ; (@ field_type ; expectations) => { Option < String > } ; (@ field_type ; share_address_mlh) => { Option < bool > } ; (@ field_type ; share_address_sponsors) => { Option < bool > } ; (@ field_type ; share_email_mlh) => { Option < bool > } ; (@ field_type ; veteran) => { bool } ; (@ field_type ; hackathon : $ selection_mode : ident { $ ($ selections : tt) + }) => { hackathon :: Data } ; (@ field_type ; hackathon) => { crate :: prisma :: hackathon :: Data } ; (@ field_type ; hackathon_id) => { String } ; (@ field_type ; time) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "Registration" , available relations are "id, user, user_id, travel_reimbursement, driving, first_hackathon, academic_year, educational_institution_type, coding_experience, shirt_size, dietary_restrictions, allergies, eighteen_before_event, mlh_coc, mlh_dcp, reference, resume, university, major, project_id, project, expectations, share_address_mlh, share_address_sponsors, share_email_mlh, veteran, hackathon, hackathon_id, time")) } ; (@ field_module ; user : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: user :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; project : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: project :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; hackathon : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: hackathon :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: id :: Select) } ; (@ selection_field_to_selection_param ; user $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: user :: Select :: $ selection_mode (crate :: prisma :: user :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; user $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: user :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; user_id) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: user_id :: Select) } ; (@ selection_field_to_selection_param ; travel_reimbursement) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: travel_reimbursement :: Select) } ; (@ selection_field_to_selection_param ; driving) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: driving :: Select) } ; (@ selection_field_to_selection_param ; first_hackathon) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: first_hackathon :: Select) } ; (@ selection_field_to_selection_param ; academic_year) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: academic_year :: Select) } ; (@ selection_field_to_selection_param ; educational_institution_type) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: educational_institution_type :: Select) } ; (@ selection_field_to_selection_param ; coding_experience) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: coding_experience :: Select) } ; (@ selection_field_to_selection_param ; shirt_size) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: shirt_size :: Select) } ; (@ selection_field_to_selection_param ; dietary_restrictions) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: dietary_restrictions :: Select) } ; (@ selection_field_to_selection_param ; allergies) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: allergies :: Select) } ; (@ selection_field_to_selection_param ; eighteen_before_event) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: eighteen_before_event :: Select) } ; (@ selection_field_to_selection_param ; mlh_coc) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: mlh_coc :: Select) } ; (@ selection_field_to_selection_param ; mlh_dcp) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: mlh_dcp :: Select) } ; (@ selection_field_to_selection_param ; reference) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: reference :: Select) } ; (@ selection_field_to_selection_param ; resume) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: resume :: Select) } ; (@ selection_field_to_selection_param ; university) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: university :: Select) } ; (@ selection_field_to_selection_param ; major) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: major :: Select) } ; (@ selection_field_to_selection_param ; project_id) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: project_id :: Select) } ; (@ selection_field_to_selection_param ; project $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: project :: Select :: $ selection_mode (crate :: prisma :: project :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; project $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: project :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; expectations) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: expectations :: Select) } ; (@ selection_field_to_selection_param ; share_address_mlh) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: share_address_mlh :: Select) } ; (@ selection_field_to_selection_param ; share_address_sponsors) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: share_address_sponsors :: Select) } ; (@ selection_field_to_selection_param ; share_email_mlh) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: share_email_mlh :: Select) } ; (@ selection_field_to_selection_param ; veteran) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: veteran :: Select) } ; (@ selection_field_to_selection_param ; hackathon $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: hackathon :: Select :: $ selection_mode (crate :: prisma :: hackathon :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; hackathon $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: hackathon :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; hackathon_id) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: hackathon_id :: Select) } ; (@ selection_field_to_selection_param ; time) => { Into :: < crate :: prisma :: registration :: SelectParam > :: into (crate :: prisma :: registration :: time :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: registration :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; user) => { "user" } ; (@ field_serde_name ; user_id) => { "userId" } ; (@ field_serde_name ; travel_reimbursement) => { "travelReimbursement" } ; (@ field_serde_name ; driving) => { "driving" } ; (@ field_serde_name ; first_hackathon) => { "firstHackathon" } ; (@ field_serde_name ; academic_year) => { "academicYear" } ; (@ field_serde_name ; educational_institution_type) => { "educationalInstitutionType" } ; (@ field_serde_name ; coding_experience) => { "codingExperience" } ; (@ field_serde_name ; shirt_size) => { "shirtSize" } ; (@ field_serde_name ; dietary_restrictions) => { "dietaryRestrictions" } ; (@ field_serde_name ; allergies) => { "allergies" } ; (@ field_serde_name ; eighteen_before_event) => { "eighteenBeforeEvent" } ; (@ field_serde_name ; mlh_coc) => { "mlhCoc" } ; (@ field_serde_name ; mlh_dcp) => { "mlhDcp" } ; (@ field_serde_name ; reference) => { "reference" } ; (@ field_serde_name ; resume) => { "resume" } ; (@ field_serde_name ; university) => { "university" } ; (@ field_serde_name ; major) => { "major" } ; (@ field_serde_name ; project_id) => { "projectId" } ; (@ field_serde_name ; project) => { "project" } ; (@ field_serde_name ; expectations) => { "expectations" } ; (@ field_serde_name ; share_address_mlh) => { "shareAddressMlh" } ; (@ field_serde_name ; share_address_sponsors) => { "shareAddressSponsors" } ; (@ field_serde_name ; share_email_mlh) => { "shareEmailMlh" } ; (@ field_serde_name ; veteran) => { "veteran" } ; (@ field_serde_name ; hackathon) => { "hackathon" } ; (@ field_serde_name ; hackathon_id) => { "hackathonId" } ; (@ field_serde_name ; time) => { "time" } ; }
     pub use _select_registration as select;
     pub enum SelectParam {
         Id(id::Select),
@@ -11118,11 +11534,17 @@ pub mod registration {
         FirstHackathon(first_hackathon::Select),
         AcademicYear(academic_year::Select),
         EducationalInstitutionType(educational_institution_type::Select),
-        CodingExoerience(coding_exoerience::Select),
+        CodingExperience(coding_experience::Select),
+        ShirtSize(shirt_size::Select),
+        DietaryRestrictions(dietary_restrictions::Select),
+        Allergies(allergies::Select),
         EighteenBeforeEvent(eighteen_before_event::Select),
         MlhCoc(mlh_coc::Select),
         MlhDcp(mlh_dcp::Select),
         Reference(reference::Select),
+        Resume(resume::Select),
+        University(university::Select),
+        Major(major::Select),
         ProjectId(project_id::Select),
         Project(project::Select),
         Expectations(expectations::Select),
@@ -11145,11 +11567,17 @@ pub mod registration {
                 Self::FirstHackathon(data) => data.to_selection(),
                 Self::AcademicYear(data) => data.to_selection(),
                 Self::EducationalInstitutionType(data) => data.to_selection(),
-                Self::CodingExoerience(data) => data.to_selection(),
+                Self::CodingExperience(data) => data.to_selection(),
+                Self::ShirtSize(data) => data.to_selection(),
+                Self::DietaryRestrictions(data) => data.to_selection(),
+                Self::Allergies(data) => data.to_selection(),
                 Self::EighteenBeforeEvent(data) => data.to_selection(),
                 Self::MlhCoc(data) => data.to_selection(),
                 Self::MlhDcp(data) => data.to_selection(),
                 Self::Reference(data) => data.to_selection(),
+                Self::Resume(data) => data.to_selection(),
+                Self::University(data) => data.to_selection(),
+                Self::Major(data) => data.to_selection(),
                 Self::ProjectId(data) => data.to_selection(),
                 Self::Project(data) => data.to_selection(),
                 Self::Expectations(data) => data.to_selection(),
@@ -11164,7 +11592,7 @@ pub mod registration {
         }
     }
     #[macro_export]
-    macro_rules ! _include_registration { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: registration :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: registration :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: registration :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: registration :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: registration :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: registration :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: registration :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: registration :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { user , project , hackathon } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { pub id : String , pub user_id : String , pub travel_reimbursement : bool , pub driving : bool , pub first_hackathon : bool , pub academic_year : String , pub educational_institution_type : String , pub coding_exoerience : Option < String > , pub eighteen_before_event : bool , pub mlh_coc : bool , pub mlh_dcp : bool , pub reference : Option < String > , pub project_id : Option < String > , pub expectations : Option < String > , pub share_address_mlh : Option < bool > , pub share_address_sponsors : Option < bool > , pub share_email_mlh : Option < bool > , pub veteran : bool , pub hackathon_id : String , pub time : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , $ (pub $ field : crate :: prisma :: registration :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (id) , stringify ! (user_id) , stringify ! (travel_reimbursement) , stringify ! (driving) , stringify ! (first_hackathon) , stringify ! (academic_year) , stringify ! (educational_institution_type) , stringify ! (coding_exoerience) , stringify ! (eighteen_before_event) , stringify ! (mlh_coc) , stringify ! (mlh_dcp) , stringify ! (reference) , stringify ! (project_id) , stringify ! (expectations) , stringify ! (share_address_mlh) , stringify ! (share_address_sponsors) , stringify ! (share_email_mlh) , stringify ! (veteran) , stringify ! (hackathon_id) , stringify ! (time)] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: registration :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: prisma :: registration :: id :: NAME , & self . id) ? ; state . serialize_field (crate :: prisma :: registration :: user_id :: NAME , & self . user_id) ? ; state . serialize_field (crate :: prisma :: registration :: travel_reimbursement :: NAME , & self . travel_reimbursement) ? ; state . serialize_field (crate :: prisma :: registration :: driving :: NAME , & self . driving) ? ; state . serialize_field (crate :: prisma :: registration :: first_hackathon :: NAME , & self . first_hackathon) ? ; state . serialize_field (crate :: prisma :: registration :: academic_year :: NAME , & self . academic_year) ? ; state . serialize_field (crate :: prisma :: registration :: educational_institution_type :: NAME , & self . educational_institution_type) ? ; state . serialize_field (crate :: prisma :: registration :: coding_exoerience :: NAME , & self . coding_exoerience) ? ; state . serialize_field (crate :: prisma :: registration :: eighteen_before_event :: NAME , & self . eighteen_before_event) ? ; state . serialize_field (crate :: prisma :: registration :: mlh_coc :: NAME , & self . mlh_coc) ? ; state . serialize_field (crate :: prisma :: registration :: mlh_dcp :: NAME , & self . mlh_dcp) ? ; state . serialize_field (crate :: prisma :: registration :: reference :: NAME , & self . reference) ? ; state . serialize_field (crate :: prisma :: registration :: project_id :: NAME , & self . project_id) ? ; state . serialize_field (crate :: prisma :: registration :: expectations :: NAME , & self . expectations) ? ; state . serialize_field (crate :: prisma :: registration :: share_address_mlh :: NAME , & self . share_address_mlh) ? ; state . serialize_field (crate :: prisma :: registration :: share_address_sponsors :: NAME , & self . share_address_sponsors) ? ; state . serialize_field (crate :: prisma :: registration :: share_email_mlh :: NAME , & self . share_email_mlh) ? ; state . serialize_field (crate :: prisma :: registration :: veteran :: NAME , & self . veteran) ? ; state . serialize_field (crate :: prisma :: registration :: hackathon_id :: NAME , & self . hackathon_id) ? ; state . serialize_field (crate :: prisma :: registration :: time :: NAME , & self . time) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , id , user_id , travel_reimbursement , driving , first_hackathon , academic_year , educational_institution_type , coding_exoerience , eighteen_before_event , mlh_coc , mlh_dcp , reference , project_id , expectations , share_address_mlh , share_address_sponsors , share_email_mlh , veteran , hackathon_id , time } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: registration :: $ field :: NAME) , + , crate :: prisma :: registration :: id :: NAME , crate :: prisma :: registration :: user_id :: NAME , crate :: prisma :: registration :: travel_reimbursement :: NAME , crate :: prisma :: registration :: driving :: NAME , crate :: prisma :: registration :: first_hackathon :: NAME , crate :: prisma :: registration :: academic_year :: NAME , crate :: prisma :: registration :: educational_institution_type :: NAME , crate :: prisma :: registration :: coding_exoerience :: NAME , crate :: prisma :: registration :: eighteen_before_event :: NAME , crate :: prisma :: registration :: mlh_coc :: NAME , crate :: prisma :: registration :: mlh_dcp :: NAME , crate :: prisma :: registration :: reference :: NAME , crate :: prisma :: registration :: project_id :: NAME , crate :: prisma :: registration :: expectations :: NAME , crate :: prisma :: registration :: share_address_mlh :: NAME , crate :: prisma :: registration :: share_address_sponsors :: NAME , crate :: prisma :: registration :: share_email_mlh :: NAME , crate :: prisma :: registration :: veteran :: NAME , crate :: prisma :: registration :: hackathon_id :: NAME , crate :: prisma :: registration :: time :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: registration :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: prisma :: registration :: id :: NAME => Ok (Field :: id) , crate :: prisma :: registration :: user_id :: NAME => Ok (Field :: user_id) , crate :: prisma :: registration :: travel_reimbursement :: NAME => Ok (Field :: travel_reimbursement) , crate :: prisma :: registration :: driving :: NAME => Ok (Field :: driving) , crate :: prisma :: registration :: first_hackathon :: NAME => Ok (Field :: first_hackathon) , crate :: prisma :: registration :: academic_year :: NAME => Ok (Field :: academic_year) , crate :: prisma :: registration :: educational_institution_type :: NAME => Ok (Field :: educational_institution_type) , crate :: prisma :: registration :: coding_exoerience :: NAME => Ok (Field :: coding_exoerience) , crate :: prisma :: registration :: eighteen_before_event :: NAME => Ok (Field :: eighteen_before_event) , crate :: prisma :: registration :: mlh_coc :: NAME => Ok (Field :: mlh_coc) , crate :: prisma :: registration :: mlh_dcp :: NAME => Ok (Field :: mlh_dcp) , crate :: prisma :: registration :: reference :: NAME => Ok (Field :: reference) , crate :: prisma :: registration :: project_id :: NAME => Ok (Field :: project_id) , crate :: prisma :: registration :: expectations :: NAME => Ok (Field :: expectations) , crate :: prisma :: registration :: share_address_mlh :: NAME => Ok (Field :: share_address_mlh) , crate :: prisma :: registration :: share_address_sponsors :: NAME => Ok (Field :: share_address_sponsors) , crate :: prisma :: registration :: share_email_mlh :: NAME => Ok (Field :: share_email_mlh) , crate :: prisma :: registration :: veteran :: NAME => Ok (Field :: veteran) , crate :: prisma :: registration :: hackathon_id :: NAME => Ok (Field :: hackathon_id) , crate :: prisma :: registration :: time :: NAME => Ok (Field :: time) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut id = None ; let mut user_id = None ; let mut travel_reimbursement = None ; let mut driving = None ; let mut first_hackathon = None ; let mut academic_year = None ; let mut educational_institution_type = None ; let mut coding_exoerience = None ; let mut eighteen_before_event = None ; let mut mlh_coc = None ; let mut mlh_dcp = None ; let mut reference = None ; let mut project_id = None ; let mut expectations = None ; let mut share_address_mlh = None ; let mut share_address_sponsors = None ; let mut share_email_mlh = None ; let mut veteran = None ; let mut hackathon_id = None ; let mut time = None ; while let Some (key) = map . next_key () ? { match key { Field :: id => { if id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: id :: NAME)) ; } id = Some (map . next_value () ?) ; } Field :: user_id => { if user_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: user_id :: NAME)) ; } user_id = Some (map . next_value () ?) ; } Field :: travel_reimbursement => { if travel_reimbursement . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: travel_reimbursement :: NAME)) ; } travel_reimbursement = Some (map . next_value () ?) ; } Field :: driving => { if driving . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: driving :: NAME)) ; } driving = Some (map . next_value () ?) ; } Field :: first_hackathon => { if first_hackathon . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: first_hackathon :: NAME)) ; } first_hackathon = Some (map . next_value () ?) ; } Field :: academic_year => { if academic_year . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: academic_year :: NAME)) ; } academic_year = Some (map . next_value () ?) ; } Field :: educational_institution_type => { if educational_institution_type . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: educational_institution_type :: NAME)) ; } educational_institution_type = Some (map . next_value () ?) ; } Field :: coding_exoerience => { if coding_exoerience . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: coding_exoerience :: NAME)) ; } coding_exoerience = Some (map . next_value () ?) ; } Field :: eighteen_before_event => { if eighteen_before_event . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: eighteen_before_event :: NAME)) ; } eighteen_before_event = Some (map . next_value () ?) ; } Field :: mlh_coc => { if mlh_coc . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: mlh_coc :: NAME)) ; } mlh_coc = Some (map . next_value () ?) ; } Field :: mlh_dcp => { if mlh_dcp . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: mlh_dcp :: NAME)) ; } mlh_dcp = Some (map . next_value () ?) ; } Field :: reference => { if reference . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: reference :: NAME)) ; } reference = Some (map . next_value () ?) ; } Field :: project_id => { if project_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: project_id :: NAME)) ; } project_id = Some (map . next_value () ?) ; } Field :: expectations => { if expectations . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: expectations :: NAME)) ; } expectations = Some (map . next_value () ?) ; } Field :: share_address_mlh => { if share_address_mlh . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: share_address_mlh :: NAME)) ; } share_address_mlh = Some (map . next_value () ?) ; } Field :: share_address_sponsors => { if share_address_sponsors . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: share_address_sponsors :: NAME)) ; } share_address_sponsors = Some (map . next_value () ?) ; } Field :: share_email_mlh => { if share_email_mlh . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: share_email_mlh :: NAME)) ; } share_email_mlh = Some (map . next_value () ?) ; } Field :: veteran => { if veteran . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: veteran :: NAME)) ; } veteran = Some (map . next_value () ?) ; } Field :: hackathon_id => { if hackathon_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: hackathon_id :: NAME)) ; } hackathon_id = Some (map . next_value () ?) ; } Field :: time => { if time . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: time :: NAME)) ; } time = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: $ field :: NAME)) ? ;) * let id = id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: id :: NAME)) ? ; let user_id = user_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: user_id :: NAME)) ? ; let travel_reimbursement = travel_reimbursement . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: travel_reimbursement :: NAME)) ? ; let driving = driving . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: driving :: NAME)) ? ; let first_hackathon = first_hackathon . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: first_hackathon :: NAME)) ? ; let academic_year = academic_year . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: academic_year :: NAME)) ? ; let educational_institution_type = educational_institution_type . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: educational_institution_type :: NAME)) ? ; let coding_exoerience = coding_exoerience . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: coding_exoerience :: NAME)) ? ; let eighteen_before_event = eighteen_before_event . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: eighteen_before_event :: NAME)) ? ; let mlh_coc = mlh_coc . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: mlh_coc :: NAME)) ? ; let mlh_dcp = mlh_dcp . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: mlh_dcp :: NAME)) ? ; let reference = reference . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: reference :: NAME)) ? ; let project_id = project_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: project_id :: NAME)) ? ; let expectations = expectations . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: expectations :: NAME)) ? ; let share_address_mlh = share_address_mlh . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: share_address_mlh :: NAME)) ? ; let share_address_sponsors = share_address_sponsors . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: share_address_sponsors :: NAME)) ? ; let share_email_mlh = share_email_mlh . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: share_email_mlh :: NAME)) ? ; let veteran = veteran . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: veteran :: NAME)) ? ; let hackathon_id = hackathon_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: hackathon_id :: NAME)) ? ; let time = time . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: time :: NAME)) ? ; Ok (Data { id , user_id , travel_reimbursement , driving , first_hackathon , academic_year , educational_institution_type , coding_exoerience , eighteen_before_event , mlh_coc , mlh_dcp , reference , project_id , expectations , share_address_mlh , share_address_sponsors , share_email_mlh , veteran , hackathon_id , time , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "user" , "userId" , "travelReimbursement" , "driving" , "firstHackathon" , "academicYear" , "educationalInstitutionType" , "codingExoerience" , "eighteenBeforeEvent" , "mlhCoc" , "mlhDcp" , "reference" , "projectId" , "project" , "expectations" , "shareAddressMlh" , "shareAddressSponsors" , "shareEmailMlh" , "veteran" , "hackathon" , "hackathonId" , "time"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: registration :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; user : $ selection_mode : ident { $ ($ selections : tt) + }) => { user :: Data } ; (@ field_type ; user) => { crate :: prisma :: user :: Data } ; (@ field_type ; project : $ selection_mode : ident { $ ($ selections : tt) + }) => { Option < project :: Data > } ; (@ field_type ; project) => { Option < crate :: prisma :: project :: Data > } ; (@ field_type ; hackathon : $ selection_mode : ident { $ ($ selections : tt) + }) => { hackathon :: Data } ; (@ field_type ; hackathon) => { crate :: prisma :: hackathon :: Data } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "Registration" , available relations are "user, project, hackathon")) } ; (@ field_module ; user : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: user :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; project : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: project :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; hackathon : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: hackathon :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; user $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: registration :: IncludeParam > :: into (crate :: prisma :: registration :: user :: Include :: $ selection_mode (crate :: prisma :: user :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; user $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: registration :: IncludeParam > :: into (crate :: prisma :: registration :: user :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; project $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: registration :: IncludeParam > :: into (crate :: prisma :: registration :: project :: Include :: $ selection_mode (crate :: prisma :: project :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; project $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: registration :: IncludeParam > :: into (crate :: prisma :: registration :: project :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; hackathon $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: registration :: IncludeParam > :: into (crate :: prisma :: registration :: hackathon :: Include :: $ selection_mode (crate :: prisma :: hackathon :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; hackathon $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: registration :: IncludeParam > :: into (crate :: prisma :: registration :: hackathon :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: registration :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; user) => { "user" } ; (@ field_serde_name ; user_id) => { "userId" } ; (@ field_serde_name ; travel_reimbursement) => { "travelReimbursement" } ; (@ field_serde_name ; driving) => { "driving" } ; (@ field_serde_name ; first_hackathon) => { "firstHackathon" } ; (@ field_serde_name ; academic_year) => { "academicYear" } ; (@ field_serde_name ; educational_institution_type) => { "educationalInstitutionType" } ; (@ field_serde_name ; coding_exoerience) => { "codingExoerience" } ; (@ field_serde_name ; eighteen_before_event) => { "eighteenBeforeEvent" } ; (@ field_serde_name ; mlh_coc) => { "mlhCoc" } ; (@ field_serde_name ; mlh_dcp) => { "mlhDcp" } ; (@ field_serde_name ; reference) => { "reference" } ; (@ field_serde_name ; project_id) => { "projectId" } ; (@ field_serde_name ; project) => { "project" } ; (@ field_serde_name ; expectations) => { "expectations" } ; (@ field_serde_name ; share_address_mlh) => { "shareAddressMlh" } ; (@ field_serde_name ; share_address_sponsors) => { "shareAddressSponsors" } ; (@ field_serde_name ; share_email_mlh) => { "shareEmailMlh" } ; (@ field_serde_name ; veteran) => { "veteran" } ; (@ field_serde_name ; hackathon) => { "hackathon" } ; (@ field_serde_name ; hackathon_id) => { "hackathonId" } ; (@ field_serde_name ; time) => { "time" } ; }
+    macro_rules ! _include_registration { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: registration :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: registration :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: registration :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: registration :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: registration :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: registration :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: registration :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: registration :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { user , project , hackathon } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { pub id : String , pub user_id : String , pub travel_reimbursement : bool , pub driving : bool , pub first_hackathon : bool , pub academic_year : String , pub educational_institution_type : String , pub coding_experience : Option < String > , pub shirt_size : String , pub dietary_restrictions : Option < String > , pub allergies : Option < String > , pub eighteen_before_event : bool , pub mlh_coc : bool , pub mlh_dcp : bool , pub reference : Option < String > , pub resume : Option < String > , pub university : String , pub major : String , pub project_id : Option < String > , pub expectations : Option < String > , pub share_address_mlh : Option < bool > , pub share_address_sponsors : Option < bool > , pub share_email_mlh : Option < bool > , pub veteran : bool , pub hackathon_id : String , pub time : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , $ (pub $ field : crate :: prisma :: registration :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (id) , stringify ! (user_id) , stringify ! (travel_reimbursement) , stringify ! (driving) , stringify ! (first_hackathon) , stringify ! (academic_year) , stringify ! (educational_institution_type) , stringify ! (coding_experience) , stringify ! (shirt_size) , stringify ! (dietary_restrictions) , stringify ! (allergies) , stringify ! (eighteen_before_event) , stringify ! (mlh_coc) , stringify ! (mlh_dcp) , stringify ! (reference) , stringify ! (resume) , stringify ! (university) , stringify ! (major) , stringify ! (project_id) , stringify ! (expectations) , stringify ! (share_address_mlh) , stringify ! (share_address_sponsors) , stringify ! (share_email_mlh) , stringify ! (veteran) , stringify ! (hackathon_id) , stringify ! (time)] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: registration :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: prisma :: registration :: id :: NAME , & self . id) ? ; state . serialize_field (crate :: prisma :: registration :: user_id :: NAME , & self . user_id) ? ; state . serialize_field (crate :: prisma :: registration :: travel_reimbursement :: NAME , & self . travel_reimbursement) ? ; state . serialize_field (crate :: prisma :: registration :: driving :: NAME , & self . driving) ? ; state . serialize_field (crate :: prisma :: registration :: first_hackathon :: NAME , & self . first_hackathon) ? ; state . serialize_field (crate :: prisma :: registration :: academic_year :: NAME , & self . academic_year) ? ; state . serialize_field (crate :: prisma :: registration :: educational_institution_type :: NAME , & self . educational_institution_type) ? ; state . serialize_field (crate :: prisma :: registration :: coding_experience :: NAME , & self . coding_experience) ? ; state . serialize_field (crate :: prisma :: registration :: shirt_size :: NAME , & self . shirt_size) ? ; state . serialize_field (crate :: prisma :: registration :: dietary_restrictions :: NAME , & self . dietary_restrictions) ? ; state . serialize_field (crate :: prisma :: registration :: allergies :: NAME , & self . allergies) ? ; state . serialize_field (crate :: prisma :: registration :: eighteen_before_event :: NAME , & self . eighteen_before_event) ? ; state . serialize_field (crate :: prisma :: registration :: mlh_coc :: NAME , & self . mlh_coc) ? ; state . serialize_field (crate :: prisma :: registration :: mlh_dcp :: NAME , & self . mlh_dcp) ? ; state . serialize_field (crate :: prisma :: registration :: reference :: NAME , & self . reference) ? ; state . serialize_field (crate :: prisma :: registration :: resume :: NAME , & self . resume) ? ; state . serialize_field (crate :: prisma :: registration :: university :: NAME , & self . university) ? ; state . serialize_field (crate :: prisma :: registration :: major :: NAME , & self . major) ? ; state . serialize_field (crate :: prisma :: registration :: project_id :: NAME , & self . project_id) ? ; state . serialize_field (crate :: prisma :: registration :: expectations :: NAME , & self . expectations) ? ; state . serialize_field (crate :: prisma :: registration :: share_address_mlh :: NAME , & self . share_address_mlh) ? ; state . serialize_field (crate :: prisma :: registration :: share_address_sponsors :: NAME , & self . share_address_sponsors) ? ; state . serialize_field (crate :: prisma :: registration :: share_email_mlh :: NAME , & self . share_email_mlh) ? ; state . serialize_field (crate :: prisma :: registration :: veteran :: NAME , & self . veteran) ? ; state . serialize_field (crate :: prisma :: registration :: hackathon_id :: NAME , & self . hackathon_id) ? ; state . serialize_field (crate :: prisma :: registration :: time :: NAME , & self . time) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , id , user_id , travel_reimbursement , driving , first_hackathon , academic_year , educational_institution_type , coding_experience , shirt_size , dietary_restrictions , allergies , eighteen_before_event , mlh_coc , mlh_dcp , reference , resume , university , major , project_id , expectations , share_address_mlh , share_address_sponsors , share_email_mlh , veteran , hackathon_id , time } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: registration :: $ field :: NAME) , + , crate :: prisma :: registration :: id :: NAME , crate :: prisma :: registration :: user_id :: NAME , crate :: prisma :: registration :: travel_reimbursement :: NAME , crate :: prisma :: registration :: driving :: NAME , crate :: prisma :: registration :: first_hackathon :: NAME , crate :: prisma :: registration :: academic_year :: NAME , crate :: prisma :: registration :: educational_institution_type :: NAME , crate :: prisma :: registration :: coding_experience :: NAME , crate :: prisma :: registration :: shirt_size :: NAME , crate :: prisma :: registration :: dietary_restrictions :: NAME , crate :: prisma :: registration :: allergies :: NAME , crate :: prisma :: registration :: eighteen_before_event :: NAME , crate :: prisma :: registration :: mlh_coc :: NAME , crate :: prisma :: registration :: mlh_dcp :: NAME , crate :: prisma :: registration :: reference :: NAME , crate :: prisma :: registration :: resume :: NAME , crate :: prisma :: registration :: university :: NAME , crate :: prisma :: registration :: major :: NAME , crate :: prisma :: registration :: project_id :: NAME , crate :: prisma :: registration :: expectations :: NAME , crate :: prisma :: registration :: share_address_mlh :: NAME , crate :: prisma :: registration :: share_address_sponsors :: NAME , crate :: prisma :: registration :: share_email_mlh :: NAME , crate :: prisma :: registration :: veteran :: NAME , crate :: prisma :: registration :: hackathon_id :: NAME , crate :: prisma :: registration :: time :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: registration :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: prisma :: registration :: id :: NAME => Ok (Field :: id) , crate :: prisma :: registration :: user_id :: NAME => Ok (Field :: user_id) , crate :: prisma :: registration :: travel_reimbursement :: NAME => Ok (Field :: travel_reimbursement) , crate :: prisma :: registration :: driving :: NAME => Ok (Field :: driving) , crate :: prisma :: registration :: first_hackathon :: NAME => Ok (Field :: first_hackathon) , crate :: prisma :: registration :: academic_year :: NAME => Ok (Field :: academic_year) , crate :: prisma :: registration :: educational_institution_type :: NAME => Ok (Field :: educational_institution_type) , crate :: prisma :: registration :: coding_experience :: NAME => Ok (Field :: coding_experience) , crate :: prisma :: registration :: shirt_size :: NAME => Ok (Field :: shirt_size) , crate :: prisma :: registration :: dietary_restrictions :: NAME => Ok (Field :: dietary_restrictions) , crate :: prisma :: registration :: allergies :: NAME => Ok (Field :: allergies) , crate :: prisma :: registration :: eighteen_before_event :: NAME => Ok (Field :: eighteen_before_event) , crate :: prisma :: registration :: mlh_coc :: NAME => Ok (Field :: mlh_coc) , crate :: prisma :: registration :: mlh_dcp :: NAME => Ok (Field :: mlh_dcp) , crate :: prisma :: registration :: reference :: NAME => Ok (Field :: reference) , crate :: prisma :: registration :: resume :: NAME => Ok (Field :: resume) , crate :: prisma :: registration :: university :: NAME => Ok (Field :: university) , crate :: prisma :: registration :: major :: NAME => Ok (Field :: major) , crate :: prisma :: registration :: project_id :: NAME => Ok (Field :: project_id) , crate :: prisma :: registration :: expectations :: NAME => Ok (Field :: expectations) , crate :: prisma :: registration :: share_address_mlh :: NAME => Ok (Field :: share_address_mlh) , crate :: prisma :: registration :: share_address_sponsors :: NAME => Ok (Field :: share_address_sponsors) , crate :: prisma :: registration :: share_email_mlh :: NAME => Ok (Field :: share_email_mlh) , crate :: prisma :: registration :: veteran :: NAME => Ok (Field :: veteran) , crate :: prisma :: registration :: hackathon_id :: NAME => Ok (Field :: hackathon_id) , crate :: prisma :: registration :: time :: NAME => Ok (Field :: time) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut id = None ; let mut user_id = None ; let mut travel_reimbursement = None ; let mut driving = None ; let mut first_hackathon = None ; let mut academic_year = None ; let mut educational_institution_type = None ; let mut coding_experience = None ; let mut shirt_size = None ; let mut dietary_restrictions = None ; let mut allergies = None ; let mut eighteen_before_event = None ; let mut mlh_coc = None ; let mut mlh_dcp = None ; let mut reference = None ; let mut resume = None ; let mut university = None ; let mut major = None ; let mut project_id = None ; let mut expectations = None ; let mut share_address_mlh = None ; let mut share_address_sponsors = None ; let mut share_email_mlh = None ; let mut veteran = None ; let mut hackathon_id = None ; let mut time = None ; while let Some (key) = map . next_key () ? { match key { Field :: id => { if id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: id :: NAME)) ; } id = Some (map . next_value () ?) ; } Field :: user_id => { if user_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: user_id :: NAME)) ; } user_id = Some (map . next_value () ?) ; } Field :: travel_reimbursement => { if travel_reimbursement . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: travel_reimbursement :: NAME)) ; } travel_reimbursement = Some (map . next_value () ?) ; } Field :: driving => { if driving . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: driving :: NAME)) ; } driving = Some (map . next_value () ?) ; } Field :: first_hackathon => { if first_hackathon . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: first_hackathon :: NAME)) ; } first_hackathon = Some (map . next_value () ?) ; } Field :: academic_year => { if academic_year . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: academic_year :: NAME)) ; } academic_year = Some (map . next_value () ?) ; } Field :: educational_institution_type => { if educational_institution_type . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: educational_institution_type :: NAME)) ; } educational_institution_type = Some (map . next_value () ?) ; } Field :: coding_experience => { if coding_experience . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: coding_experience :: NAME)) ; } coding_experience = Some (map . next_value () ?) ; } Field :: shirt_size => { if shirt_size . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: shirt_size :: NAME)) ; } shirt_size = Some (map . next_value () ?) ; } Field :: dietary_restrictions => { if dietary_restrictions . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: dietary_restrictions :: NAME)) ; } dietary_restrictions = Some (map . next_value () ?) ; } Field :: allergies => { if allergies . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: allergies :: NAME)) ; } allergies = Some (map . next_value () ?) ; } Field :: eighteen_before_event => { if eighteen_before_event . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: eighteen_before_event :: NAME)) ; } eighteen_before_event = Some (map . next_value () ?) ; } Field :: mlh_coc => { if mlh_coc . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: mlh_coc :: NAME)) ; } mlh_coc = Some (map . next_value () ?) ; } Field :: mlh_dcp => { if mlh_dcp . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: mlh_dcp :: NAME)) ; } mlh_dcp = Some (map . next_value () ?) ; } Field :: reference => { if reference . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: reference :: NAME)) ; } reference = Some (map . next_value () ?) ; } Field :: resume => { if resume . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: resume :: NAME)) ; } resume = Some (map . next_value () ?) ; } Field :: university => { if university . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: university :: NAME)) ; } university = Some (map . next_value () ?) ; } Field :: major => { if major . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: major :: NAME)) ; } major = Some (map . next_value () ?) ; } Field :: project_id => { if project_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: project_id :: NAME)) ; } project_id = Some (map . next_value () ?) ; } Field :: expectations => { if expectations . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: expectations :: NAME)) ; } expectations = Some (map . next_value () ?) ; } Field :: share_address_mlh => { if share_address_mlh . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: share_address_mlh :: NAME)) ; } share_address_mlh = Some (map . next_value () ?) ; } Field :: share_address_sponsors => { if share_address_sponsors . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: share_address_sponsors :: NAME)) ; } share_address_sponsors = Some (map . next_value () ?) ; } Field :: share_email_mlh => { if share_email_mlh . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: share_email_mlh :: NAME)) ; } share_email_mlh = Some (map . next_value () ?) ; } Field :: veteran => { if veteran . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: veteran :: NAME)) ; } veteran = Some (map . next_value () ?) ; } Field :: hackathon_id => { if hackathon_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: hackathon_id :: NAME)) ; } hackathon_id = Some (map . next_value () ?) ; } Field :: time => { if time . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: time :: NAME)) ; } time = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: registration :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: $ field :: NAME)) ? ;) * let id = id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: id :: NAME)) ? ; let user_id = user_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: user_id :: NAME)) ? ; let travel_reimbursement = travel_reimbursement . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: travel_reimbursement :: NAME)) ? ; let driving = driving . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: driving :: NAME)) ? ; let first_hackathon = first_hackathon . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: first_hackathon :: NAME)) ? ; let academic_year = academic_year . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: academic_year :: NAME)) ? ; let educational_institution_type = educational_institution_type . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: educational_institution_type :: NAME)) ? ; let coding_experience = coding_experience . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: coding_experience :: NAME)) ? ; let shirt_size = shirt_size . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: shirt_size :: NAME)) ? ; let dietary_restrictions = dietary_restrictions . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: dietary_restrictions :: NAME)) ? ; let allergies = allergies . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: allergies :: NAME)) ? ; let eighteen_before_event = eighteen_before_event . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: eighteen_before_event :: NAME)) ? ; let mlh_coc = mlh_coc . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: mlh_coc :: NAME)) ? ; let mlh_dcp = mlh_dcp . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: mlh_dcp :: NAME)) ? ; let reference = reference . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: reference :: NAME)) ? ; let resume = resume . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: resume :: NAME)) ? ; let university = university . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: university :: NAME)) ? ; let major = major . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: major :: NAME)) ? ; let project_id = project_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: project_id :: NAME)) ? ; let expectations = expectations . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: expectations :: NAME)) ? ; let share_address_mlh = share_address_mlh . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: share_address_mlh :: NAME)) ? ; let share_address_sponsors = share_address_sponsors . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: share_address_sponsors :: NAME)) ? ; let share_email_mlh = share_email_mlh . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: share_email_mlh :: NAME)) ? ; let veteran = veteran . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: veteran :: NAME)) ? ; let hackathon_id = hackathon_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: hackathon_id :: NAME)) ? ; let time = time . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: registration :: time :: NAME)) ? ; Ok (Data { id , user_id , travel_reimbursement , driving , first_hackathon , academic_year , educational_institution_type , coding_experience , shirt_size , dietary_restrictions , allergies , eighteen_before_event , mlh_coc , mlh_dcp , reference , resume , university , major , project_id , expectations , share_address_mlh , share_address_sponsors , share_email_mlh , veteran , hackathon_id , time , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "user" , "userId" , "travelReimbursement" , "driving" , "firstHackathon" , "academicYear" , "educationalInstitutionType" , "codingExperience" , "shirtSize" , "dietaryRestrictions" , "allergies" , "eighteenBeforeEvent" , "mlhCoc" , "mlhDcp" , "reference" , "resume" , "university" , "major" , "projectId" , "project" , "expectations" , "shareAddressMlh" , "shareAddressSponsors" , "shareEmailMlh" , "veteran" , "hackathon" , "hackathonId" , "time"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: registration :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; user : $ selection_mode : ident { $ ($ selections : tt) + }) => { user :: Data } ; (@ field_type ; user) => { crate :: prisma :: user :: Data } ; (@ field_type ; project : $ selection_mode : ident { $ ($ selections : tt) + }) => { Option < project :: Data > } ; (@ field_type ; project) => { Option < crate :: prisma :: project :: Data > } ; (@ field_type ; hackathon : $ selection_mode : ident { $ ($ selections : tt) + }) => { hackathon :: Data } ; (@ field_type ; hackathon) => { crate :: prisma :: hackathon :: Data } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "Registration" , available relations are "user, project, hackathon")) } ; (@ field_module ; user : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: user :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; project : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: project :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; hackathon : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: hackathon :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; user $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: registration :: IncludeParam > :: into (crate :: prisma :: registration :: user :: Include :: $ selection_mode (crate :: prisma :: user :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; user $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: registration :: IncludeParam > :: into (crate :: prisma :: registration :: user :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; project $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: registration :: IncludeParam > :: into (crate :: prisma :: registration :: project :: Include :: $ selection_mode (crate :: prisma :: project :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; project $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: registration :: IncludeParam > :: into (crate :: prisma :: registration :: project :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; hackathon $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: registration :: IncludeParam > :: into (crate :: prisma :: registration :: hackathon :: Include :: $ selection_mode (crate :: prisma :: hackathon :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; hackathon $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: registration :: IncludeParam > :: into (crate :: prisma :: registration :: hackathon :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: registration :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; user) => { "user" } ; (@ field_serde_name ; user_id) => { "userId" } ; (@ field_serde_name ; travel_reimbursement) => { "travelReimbursement" } ; (@ field_serde_name ; driving) => { "driving" } ; (@ field_serde_name ; first_hackathon) => { "firstHackathon" } ; (@ field_serde_name ; academic_year) => { "academicYear" } ; (@ field_serde_name ; educational_institution_type) => { "educationalInstitutionType" } ; (@ field_serde_name ; coding_experience) => { "codingExperience" } ; (@ field_serde_name ; shirt_size) => { "shirtSize" } ; (@ field_serde_name ; dietary_restrictions) => { "dietaryRestrictions" } ; (@ field_serde_name ; allergies) => { "allergies" } ; (@ field_serde_name ; eighteen_before_event) => { "eighteenBeforeEvent" } ; (@ field_serde_name ; mlh_coc) => { "mlhCoc" } ; (@ field_serde_name ; mlh_dcp) => { "mlhDcp" } ; (@ field_serde_name ; reference) => { "reference" } ; (@ field_serde_name ; resume) => { "resume" } ; (@ field_serde_name ; university) => { "university" } ; (@ field_serde_name ; major) => { "major" } ; (@ field_serde_name ; project_id) => { "projectId" } ; (@ field_serde_name ; project) => { "project" } ; (@ field_serde_name ; expectations) => { "expectations" } ; (@ field_serde_name ; share_address_mlh) => { "shareAddressMlh" } ; (@ field_serde_name ; share_address_sponsors) => { "shareAddressSponsors" } ; (@ field_serde_name ; share_email_mlh) => { "shareEmailMlh" } ; (@ field_serde_name ; veteran) => { "veteran" } ; (@ field_serde_name ; hackathon) => { "hackathon" } ; (@ field_serde_name ; hackathon_id) => { "hackathonId" } ; (@ field_serde_name ; time) => { "time" } ; }
     pub use _include_registration as include;
     pub enum IncludeParam {
         Id(id::Include),
@@ -11175,11 +11603,17 @@ pub mod registration {
         FirstHackathon(first_hackathon::Include),
         AcademicYear(academic_year::Include),
         EducationalInstitutionType(educational_institution_type::Include),
-        CodingExoerience(coding_exoerience::Include),
+        CodingExperience(coding_experience::Include),
+        ShirtSize(shirt_size::Include),
+        DietaryRestrictions(dietary_restrictions::Include),
+        Allergies(allergies::Include),
         EighteenBeforeEvent(eighteen_before_event::Include),
         MlhCoc(mlh_coc::Include),
         MlhDcp(mlh_dcp::Include),
         Reference(reference::Include),
+        Resume(resume::Include),
+        University(university::Include),
+        Major(major::Include),
         ProjectId(project_id::Include),
         Project(project::Include),
         Expectations(expectations::Include),
@@ -11202,11 +11636,17 @@ pub mod registration {
                 Self::FirstHackathon(data) => data.to_selection(),
                 Self::AcademicYear(data) => data.to_selection(),
                 Self::EducationalInstitutionType(data) => data.to_selection(),
-                Self::CodingExoerience(data) => data.to_selection(),
+                Self::CodingExperience(data) => data.to_selection(),
+                Self::ShirtSize(data) => data.to_selection(),
+                Self::DietaryRestrictions(data) => data.to_selection(),
+                Self::Allergies(data) => data.to_selection(),
                 Self::EighteenBeforeEvent(data) => data.to_selection(),
                 Self::MlhCoc(data) => data.to_selection(),
                 Self::MlhDcp(data) => data.to_selection(),
                 Self::Reference(data) => data.to_selection(),
+                Self::Resume(data) => data.to_selection(),
+                Self::University(data) => data.to_selection(),
+                Self::Major(data) => data.to_selection(),
                 Self::ProjectId(data) => data.to_selection(),
                 Self::Project(data) => data.to_selection(),
                 Self::Expectations(data) => data.to_selection(),
@@ -11221,7 +11661,7 @@ pub mod registration {
         }
     }
     #[macro_export]
-    macro_rules ! _partial_unchecked_registration { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: prisma :: registration struct $ struct_name { # [serde (rename = "id")] pub id : String , # [serde (rename = "userId")] pub user_id : String , # [serde (rename = "travelReimbursement")] pub travel_reimbursement : bool , # [serde (rename = "driving")] pub driving : bool , # [serde (rename = "firstHackathon")] pub first_hackathon : bool , # [serde (rename = "academicYear")] pub academic_year : String , # [serde (rename = "educationalInstitutionType")] pub educational_institution_type : String , # [serde (rename = "codingExoerience")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub coding_exoerience : Option < String > , # [serde (rename = "eighteenBeforeEvent")] pub eighteen_before_event : bool , # [serde (rename = "mlhCoc")] pub mlh_coc : bool , # [serde (rename = "mlhDcp")] pub mlh_dcp : bool , # [serde (rename = "reference")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub reference : Option < String > , # [serde (rename = "projectId")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub project_id : Option < String > , # [serde (rename = "expectations")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub expectations : Option < String > , # [serde (rename = "shareAddressMlh")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub share_address_mlh : Option < bool > , # [serde (rename = "shareAddressSponsors")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub share_address_sponsors : Option < bool > , # [serde (rename = "shareEmailMlh")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub share_email_mlh : Option < bool > , # [serde (rename = "veteran")] pub veteran : bool , # [serde (rename = "hackathonId")] pub hackathon_id : String , # [serde (rename = "time")] pub time : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } [$ ($ scalar_field) , +] } } ; }
+    macro_rules ! _partial_unchecked_registration { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: prisma :: registration struct $ struct_name { # [serde (rename = "id")] pub id : String , # [serde (rename = "userId")] pub user_id : String , # [serde (rename = "travelReimbursement")] pub travel_reimbursement : bool , # [serde (rename = "driving")] pub driving : bool , # [serde (rename = "firstHackathon")] pub first_hackathon : bool , # [serde (rename = "academicYear")] pub academic_year : String , # [serde (rename = "educationalInstitutionType")] pub educational_institution_type : String , # [serde (rename = "codingExperience")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub coding_experience : Option < String > , # [serde (rename = "shirtSize")] pub shirt_size : String , # [serde (rename = "dietaryRestrictions")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub dietary_restrictions : Option < String > , # [serde (rename = "allergies")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub allergies : Option < String > , # [serde (rename = "eighteenBeforeEvent")] pub eighteen_before_event : bool , # [serde (rename = "mlhCoc")] pub mlh_coc : bool , # [serde (rename = "mlhDcp")] pub mlh_dcp : bool , # [serde (rename = "reference")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub reference : Option < String > , # [serde (rename = "resume")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub resume : Option < String > , # [serde (rename = "university")] pub university : String , # [serde (rename = "major")] pub major : String , # [serde (rename = "projectId")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub project_id : Option < String > , # [serde (rename = "expectations")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub expectations : Option < String > , # [serde (rename = "shareAddressMlh")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub share_address_mlh : Option < bool > , # [serde (rename = "shareAddressSponsors")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub share_address_sponsors : Option < bool > , # [serde (rename = "shareEmailMlh")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub share_email_mlh : Option < bool > , # [serde (rename = "veteran")] pub veteran : bool , # [serde (rename = "hackathonId")] pub hackathon_id : String , # [serde (rename = "time")] pub time : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } [$ ($ scalar_field) , +] } } ; }
     pub use _partial_unchecked_registration as partial_unchecked;
     #[derive(Debug, Clone, :: serde :: Serialize, :: serde :: Deserialize)]
     pub struct Data {
@@ -11241,8 +11681,14 @@ pub mod registration {
         pub academic_year: String,
         #[serde(rename = "educationalInstitutionType")]
         pub educational_institution_type: String,
-        #[serde(rename = "codingExoerience")]
-        pub coding_exoerience: Option<String>,
+        #[serde(rename = "codingExperience")]
+        pub coding_experience: Option<String>,
+        #[serde(rename = "shirtSize")]
+        pub shirt_size: String,
+        #[serde(rename = "dietaryRestrictions")]
+        pub dietary_restrictions: Option<String>,
+        #[serde(rename = "allergies")]
+        pub allergies: Option<String>,
         #[serde(rename = "eighteenBeforeEvent")]
         pub eighteen_before_event: bool,
         #[serde(rename = "mlhCoc")]
@@ -11251,6 +11697,12 @@ pub mod registration {
         pub mlh_dcp: bool,
         #[serde(rename = "reference")]
         pub reference: Option<String>,
+        #[serde(rename = "resume")]
+        pub resume: Option<String>,
+        #[serde(rename = "university")]
+        pub university: String,
+        #[serde(rename = "major")]
+        pub major: String,
         #[serde(rename = "projectId")]
         pub project_id: Option<String>,
         #[serde(
@@ -11362,11 +11814,17 @@ pub mod registration {
         SetFirstHackathon(bool),
         SetAcademicYear(String),
         SetEducationalInstitutionType(String),
-        SetCodingExoerience(Option<String>),
+        SetCodingExperience(Option<String>),
+        SetShirtSize(String),
+        SetDietaryRestrictions(Option<String>),
+        SetAllergies(Option<String>),
         SetEighteenBeforeEvent(bool),
         SetMlhCoc(bool),
         SetMlhDcp(bool),
         SetReference(Option<String>),
+        SetResume(Option<String>),
+        SetUniversity(String),
+        SetMajor(String),
         SetProjectId(Option<String>),
         ConnectProject(super::project::UniqueWhereParam),
         DisconnectProject,
@@ -11424,8 +11882,24 @@ pub mod registration {
                     educational_institution_type::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(value),
                 ),
-                SetParam::SetCodingExoerience(value) => (
-                    coding_exoerience::NAME.to_string(),
+                SetParam::SetCodingExperience(value) => (
+                    coding_experience::NAME.to_string(),
+                    value
+                        .map(|value| ::prisma_client_rust::PrismaValue::String(value))
+                        .unwrap_or_else(|| ::prisma_client_rust::PrismaValue::Null),
+                ),
+                SetParam::SetShirtSize(value) => (
+                    shirt_size::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(value),
+                ),
+                SetParam::SetDietaryRestrictions(value) => (
+                    dietary_restrictions::NAME.to_string(),
+                    value
+                        .map(|value| ::prisma_client_rust::PrismaValue::String(value))
+                        .unwrap_or_else(|| ::prisma_client_rust::PrismaValue::Null),
+                ),
+                SetParam::SetAllergies(value) => (
+                    allergies::NAME.to_string(),
                     value
                         .map(|value| ::prisma_client_rust::PrismaValue::String(value))
                         .unwrap_or_else(|| ::prisma_client_rust::PrismaValue::Null),
@@ -11447,6 +11921,20 @@ pub mod registration {
                     value
                         .map(|value| ::prisma_client_rust::PrismaValue::String(value))
                         .unwrap_or_else(|| ::prisma_client_rust::PrismaValue::Null),
+                ),
+                SetParam::SetResume(value) => (
+                    resume::NAME.to_string(),
+                    value
+                        .map(|value| ::prisma_client_rust::PrismaValue::String(value))
+                        .unwrap_or_else(|| ::prisma_client_rust::PrismaValue::Null),
+                ),
+                SetParam::SetUniversity(value) => (
+                    university::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(value),
+                ),
+                SetParam::SetMajor(value) => (
+                    major::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(value),
                 ),
                 SetParam::SetProjectId(value) => (
                     project_id::NAME.to_string(),
@@ -11537,11 +12025,17 @@ pub mod registration {
         FirstHackathon(bool),
         AcademicYear(String),
         EducationalInstitutionType(String),
-        CodingExoerience(Option<String>),
+        CodingExperience(Option<String>),
+        ShirtSize(String),
+        DietaryRestrictions(Option<String>),
+        Allergies(Option<String>),
         EighteenBeforeEvent(bool),
         MlhCoc(bool),
         MlhDcp(bool),
         Reference(Option<String>),
+        Resume(Option<String>),
+        University(String),
+        Major(String),
         ProjectId(Option<String>),
         Expectations(Option<String>),
         ShareAddressMlh(Option<bool>),
@@ -11565,13 +12059,21 @@ pub mod registration {
                 UncheckedSetParam::EducationalInstitutionType(value) => {
                     Self::SetEducationalInstitutionType(value)
                 }
-                UncheckedSetParam::CodingExoerience(value) => Self::SetCodingExoerience(value),
+                UncheckedSetParam::CodingExperience(value) => Self::SetCodingExperience(value),
+                UncheckedSetParam::ShirtSize(value) => Self::SetShirtSize(value),
+                UncheckedSetParam::DietaryRestrictions(value) => {
+                    Self::SetDietaryRestrictions(value)
+                }
+                UncheckedSetParam::Allergies(value) => Self::SetAllergies(value),
                 UncheckedSetParam::EighteenBeforeEvent(value) => {
                     Self::SetEighteenBeforeEvent(value)
                 }
                 UncheckedSetParam::MlhCoc(value) => Self::SetMlhCoc(value),
                 UncheckedSetParam::MlhDcp(value) => Self::SetMlhDcp(value),
                 UncheckedSetParam::Reference(value) => Self::SetReference(value),
+                UncheckedSetParam::Resume(value) => Self::SetResume(value),
+                UncheckedSetParam::University(value) => Self::SetUniversity(value),
+                UncheckedSetParam::Major(value) => Self::SetMajor(value),
                 UncheckedSetParam::ProjectId(value) => Self::SetProjectId(value),
                 UncheckedSetParam::Expectations(value) => Self::SetExpectations(value),
                 UncheckedSetParam::ShareAddressMlh(value) => Self::SetShareAddressMlh(value),
@@ -11594,11 +12096,17 @@ pub mod registration {
         FirstHackathon(::prisma_client_rust::Direction),
         AcademicYear(::prisma_client_rust::Direction),
         EducationalInstitutionType(::prisma_client_rust::Direction),
-        CodingExoerience(::prisma_client_rust::Direction),
+        CodingExperience(::prisma_client_rust::Direction),
+        ShirtSize(::prisma_client_rust::Direction),
+        DietaryRestrictions(::prisma_client_rust::Direction),
+        Allergies(::prisma_client_rust::Direction),
         EighteenBeforeEvent(::prisma_client_rust::Direction),
         MlhCoc(::prisma_client_rust::Direction),
         MlhDcp(::prisma_client_rust::Direction),
         Reference(::prisma_client_rust::Direction),
+        Resume(::prisma_client_rust::Direction),
+        University(::prisma_client_rust::Direction),
+        Major(::prisma_client_rust::Direction),
         ProjectId(::prisma_client_rust::Direction),
         Expectations(::prisma_client_rust::Direction),
         ShareAddressMlh(::prisma_client_rust::Direction),
@@ -11639,8 +12147,20 @@ pub mod registration {
                     educational_institution_type::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(direction.to_string()),
                 ),
-                Self::CodingExoerience(direction) => (
-                    coding_exoerience::NAME.to_string(),
+                Self::CodingExperience(direction) => (
+                    coding_experience::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::ShirtSize(direction) => (
+                    shirt_size::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::DietaryRestrictions(direction) => (
+                    dietary_restrictions::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::Allergies(direction) => (
+                    allergies::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(direction.to_string()),
                 ),
                 Self::EighteenBeforeEvent(direction) => (
@@ -11657,6 +12177,18 @@ pub mod registration {
                 ),
                 Self::Reference(direction) => (
                     reference::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::Resume(direction) => (
+                    resume::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::University(direction) => (
+                    university::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::Major(direction) => (
+                    major::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(direction.to_string()),
                 ),
                 Self::ProjectId(direction) => (
@@ -11708,11 +12240,17 @@ pub mod registration {
         FirstHackathon(_prisma::read_filters::BoolFilter),
         AcademicYear(_prisma::read_filters::StringFilter),
         EducationalInstitutionType(_prisma::read_filters::StringFilter),
-        CodingExoerience(_prisma::read_filters::StringNullableFilter),
+        CodingExperience(_prisma::read_filters::StringNullableFilter),
+        ShirtSize(_prisma::read_filters::StringFilter),
+        DietaryRestrictions(_prisma::read_filters::StringNullableFilter),
+        Allergies(_prisma::read_filters::StringNullableFilter),
         EighteenBeforeEvent(_prisma::read_filters::BoolFilter),
         MlhCoc(_prisma::read_filters::BoolFilter),
         MlhDcp(_prisma::read_filters::BoolFilter),
         Reference(_prisma::read_filters::StringNullableFilter),
+        Resume(_prisma::read_filters::StringNullableFilter),
+        University(_prisma::read_filters::StringFilter),
+        Major(_prisma::read_filters::StringFilter),
         ProjectId(_prisma::read_filters::StringNullableFilter),
         ProjectIsNull,
         ProjectIs(Vec<super::project::WhereParam>),
@@ -11801,11 +12339,17 @@ pub mod registration {
                 Self::EducationalInstitutionType(value) => {
                     (educational_institution_type::NAME, value.into())
                 }
-                Self::CodingExoerience(value) => (coding_exoerience::NAME, value.into()),
+                Self::CodingExperience(value) => (coding_experience::NAME, value.into()),
+                Self::ShirtSize(value) => (shirt_size::NAME, value.into()),
+                Self::DietaryRestrictions(value) => (dietary_restrictions::NAME, value.into()),
+                Self::Allergies(value) => (allergies::NAME, value.into()),
                 Self::EighteenBeforeEvent(value) => (eighteen_before_event::NAME, value.into()),
                 Self::MlhCoc(value) => (mlh_coc::NAME, value.into()),
                 Self::MlhDcp(value) => (mlh_dcp::NAME, value.into()),
                 Self::Reference(value) => (reference::NAME, value.into()),
+                Self::Resume(value) => (resume::NAME, value.into()),
+                Self::University(value) => (university::NAME, value.into()),
+                Self::Major(value) => (major::NAME, value.into()),
                 Self::ProjectId(value) => (project_id::NAME, value.into()),
                 Self::ProjectIsNull => (
                     project::NAME,
@@ -11918,11 +12462,17 @@ pub mod registration {
                 ::prisma_client_rust::sel(first_hackathon::NAME),
                 ::prisma_client_rust::sel(academic_year::NAME),
                 ::prisma_client_rust::sel(educational_institution_type::NAME),
-                ::prisma_client_rust::sel(coding_exoerience::NAME),
+                ::prisma_client_rust::sel(coding_experience::NAME),
+                ::prisma_client_rust::sel(shirt_size::NAME),
+                ::prisma_client_rust::sel(dietary_restrictions::NAME),
+                ::prisma_client_rust::sel(allergies::NAME),
                 ::prisma_client_rust::sel(eighteen_before_event::NAME),
                 ::prisma_client_rust::sel(mlh_coc::NAME),
                 ::prisma_client_rust::sel(mlh_dcp::NAME),
                 ::prisma_client_rust::sel(reference::NAME),
+                ::prisma_client_rust::sel(resume::NAME),
+                ::prisma_client_rust::sel(university::NAME),
+                ::prisma_client_rust::sel(major::NAME),
                 ::prisma_client_rust::sel(project_id::NAME),
                 ::prisma_client_rust::sel(expectations::NAME),
                 ::prisma_client_rust::sel(share_address_mlh::NAME),
@@ -11969,9 +12519,12 @@ pub mod registration {
             first_hackathon: bool,
             academic_year: String,
             educational_institution_type: String,
+            shirt_size: String,
             eighteen_before_event: bool,
             mlh_coc: bool,
             mlh_dcp: bool,
+            university: String,
+            major: String,
             veteran: bool,
             hackathon: super::hackathon::UniqueWhereParam,
             time: ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -11984,9 +12537,12 @@ pub mod registration {
                 first_hackathon::set(first_hackathon),
                 academic_year::set(academic_year),
                 educational_institution_type::set(educational_institution_type),
+                shirt_size::set(shirt_size),
                 eighteen_before_event::set(eighteen_before_event),
                 mlh_coc::set(mlh_coc),
                 mlh_dcp::set(mlh_dcp),
+                university::set(university),
+                major::set(major),
                 veteran::set(veteran),
                 hackathon::connect(hackathon),
                 time::set(time),
@@ -12001,9 +12557,12 @@ pub mod registration {
             first_hackathon: bool,
             academic_year: String,
             educational_institution_type: String,
+            shirt_size: String,
             eighteen_before_event: bool,
             mlh_coc: bool,
             mlh_dcp: bool,
+            university: String,
+            major: String,
             veteran: bool,
             hackathon_id: String,
             time: ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -12016,9 +12575,12 @@ pub mod registration {
                 first_hackathon::set(first_hackathon),
                 academic_year::set(academic_year),
                 educational_institution_type::set(educational_institution_type),
+                shirt_size::set(shirt_size),
                 eighteen_before_event::set(eighteen_before_event),
                 mlh_coc::set(mlh_coc),
                 mlh_dcp::set(mlh_dcp),
+                university::set(university),
+                major::set(major),
                 veteran::set(veteran),
                 hackathon_id::set(hackathon_id),
                 time::set(time),
@@ -12034,9 +12596,12 @@ pub mod registration {
                 bool,
                 String,
                 String,
+                String,
                 bool,
                 bool,
                 bool,
+                String,
+                String,
                 bool,
                 String,
                 ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -12053,9 +12618,12 @@ pub mod registration {
                         first_hackathon,
                         academic_year,
                         educational_institution_type,
+                        shirt_size,
                         eighteen_before_event,
                         mlh_coc,
                         mlh_dcp,
+                        university,
+                        major,
                         veteran,
                         hackathon_id,
                         time,
@@ -12068,9 +12636,12 @@ pub mod registration {
                             first_hackathon::set(first_hackathon),
                             academic_year::set(academic_year),
                             educational_institution_type::set(educational_institution_type),
+                            shirt_size::set(shirt_size),
                             eighteen_before_event::set(eighteen_before_event),
                             mlh_coc::set(mlh_coc),
                             mlh_dcp::set(mlh_dcp),
+                            university::set(university),
+                            major::set(major),
                             veteran::set(veteran),
                             hackathon_id::set(hackathon_id),
                             time::set(time),
@@ -12113,9 +12684,12 @@ pub mod registration {
                 first_hackathon,
                 academic_year,
                 educational_institution_type,
+                shirt_size,
                 eighteen_before_event,
                 mlh_coc,
                 mlh_dcp,
+                university,
+                major,
                 veteran,
                 hackathon,
                 time,
@@ -12127,9 +12701,12 @@ pub mod registration {
                 bool,
                 String,
                 String,
+                String,
                 bool,
                 bool,
                 bool,
+                String,
+                String,
                 bool,
                 super::hackathon::UniqueWhereParam,
                 ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -12144,9 +12721,12 @@ pub mod registration {
                 first_hackathon::set(first_hackathon),
                 academic_year::set(academic_year),
                 educational_institution_type::set(educational_institution_type),
+                shirt_size::set(shirt_size),
                 eighteen_before_event::set(eighteen_before_event),
                 mlh_coc::set(mlh_coc),
                 mlh_dcp::set(mlh_dcp),
+                university::set(university),
+                major::set(major),
                 veteran::set(veteran),
                 hackathon::connect(hackathon),
                 time::set(time),
@@ -14912,272 +15492,6 @@ pub mod user {
             }
         }
     }
-    pub mod shirt_size {
-        use super::super::*;
-        use super::_prisma::*;
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
-        };
-        pub const NAME: &str = "shirtSize";
-        pub struct Set(pub String);
-        impl From<Set> for SetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::SetShirtSize(v)
-            }
-        }
-        impl From<Set> for UncheckedSetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::ShirtSize(v)
-            }
-        }
-        pub fn set<T: From<Set>>(value: String) -> T {
-            Set(value).into()
-        }
-        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
-            OrderByParam::ShirtSize(direction)
-        }
-        pub fn equals(value: String) -> WhereParam {
-            WhereParam::ShirtSize(_prisma::read_filters::StringFilter::Equals(value))
-        }
-        ::prisma_client_rust::scalar_where_param_fns!(
-            _prisma::read_filters::StringFilter,
-            ShirtSize,
-            {
-                fn in_vec(_: Vec<String>) -> InVec;
-                fn not_in_vec(_: Vec<String>) -> NotInVec;
-                fn lt(_: String) -> Lt;
-                fn lte(_: String) -> Lte;
-                fn gt(_: String) -> Gt;
-                fn gte(_: String) -> Gte;
-                fn contains(_: String) -> Contains;
-                fn starts_with(_: String) -> StartsWith;
-                fn ends_with(_: String) -> EndsWith;
-                fn not(_: String) -> Not;
-            }
-        );
-        pub struct Include;
-        impl Into<super::IncludeParam> for Include {
-            fn into(self) -> super::IncludeParam {
-                super::IncludeParam::ShirtSize(self)
-            }
-        }
-        impl Include {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-        pub struct Select;
-        impl Into<super::SelectParam> for Select {
-            fn into(self) -> super::SelectParam {
-                super::SelectParam::ShirtSize(self)
-            }
-        }
-        impl Select {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-    }
-    pub mod dietary_restrictions {
-        use super::super::*;
-        use super::_prisma::*;
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
-        };
-        pub const NAME: &str = "dietaryRestrictions";
-        pub struct Set(pub Option<String>);
-        impl From<Set> for SetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::SetDietaryRestrictions(v)
-            }
-        }
-        impl From<Set> for UncheckedSetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::DietaryRestrictions(v)
-            }
-        }
-        pub fn set<T: From<Set>>(value: Option<String>) -> T {
-            Set(value).into()
-        }
-        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
-            OrderByParam::DietaryRestrictions(direction)
-        }
-        pub fn equals(value: Option<String>) -> WhereParam {
-            WhereParam::DietaryRestrictions(_prisma::read_filters::StringNullableFilter::Equals(
-                value,
-            ))
-        }
-        ::prisma_client_rust::scalar_where_param_fns!(
-            _prisma::read_filters::StringNullableFilter,
-            DietaryRestrictions,
-            {
-                fn in_vec(_: Vec<String>) -> InVec;
-                fn not_in_vec(_: Vec<String>) -> NotInVec;
-                fn lt(_: String) -> Lt;
-                fn lte(_: String) -> Lte;
-                fn gt(_: String) -> Gt;
-                fn gte(_: String) -> Gte;
-                fn contains(_: String) -> Contains;
-                fn starts_with(_: String) -> StartsWith;
-                fn ends_with(_: String) -> EndsWith;
-                fn not(_: Option<String>) -> Not;
-            }
-        );
-        pub struct Include;
-        impl Into<super::IncludeParam> for Include {
-            fn into(self) -> super::IncludeParam {
-                super::IncludeParam::DietaryRestrictions(self)
-            }
-        }
-        impl Include {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-        pub struct Select;
-        impl Into<super::SelectParam> for Select {
-            fn into(self) -> super::SelectParam {
-                super::SelectParam::DietaryRestrictions(self)
-            }
-        }
-        impl Select {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-    }
-    pub mod allergies {
-        use super::super::*;
-        use super::_prisma::*;
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
-        };
-        pub const NAME: &str = "allergies";
-        pub struct Set(pub Option<String>);
-        impl From<Set> for SetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::SetAllergies(v)
-            }
-        }
-        impl From<Set> for UncheckedSetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::Allergies(v)
-            }
-        }
-        pub fn set<T: From<Set>>(value: Option<String>) -> T {
-            Set(value).into()
-        }
-        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
-            OrderByParam::Allergies(direction)
-        }
-        pub fn equals(value: Option<String>) -> WhereParam {
-            WhereParam::Allergies(_prisma::read_filters::StringNullableFilter::Equals(value))
-        }
-        ::prisma_client_rust::scalar_where_param_fns!(
-            _prisma::read_filters::StringNullableFilter,
-            Allergies,
-            {
-                fn in_vec(_: Vec<String>) -> InVec;
-                fn not_in_vec(_: Vec<String>) -> NotInVec;
-                fn lt(_: String) -> Lt;
-                fn lte(_: String) -> Lte;
-                fn gt(_: String) -> Gt;
-                fn gte(_: String) -> Gte;
-                fn contains(_: String) -> Contains;
-                fn starts_with(_: String) -> StartsWith;
-                fn ends_with(_: String) -> EndsWith;
-                fn not(_: Option<String>) -> Not;
-            }
-        );
-        pub struct Include;
-        impl Into<super::IncludeParam> for Include {
-            fn into(self) -> super::IncludeParam {
-                super::IncludeParam::Allergies(self)
-            }
-        }
-        impl Include {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-        pub struct Select;
-        impl Into<super::SelectParam> for Select {
-            fn into(self) -> super::SelectParam {
-                super::SelectParam::Allergies(self)
-            }
-        }
-        impl Select {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-    }
-    pub mod university {
-        use super::super::*;
-        use super::_prisma::*;
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
-        };
-        pub const NAME: &str = "university";
-        pub struct Set(pub String);
-        impl From<Set> for SetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::SetUniversity(v)
-            }
-        }
-        impl From<Set> for UncheckedSetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::University(v)
-            }
-        }
-        pub fn set<T: From<Set>>(value: String) -> T {
-            Set(value).into()
-        }
-        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
-            OrderByParam::University(direction)
-        }
-        pub fn equals(value: String) -> WhereParam {
-            WhereParam::University(_prisma::read_filters::StringFilter::Equals(value))
-        }
-        ::prisma_client_rust::scalar_where_param_fns!(
-            _prisma::read_filters::StringFilter,
-            University,
-            {
-                fn in_vec(_: Vec<String>) -> InVec;
-                fn not_in_vec(_: Vec<String>) -> NotInVec;
-                fn lt(_: String) -> Lt;
-                fn lte(_: String) -> Lte;
-                fn gt(_: String) -> Gt;
-                fn gte(_: String) -> Gte;
-                fn contains(_: String) -> Contains;
-                fn starts_with(_: String) -> StartsWith;
-                fn ends_with(_: String) -> EndsWith;
-                fn not(_: String) -> Not;
-            }
-        );
-        pub struct Include;
-        impl Into<super::IncludeParam> for Include {
-            fn into(self) -> super::IncludeParam {
-                super::IncludeParam::University(self)
-            }
-        }
-        impl Include {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-        pub struct Select;
-        impl Into<super::SelectParam> for Select {
-            fn into(self) -> super::SelectParam {
-                super::SelectParam::University(self)
-            }
-        }
-        impl Select {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-    }
     pub mod email {
         use super::super::*;
         use super::_prisma::*;
@@ -15236,72 +15550,6 @@ pub mod user {
         impl Into<super::SelectParam> for Select {
             fn into(self) -> super::SelectParam {
                 super::SelectParam::Email(self)
-            }
-        }
-        impl Select {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-    }
-    pub mod major {
-        use super::super::*;
-        use super::_prisma::*;
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
-        };
-        pub const NAME: &str = "major";
-        pub struct Set(pub String);
-        impl From<Set> for SetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::SetMajor(v)
-            }
-        }
-        impl From<Set> for UncheckedSetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::Major(v)
-            }
-        }
-        pub fn set<T: From<Set>>(value: String) -> T {
-            Set(value).into()
-        }
-        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
-            OrderByParam::Major(direction)
-        }
-        pub fn equals(value: String) -> WhereParam {
-            WhereParam::Major(_prisma::read_filters::StringFilter::Equals(value))
-        }
-        ::prisma_client_rust::scalar_where_param_fns!(
-            _prisma::read_filters::StringFilter,
-            Major,
-            {
-                fn in_vec(_: Vec<String>) -> InVec;
-                fn not_in_vec(_: Vec<String>) -> NotInVec;
-                fn lt(_: String) -> Lt;
-                fn lte(_: String) -> Lte;
-                fn gt(_: String) -> Gt;
-                fn gte(_: String) -> Gte;
-                fn contains(_: String) -> Contains;
-                fn starts_with(_: String) -> StartsWith;
-                fn ends_with(_: String) -> EndsWith;
-                fn not(_: String) -> Not;
-            }
-        );
-        pub struct Include;
-        impl Into<super::IncludeParam> for Include {
-            fn into(self) -> super::IncludeParam {
-                super::IncludeParam::Major(self)
-            }
-        }
-        impl Include {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-        pub struct Select;
-        impl Into<super::SelectParam> for Select {
-            fn into(self) -> super::SelectParam {
-                super::SelectParam::Major(self)
             }
         }
         impl Select {
@@ -15500,72 +15748,6 @@ pub mod user {
         impl Into<super::SelectParam> for Select {
             fn into(self) -> super::SelectParam {
                 super::SelectParam::Race(self)
-            }
-        }
-        impl Select {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-    }
-    pub mod resume {
-        use super::super::*;
-        use super::_prisma::*;
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
-        };
-        pub const NAME: &str = "resume";
-        pub struct Set(pub Option<String>);
-        impl From<Set> for SetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::SetResume(v)
-            }
-        }
-        impl From<Set> for UncheckedSetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::Resume(v)
-            }
-        }
-        pub fn set<T: From<Set>>(value: Option<String>) -> T {
-            Set(value).into()
-        }
-        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
-            OrderByParam::Resume(direction)
-        }
-        pub fn equals(value: Option<String>) -> WhereParam {
-            WhereParam::Resume(_prisma::read_filters::StringNullableFilter::Equals(value))
-        }
-        ::prisma_client_rust::scalar_where_param_fns!(
-            _prisma::read_filters::StringNullableFilter,
-            Resume,
-            {
-                fn in_vec(_: Vec<String>) -> InVec;
-                fn not_in_vec(_: Vec<String>) -> NotInVec;
-                fn lt(_: String) -> Lt;
-                fn lte(_: String) -> Lte;
-                fn gt(_: String) -> Gt;
-                fn gte(_: String) -> Gte;
-                fn contains(_: String) -> Contains;
-                fn starts_with(_: String) -> StartsWith;
-                fn ends_with(_: String) -> EndsWith;
-                fn not(_: Option<String>) -> Not;
-            }
-        );
-        pub struct Include;
-        impl Into<super::IncludeParam> for Include {
-            fn into(self) -> super::IncludeParam {
-                super::IncludeParam::Resume(self)
-            }
-        }
-        impl Include {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-        pub struct Select;
-        impl Into<super::SelectParam> for Select {
-            fn into(self) -> super::SelectParam {
-                super::SelectParam::Resume(self)
             }
         }
         impl Select {
@@ -15968,20 +16150,82 @@ pub mod user {
             }
         }
     }
+    pub mod gcp_id {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "gcpId";
+        pub struct Set(pub String);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetGcpId(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::GcpId(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: String) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::GcpId(direction)
+        }
+        pub fn equals<T: From<UniqueWhereParam>>(value: String) -> T {
+            UniqueWhereParam::GcpIdEquals(value).into()
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::StringFilter,
+            GcpId,
+            {
+                fn in_vec(_: Vec<String>) -> InVec;
+                fn not_in_vec(_: Vec<String>) -> NotInVec;
+                fn lt(_: String) -> Lt;
+                fn lte(_: String) -> Lte;
+                fn gt(_: String) -> Gt;
+                fn gte(_: String) -> Gte;
+                fn contains(_: String) -> Contains;
+                fn starts_with(_: String) -> StartsWith;
+                fn ends_with(_: String) -> EndsWith;
+                fn not(_: String) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::GcpId(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::GcpId(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
     pub fn create(
         first_name: String,
         last_name: String,
         gender: String,
-        shirt_size: String,
-        university: String,
         email: String,
-        major: String,
         phone: String,
         country: String,
+        gcp_id: String,
         _params: Vec<SetParam>,
     ) -> (
-        String,
-        String,
         String,
         String,
         String,
@@ -15992,24 +16236,19 @@ pub mod user {
         Vec<SetParam>,
     ) {
         (
-            first_name, last_name, gender, shirt_size, university, email, major, phone, country,
-            _params,
+            first_name, last_name, gender, email, phone, country, gcp_id, _params,
         )
     }
     pub fn create_unchecked(
         first_name: String,
         last_name: String,
         gender: String,
-        shirt_size: String,
-        university: String,
         email: String,
-        major: String,
         phone: String,
         country: String,
+        gcp_id: String,
         _params: Vec<SetParam>,
     ) -> (
-        String,
-        String,
         String,
         String,
         String,
@@ -16020,31 +16259,25 @@ pub mod user {
         Vec<SetParam>,
     ) {
         (
-            first_name, last_name, gender, shirt_size, university, email, major, phone, country,
-            _params,
+            first_name, last_name, gender, email, phone, country, gcp_id, _params,
         )
     }
     #[macro_export]
-    macro_rules ! _select_user { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: user :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: user :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: user :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: user :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: user :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: user :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , first_name , last_name , gender , shirt_size , dietary_restrictions , allergies , university , email , major , phone , country , race , resume , extra_credit_assignment , registration , scan } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: user :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: user :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: user :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: user :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "firstName" , "lastName" , "gender" , "shirtSize" , "dietaryRestrictions" , "allergies" , "university" , "email" , "major" , "phone" , "country" , "race" , "resume" , "ExtraCreditAssignment" , "Registration" , "Scan"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: user :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { String } ; (@ field_type ; first_name) => { String } ; (@ field_type ; last_name) => { String } ; (@ field_type ; gender) => { String } ; (@ field_type ; shirt_size) => { String } ; (@ field_type ; dietary_restrictions) => { Option < String > } ; (@ field_type ; allergies) => { Option < String > } ; (@ field_type ; university) => { String } ; (@ field_type ; email) => { String } ; (@ field_type ; major) => { String } ; (@ field_type ; phone) => { String } ; (@ field_type ; country) => { String } ; (@ field_type ; race) => { Option < String > } ; (@ field_type ; resume) => { Option < String > } ; (@ field_type ; extra_credit_assignment : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < extra_credit_assignment :: Data > } ; (@ field_type ; extra_credit_assignment) => { Vec < crate :: prisma :: extra_credit_assignment :: Data > } ; (@ field_type ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < registration :: Data > } ; (@ field_type ; registration) => { Vec < crate :: prisma :: registration :: Data > } ; (@ field_type ; scan : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < scan :: Data > } ; (@ field_type ; scan) => { Vec < crate :: prisma :: scan :: Data > } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "User" , available relations are "id, first_name, last_name, gender, shirt_size, dietary_restrictions, allergies, university, email, major, phone, country, race, resume, extra_credit_assignment, registration, scan")) } ; (@ field_module ; extra_credit_assignment : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: extra_credit_assignment :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: registration :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; scan : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: scan :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: id :: Select) } ; (@ selection_field_to_selection_param ; first_name) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: first_name :: Select) } ; (@ selection_field_to_selection_param ; last_name) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: last_name :: Select) } ; (@ selection_field_to_selection_param ; gender) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: gender :: Select) } ; (@ selection_field_to_selection_param ; shirt_size) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: shirt_size :: Select) } ; (@ selection_field_to_selection_param ; dietary_restrictions) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: dietary_restrictions :: Select) } ; (@ selection_field_to_selection_param ; allergies) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: allergies :: Select) } ; (@ selection_field_to_selection_param ; university) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: university :: Select) } ; (@ selection_field_to_selection_param ; email) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: email :: Select) } ; (@ selection_field_to_selection_param ; major) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: major :: Select) } ; (@ selection_field_to_selection_param ; phone) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: phone :: Select) } ; (@ selection_field_to_selection_param ; country) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: country :: Select) } ; (@ selection_field_to_selection_param ; race) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: race :: Select) } ; (@ selection_field_to_selection_param ; resume) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: resume :: Select) } ; (@ selection_field_to_selection_param ; extra_credit_assignment $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: extra_credit_assignment :: Select :: $ selection_mode (crate :: prisma :: extra_credit_assignment :: ManyArgs :: new (crate :: prisma :: extra_credit_assignment :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: extra_credit_assignment :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; extra_credit_assignment $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: extra_credit_assignment :: Select :: Fetch (crate :: prisma :: extra_credit_assignment :: ManyArgs :: new (crate :: prisma :: extra_credit_assignment :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: registration :: Select :: $ selection_mode (crate :: prisma :: registration :: ManyArgs :: new (crate :: prisma :: registration :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: registration :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: registration :: Select :: Fetch (crate :: prisma :: registration :: ManyArgs :: new (crate :: prisma :: registration :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; scan $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: scan :: Select :: $ selection_mode (crate :: prisma :: scan :: ManyArgs :: new (crate :: prisma :: scan :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: scan :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; scan $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: scan :: Select :: Fetch (crate :: prisma :: scan :: ManyArgs :: new (crate :: prisma :: scan :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: user :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; first_name) => { "firstName" } ; (@ field_serde_name ; last_name) => { "lastName" } ; (@ field_serde_name ; gender) => { "gender" } ; (@ field_serde_name ; shirt_size) => { "shirtSize" } ; (@ field_serde_name ; dietary_restrictions) => { "dietaryRestrictions" } ; (@ field_serde_name ; allergies) => { "allergies" } ; (@ field_serde_name ; university) => { "university" } ; (@ field_serde_name ; email) => { "email" } ; (@ field_serde_name ; major) => { "major" } ; (@ field_serde_name ; phone) => { "phone" } ; (@ field_serde_name ; country) => { "country" } ; (@ field_serde_name ; race) => { "race" } ; (@ field_serde_name ; resume) => { "resume" } ; (@ field_serde_name ; extra_credit_assignment) => { "ExtraCreditAssignment" } ; (@ field_serde_name ; registration) => { "Registration" } ; (@ field_serde_name ; scan) => { "Scan" } ; }
+    macro_rules ! _select_user { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: user :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: user :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: user :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: user :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: user :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: user :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , first_name , last_name , gender , email , phone , country , race , extra_credit_assignment , registration , scan , gcp_id } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: user :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: user :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: user :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: user :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "firstName" , "lastName" , "gender" , "email" , "phone" , "country" , "race" , "ExtraCreditAssignment" , "Registration" , "Scan" , "gcpId"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: user :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { String } ; (@ field_type ; first_name) => { String } ; (@ field_type ; last_name) => { String } ; (@ field_type ; gender) => { String } ; (@ field_type ; email) => { String } ; (@ field_type ; phone) => { String } ; (@ field_type ; country) => { String } ; (@ field_type ; race) => { Option < String > } ; (@ field_type ; extra_credit_assignment : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < extra_credit_assignment :: Data > } ; (@ field_type ; extra_credit_assignment) => { Vec < crate :: prisma :: extra_credit_assignment :: Data > } ; (@ field_type ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < registration :: Data > } ; (@ field_type ; registration) => { Vec < crate :: prisma :: registration :: Data > } ; (@ field_type ; scan : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < scan :: Data > } ; (@ field_type ; scan) => { Vec < crate :: prisma :: scan :: Data > } ; (@ field_type ; gcp_id) => { String } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "User" , available relations are "id, first_name, last_name, gender, email, phone, country, race, extra_credit_assignment, registration, scan, gcp_id")) } ; (@ field_module ; extra_credit_assignment : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: extra_credit_assignment :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: registration :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; scan : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: scan :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: id :: Select) } ; (@ selection_field_to_selection_param ; first_name) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: first_name :: Select) } ; (@ selection_field_to_selection_param ; last_name) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: last_name :: Select) } ; (@ selection_field_to_selection_param ; gender) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: gender :: Select) } ; (@ selection_field_to_selection_param ; email) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: email :: Select) } ; (@ selection_field_to_selection_param ; phone) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: phone :: Select) } ; (@ selection_field_to_selection_param ; country) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: country :: Select) } ; (@ selection_field_to_selection_param ; race) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: race :: Select) } ; (@ selection_field_to_selection_param ; extra_credit_assignment $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: extra_credit_assignment :: Select :: $ selection_mode (crate :: prisma :: extra_credit_assignment :: ManyArgs :: new (crate :: prisma :: extra_credit_assignment :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: extra_credit_assignment :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; extra_credit_assignment $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: extra_credit_assignment :: Select :: Fetch (crate :: prisma :: extra_credit_assignment :: ManyArgs :: new (crate :: prisma :: extra_credit_assignment :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: registration :: Select :: $ selection_mode (crate :: prisma :: registration :: ManyArgs :: new (crate :: prisma :: registration :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: registration :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: registration :: Select :: Fetch (crate :: prisma :: registration :: ManyArgs :: new (crate :: prisma :: registration :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; scan $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: scan :: Select :: $ selection_mode (crate :: prisma :: scan :: ManyArgs :: new (crate :: prisma :: scan :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: scan :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; scan $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: scan :: Select :: Fetch (crate :: prisma :: scan :: ManyArgs :: new (crate :: prisma :: scan :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; gcp_id) => { Into :: < crate :: prisma :: user :: SelectParam > :: into (crate :: prisma :: user :: gcp_id :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: user :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; first_name) => { "firstName" } ; (@ field_serde_name ; last_name) => { "lastName" } ; (@ field_serde_name ; gender) => { "gender" } ; (@ field_serde_name ; email) => { "email" } ; (@ field_serde_name ; phone) => { "phone" } ; (@ field_serde_name ; country) => { "country" } ; (@ field_serde_name ; race) => { "race" } ; (@ field_serde_name ; extra_credit_assignment) => { "ExtraCreditAssignment" } ; (@ field_serde_name ; registration) => { "Registration" } ; (@ field_serde_name ; scan) => { "Scan" } ; (@ field_serde_name ; gcp_id) => { "gcpId" } ; }
     pub use _select_user as select;
     pub enum SelectParam {
         Id(id::Select),
         FirstName(first_name::Select),
         LastName(last_name::Select),
         Gender(gender::Select),
-        ShirtSize(shirt_size::Select),
-        DietaryRestrictions(dietary_restrictions::Select),
-        Allergies(allergies::Select),
-        University(university::Select),
         Email(email::Select),
-        Major(major::Select),
         Phone(phone::Select),
         Country(country::Select),
         Race(race::Select),
-        Resume(resume::Select),
         ExtraCreditAssignment(extra_credit_assignment::Select),
         Registration(registration::Select),
         Scan(scan::Select),
+        GcpId(gcp_id::Select),
     }
     impl SelectParam {
         pub fn to_selection(self) -> ::prisma_client_rust::Selection {
@@ -16053,43 +16286,33 @@ pub mod user {
                 Self::FirstName(data) => data.to_selection(),
                 Self::LastName(data) => data.to_selection(),
                 Self::Gender(data) => data.to_selection(),
-                Self::ShirtSize(data) => data.to_selection(),
-                Self::DietaryRestrictions(data) => data.to_selection(),
-                Self::Allergies(data) => data.to_selection(),
-                Self::University(data) => data.to_selection(),
                 Self::Email(data) => data.to_selection(),
-                Self::Major(data) => data.to_selection(),
                 Self::Phone(data) => data.to_selection(),
                 Self::Country(data) => data.to_selection(),
                 Self::Race(data) => data.to_selection(),
-                Self::Resume(data) => data.to_selection(),
                 Self::ExtraCreditAssignment(data) => data.to_selection(),
                 Self::Registration(data) => data.to_selection(),
                 Self::Scan(data) => data.to_selection(),
+                Self::GcpId(data) => data.to_selection(),
             }
         }
     }
     #[macro_export]
-    macro_rules ! _include_user { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: user :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: user :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: user :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: user :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: user :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: user :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: user :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: user :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { extra_credit_assignment , registration , scan } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { pub id : String , pub first_name : String , pub last_name : String , pub gender : String , pub shirt_size : String , pub dietary_restrictions : Option < String > , pub allergies : Option < String > , pub university : String , pub email : String , pub major : String , pub phone : String , pub country : String , pub race : Option < String > , pub resume : Option < String > , $ (pub $ field : crate :: prisma :: user :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (id) , stringify ! (first_name) , stringify ! (last_name) , stringify ! (gender) , stringify ! (shirt_size) , stringify ! (dietary_restrictions) , stringify ! (allergies) , stringify ! (university) , stringify ! (email) , stringify ! (major) , stringify ! (phone) , stringify ! (country) , stringify ! (race) , stringify ! (resume)] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: user :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: prisma :: user :: id :: NAME , & self . id) ? ; state . serialize_field (crate :: prisma :: user :: first_name :: NAME , & self . first_name) ? ; state . serialize_field (crate :: prisma :: user :: last_name :: NAME , & self . last_name) ? ; state . serialize_field (crate :: prisma :: user :: gender :: NAME , & self . gender) ? ; state . serialize_field (crate :: prisma :: user :: shirt_size :: NAME , & self . shirt_size) ? ; state . serialize_field (crate :: prisma :: user :: dietary_restrictions :: NAME , & self . dietary_restrictions) ? ; state . serialize_field (crate :: prisma :: user :: allergies :: NAME , & self . allergies) ? ; state . serialize_field (crate :: prisma :: user :: university :: NAME , & self . university) ? ; state . serialize_field (crate :: prisma :: user :: email :: NAME , & self . email) ? ; state . serialize_field (crate :: prisma :: user :: major :: NAME , & self . major) ? ; state . serialize_field (crate :: prisma :: user :: phone :: NAME , & self . phone) ? ; state . serialize_field (crate :: prisma :: user :: country :: NAME , & self . country) ? ; state . serialize_field (crate :: prisma :: user :: race :: NAME , & self . race) ? ; state . serialize_field (crate :: prisma :: user :: resume :: NAME , & self . resume) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , id , first_name , last_name , gender , shirt_size , dietary_restrictions , allergies , university , email , major , phone , country , race , resume } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: user :: $ field :: NAME) , + , crate :: prisma :: user :: id :: NAME , crate :: prisma :: user :: first_name :: NAME , crate :: prisma :: user :: last_name :: NAME , crate :: prisma :: user :: gender :: NAME , crate :: prisma :: user :: shirt_size :: NAME , crate :: prisma :: user :: dietary_restrictions :: NAME , crate :: prisma :: user :: allergies :: NAME , crate :: prisma :: user :: university :: NAME , crate :: prisma :: user :: email :: NAME , crate :: prisma :: user :: major :: NAME , crate :: prisma :: user :: phone :: NAME , crate :: prisma :: user :: country :: NAME , crate :: prisma :: user :: race :: NAME , crate :: prisma :: user :: resume :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: user :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: prisma :: user :: id :: NAME => Ok (Field :: id) , crate :: prisma :: user :: first_name :: NAME => Ok (Field :: first_name) , crate :: prisma :: user :: last_name :: NAME => Ok (Field :: last_name) , crate :: prisma :: user :: gender :: NAME => Ok (Field :: gender) , crate :: prisma :: user :: shirt_size :: NAME => Ok (Field :: shirt_size) , crate :: prisma :: user :: dietary_restrictions :: NAME => Ok (Field :: dietary_restrictions) , crate :: prisma :: user :: allergies :: NAME => Ok (Field :: allergies) , crate :: prisma :: user :: university :: NAME => Ok (Field :: university) , crate :: prisma :: user :: email :: NAME => Ok (Field :: email) , crate :: prisma :: user :: major :: NAME => Ok (Field :: major) , crate :: prisma :: user :: phone :: NAME => Ok (Field :: phone) , crate :: prisma :: user :: country :: NAME => Ok (Field :: country) , crate :: prisma :: user :: race :: NAME => Ok (Field :: race) , crate :: prisma :: user :: resume :: NAME => Ok (Field :: resume) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut id = None ; let mut first_name = None ; let mut last_name = None ; let mut gender = None ; let mut shirt_size = None ; let mut dietary_restrictions = None ; let mut allergies = None ; let mut university = None ; let mut email = None ; let mut major = None ; let mut phone = None ; let mut country = None ; let mut race = None ; let mut resume = None ; while let Some (key) = map . next_key () ? { match key { Field :: id => { if id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: id :: NAME)) ; } id = Some (map . next_value () ?) ; } Field :: first_name => { if first_name . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: first_name :: NAME)) ; } first_name = Some (map . next_value () ?) ; } Field :: last_name => { if last_name . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: last_name :: NAME)) ; } last_name = Some (map . next_value () ?) ; } Field :: gender => { if gender . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: gender :: NAME)) ; } gender = Some (map . next_value () ?) ; } Field :: shirt_size => { if shirt_size . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: shirt_size :: NAME)) ; } shirt_size = Some (map . next_value () ?) ; } Field :: dietary_restrictions => { if dietary_restrictions . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: dietary_restrictions :: NAME)) ; } dietary_restrictions = Some (map . next_value () ?) ; } Field :: allergies => { if allergies . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: allergies :: NAME)) ; } allergies = Some (map . next_value () ?) ; } Field :: university => { if university . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: university :: NAME)) ; } university = Some (map . next_value () ?) ; } Field :: email => { if email . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: email :: NAME)) ; } email = Some (map . next_value () ?) ; } Field :: major => { if major . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: major :: NAME)) ; } major = Some (map . next_value () ?) ; } Field :: phone => { if phone . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: phone :: NAME)) ; } phone = Some (map . next_value () ?) ; } Field :: country => { if country . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: country :: NAME)) ; } country = Some (map . next_value () ?) ; } Field :: race => { if race . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: race :: NAME)) ; } race = Some (map . next_value () ?) ; } Field :: resume => { if resume . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: resume :: NAME)) ; } resume = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: $ field :: NAME)) ? ;) * let id = id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: id :: NAME)) ? ; let first_name = first_name . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: first_name :: NAME)) ? ; let last_name = last_name . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: last_name :: NAME)) ? ; let gender = gender . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: gender :: NAME)) ? ; let shirt_size = shirt_size . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: shirt_size :: NAME)) ? ; let dietary_restrictions = dietary_restrictions . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: dietary_restrictions :: NAME)) ? ; let allergies = allergies . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: allergies :: NAME)) ? ; let university = university . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: university :: NAME)) ? ; let email = email . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: email :: NAME)) ? ; let major = major . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: major :: NAME)) ? ; let phone = phone . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: phone :: NAME)) ? ; let country = country . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: country :: NAME)) ? ; let race = race . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: race :: NAME)) ? ; let resume = resume . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: resume :: NAME)) ? ; Ok (Data { id , first_name , last_name , gender , shirt_size , dietary_restrictions , allergies , university , email , major , phone , country , race , resume , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "firstName" , "lastName" , "gender" , "shirtSize" , "dietaryRestrictions" , "allergies" , "university" , "email" , "major" , "phone" , "country" , "race" , "resume" , "ExtraCreditAssignment" , "Registration" , "Scan"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: user :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; extra_credit_assignment : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < extra_credit_assignment :: Data > } ; (@ field_type ; extra_credit_assignment) => { Vec < crate :: prisma :: extra_credit_assignment :: Data > } ; (@ field_type ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < registration :: Data > } ; (@ field_type ; registration) => { Vec < crate :: prisma :: registration :: Data > } ; (@ field_type ; scan : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < scan :: Data > } ; (@ field_type ; scan) => { Vec < crate :: prisma :: scan :: Data > } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "User" , available relations are "extra_credit_assignment, registration, scan")) } ; (@ field_module ; extra_credit_assignment : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: extra_credit_assignment :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: registration :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; scan : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: scan :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; extra_credit_assignment $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: user :: IncludeParam > :: into (crate :: prisma :: user :: extra_credit_assignment :: Include :: $ selection_mode (crate :: prisma :: extra_credit_assignment :: ManyArgs :: new (crate :: prisma :: extra_credit_assignment :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: extra_credit_assignment :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; extra_credit_assignment $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: user :: IncludeParam > :: into (crate :: prisma :: user :: extra_credit_assignment :: Include :: Fetch (crate :: prisma :: extra_credit_assignment :: ManyArgs :: new (crate :: prisma :: extra_credit_assignment :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: user :: IncludeParam > :: into (crate :: prisma :: user :: registration :: Include :: $ selection_mode (crate :: prisma :: registration :: ManyArgs :: new (crate :: prisma :: registration :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: registration :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: user :: IncludeParam > :: into (crate :: prisma :: user :: registration :: Include :: Fetch (crate :: prisma :: registration :: ManyArgs :: new (crate :: prisma :: registration :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; scan $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: user :: IncludeParam > :: into (crate :: prisma :: user :: scan :: Include :: $ selection_mode (crate :: prisma :: scan :: ManyArgs :: new (crate :: prisma :: scan :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: scan :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; scan $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: user :: IncludeParam > :: into (crate :: prisma :: user :: scan :: Include :: Fetch (crate :: prisma :: scan :: ManyArgs :: new (crate :: prisma :: scan :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: user :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; first_name) => { "firstName" } ; (@ field_serde_name ; last_name) => { "lastName" } ; (@ field_serde_name ; gender) => { "gender" } ; (@ field_serde_name ; shirt_size) => { "shirtSize" } ; (@ field_serde_name ; dietary_restrictions) => { "dietaryRestrictions" } ; (@ field_serde_name ; allergies) => { "allergies" } ; (@ field_serde_name ; university) => { "university" } ; (@ field_serde_name ; email) => { "email" } ; (@ field_serde_name ; major) => { "major" } ; (@ field_serde_name ; phone) => { "phone" } ; (@ field_serde_name ; country) => { "country" } ; (@ field_serde_name ; race) => { "race" } ; (@ field_serde_name ; resume) => { "resume" } ; (@ field_serde_name ; extra_credit_assignment) => { "ExtraCreditAssignment" } ; (@ field_serde_name ; registration) => { "Registration" } ; (@ field_serde_name ; scan) => { "Scan" } ; }
+    macro_rules ! _include_user { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: user :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: user :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: user :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: user :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: user :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: user :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: user :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: user :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { extra_credit_assignment , registration , scan } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { pub id : String , pub first_name : String , pub last_name : String , pub gender : String , pub email : String , pub phone : String , pub country : String , pub race : Option < String > , pub gcp_id : String , $ (pub $ field : crate :: prisma :: user :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (id) , stringify ! (first_name) , stringify ! (last_name) , stringify ! (gender) , stringify ! (email) , stringify ! (phone) , stringify ! (country) , stringify ! (race) , stringify ! (gcp_id)] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: user :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: prisma :: user :: id :: NAME , & self . id) ? ; state . serialize_field (crate :: prisma :: user :: first_name :: NAME , & self . first_name) ? ; state . serialize_field (crate :: prisma :: user :: last_name :: NAME , & self . last_name) ? ; state . serialize_field (crate :: prisma :: user :: gender :: NAME , & self . gender) ? ; state . serialize_field (crate :: prisma :: user :: email :: NAME , & self . email) ? ; state . serialize_field (crate :: prisma :: user :: phone :: NAME , & self . phone) ? ; state . serialize_field (crate :: prisma :: user :: country :: NAME , & self . country) ? ; state . serialize_field (crate :: prisma :: user :: race :: NAME , & self . race) ? ; state . serialize_field (crate :: prisma :: user :: gcp_id :: NAME , & self . gcp_id) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , id , first_name , last_name , gender , email , phone , country , race , gcp_id } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: user :: $ field :: NAME) , + , crate :: prisma :: user :: id :: NAME , crate :: prisma :: user :: first_name :: NAME , crate :: prisma :: user :: last_name :: NAME , crate :: prisma :: user :: gender :: NAME , crate :: prisma :: user :: email :: NAME , crate :: prisma :: user :: phone :: NAME , crate :: prisma :: user :: country :: NAME , crate :: prisma :: user :: race :: NAME , crate :: prisma :: user :: gcp_id :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: user :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: prisma :: user :: id :: NAME => Ok (Field :: id) , crate :: prisma :: user :: first_name :: NAME => Ok (Field :: first_name) , crate :: prisma :: user :: last_name :: NAME => Ok (Field :: last_name) , crate :: prisma :: user :: gender :: NAME => Ok (Field :: gender) , crate :: prisma :: user :: email :: NAME => Ok (Field :: email) , crate :: prisma :: user :: phone :: NAME => Ok (Field :: phone) , crate :: prisma :: user :: country :: NAME => Ok (Field :: country) , crate :: prisma :: user :: race :: NAME => Ok (Field :: race) , crate :: prisma :: user :: gcp_id :: NAME => Ok (Field :: gcp_id) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut id = None ; let mut first_name = None ; let mut last_name = None ; let mut gender = None ; let mut email = None ; let mut phone = None ; let mut country = None ; let mut race = None ; let mut gcp_id = None ; while let Some (key) = map . next_key () ? { match key { Field :: id => { if id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: id :: NAME)) ; } id = Some (map . next_value () ?) ; } Field :: first_name => { if first_name . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: first_name :: NAME)) ; } first_name = Some (map . next_value () ?) ; } Field :: last_name => { if last_name . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: last_name :: NAME)) ; } last_name = Some (map . next_value () ?) ; } Field :: gender => { if gender . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: gender :: NAME)) ; } gender = Some (map . next_value () ?) ; } Field :: email => { if email . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: email :: NAME)) ; } email = Some (map . next_value () ?) ; } Field :: phone => { if phone . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: phone :: NAME)) ; } phone = Some (map . next_value () ?) ; } Field :: country => { if country . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: country :: NAME)) ; } country = Some (map . next_value () ?) ; } Field :: race => { if race . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: race :: NAME)) ; } race = Some (map . next_value () ?) ; } Field :: gcp_id => { if gcp_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: gcp_id :: NAME)) ; } gcp_id = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: user :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: $ field :: NAME)) ? ;) * let id = id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: id :: NAME)) ? ; let first_name = first_name . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: first_name :: NAME)) ? ; let last_name = last_name . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: last_name :: NAME)) ? ; let gender = gender . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: gender :: NAME)) ? ; let email = email . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: email :: NAME)) ? ; let phone = phone . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: phone :: NAME)) ? ; let country = country . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: country :: NAME)) ? ; let race = race . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: race :: NAME)) ? ; let gcp_id = gcp_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: user :: gcp_id :: NAME)) ? ; Ok (Data { id , first_name , last_name , gender , email , phone , country , race , gcp_id , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "firstName" , "lastName" , "gender" , "email" , "phone" , "country" , "race" , "ExtraCreditAssignment" , "Registration" , "Scan" , "gcpId"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: user :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; extra_credit_assignment : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < extra_credit_assignment :: Data > } ; (@ field_type ; extra_credit_assignment) => { Vec < crate :: prisma :: extra_credit_assignment :: Data > } ; (@ field_type ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < registration :: Data > } ; (@ field_type ; registration) => { Vec < crate :: prisma :: registration :: Data > } ; (@ field_type ; scan : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < scan :: Data > } ; (@ field_type ; scan) => { Vec < crate :: prisma :: scan :: Data > } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "User" , available relations are "extra_credit_assignment, registration, scan")) } ; (@ field_module ; extra_credit_assignment : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: extra_credit_assignment :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: registration :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; scan : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: scan :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; extra_credit_assignment $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: user :: IncludeParam > :: into (crate :: prisma :: user :: extra_credit_assignment :: Include :: $ selection_mode (crate :: prisma :: extra_credit_assignment :: ManyArgs :: new (crate :: prisma :: extra_credit_assignment :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: extra_credit_assignment :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; extra_credit_assignment $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: user :: IncludeParam > :: into (crate :: prisma :: user :: extra_credit_assignment :: Include :: Fetch (crate :: prisma :: extra_credit_assignment :: ManyArgs :: new (crate :: prisma :: extra_credit_assignment :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: user :: IncludeParam > :: into (crate :: prisma :: user :: registration :: Include :: $ selection_mode (crate :: prisma :: registration :: ManyArgs :: new (crate :: prisma :: registration :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: registration :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: user :: IncludeParam > :: into (crate :: prisma :: user :: registration :: Include :: Fetch (crate :: prisma :: registration :: ManyArgs :: new (crate :: prisma :: registration :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; scan $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: user :: IncludeParam > :: into (crate :: prisma :: user :: scan :: Include :: $ selection_mode (crate :: prisma :: scan :: ManyArgs :: new (crate :: prisma :: scan :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: scan :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; scan $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: user :: IncludeParam > :: into (crate :: prisma :: user :: scan :: Include :: Fetch (crate :: prisma :: scan :: ManyArgs :: new (crate :: prisma :: scan :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: user :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; first_name) => { "firstName" } ; (@ field_serde_name ; last_name) => { "lastName" } ; (@ field_serde_name ; gender) => { "gender" } ; (@ field_serde_name ; email) => { "email" } ; (@ field_serde_name ; phone) => { "phone" } ; (@ field_serde_name ; country) => { "country" } ; (@ field_serde_name ; race) => { "race" } ; (@ field_serde_name ; extra_credit_assignment) => { "ExtraCreditAssignment" } ; (@ field_serde_name ; registration) => { "Registration" } ; (@ field_serde_name ; scan) => { "Scan" } ; (@ field_serde_name ; gcp_id) => { "gcpId" } ; }
     pub use _include_user as include;
     pub enum IncludeParam {
         Id(id::Include),
         FirstName(first_name::Include),
         LastName(last_name::Include),
         Gender(gender::Include),
-        ShirtSize(shirt_size::Include),
-        DietaryRestrictions(dietary_restrictions::Include),
-        Allergies(allergies::Include),
-        University(university::Include),
         Email(email::Include),
-        Major(major::Include),
         Phone(phone::Include),
         Country(country::Include),
         Race(race::Include),
-        Resume(resume::Include),
         ExtraCreditAssignment(extra_credit_assignment::Include),
         Registration(registration::Include),
         Scan(scan::Include),
+        GcpId(gcp_id::Include),
     }
     impl IncludeParam {
         pub fn to_selection(self) -> ::prisma_client_rust::Selection {
@@ -16098,24 +16321,19 @@ pub mod user {
                 Self::FirstName(data) => data.to_selection(),
                 Self::LastName(data) => data.to_selection(),
                 Self::Gender(data) => data.to_selection(),
-                Self::ShirtSize(data) => data.to_selection(),
-                Self::DietaryRestrictions(data) => data.to_selection(),
-                Self::Allergies(data) => data.to_selection(),
-                Self::University(data) => data.to_selection(),
                 Self::Email(data) => data.to_selection(),
-                Self::Major(data) => data.to_selection(),
                 Self::Phone(data) => data.to_selection(),
                 Self::Country(data) => data.to_selection(),
                 Self::Race(data) => data.to_selection(),
-                Self::Resume(data) => data.to_selection(),
                 Self::ExtraCreditAssignment(data) => data.to_selection(),
                 Self::Registration(data) => data.to_selection(),
                 Self::Scan(data) => data.to_selection(),
+                Self::GcpId(data) => data.to_selection(),
             }
         }
     }
     #[macro_export]
-    macro_rules ! _partial_unchecked_user { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: prisma :: user struct $ struct_name { # [serde (rename = "id")] pub id : String , # [serde (rename = "firstName")] pub first_name : String , # [serde (rename = "lastName")] pub last_name : String , # [serde (rename = "gender")] pub gender : String , # [serde (rename = "shirtSize")] pub shirt_size : String , # [serde (rename = "dietaryRestrictions")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub dietary_restrictions : Option < String > , # [serde (rename = "allergies")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub allergies : Option < String > , # [serde (rename = "university")] pub university : String , # [serde (rename = "email")] pub email : String , # [serde (rename = "major")] pub major : String , # [serde (rename = "phone")] pub phone : String , # [serde (rename = "country")] pub country : String , # [serde (rename = "race")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub race : Option < String > , # [serde (rename = "resume")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub resume : Option < String > } [$ ($ scalar_field) , +] } } ; }
+    macro_rules ! _partial_unchecked_user { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: prisma :: user struct $ struct_name { # [serde (rename = "id")] pub id : String , # [serde (rename = "firstName")] pub first_name : String , # [serde (rename = "lastName")] pub last_name : String , # [serde (rename = "gender")] pub gender : String , # [serde (rename = "email")] pub email : String , # [serde (rename = "phone")] pub phone : String , # [serde (rename = "country")] pub country : String , # [serde (rename = "race")] # [serde (default , with = "::prisma_client_rust::serde::double_option")] pub race : Option < String > , # [serde (rename = "gcpId")] pub gcp_id : String } [$ ($ scalar_field) , +] } } ; }
     pub use _partial_unchecked_user as partial_unchecked;
     #[derive(Debug, Clone, :: serde :: Serialize, :: serde :: Deserialize)]
     pub struct Data {
@@ -16127,32 +16345,22 @@ pub mod user {
         pub last_name: String,
         #[serde(rename = "gender")]
         pub gender: String,
-        #[serde(rename = "shirtSize")]
-        pub shirt_size: String,
-        #[serde(rename = "dietaryRestrictions")]
-        pub dietary_restrictions: Option<String>,
-        #[serde(rename = "allergies")]
-        pub allergies: Option<String>,
-        #[serde(rename = "university")]
-        pub university: String,
         #[serde(rename = "email")]
         pub email: String,
-        #[serde(rename = "major")]
-        pub major: String,
         #[serde(rename = "phone")]
         pub phone: String,
         #[serde(rename = "country")]
         pub country: String,
         #[serde(rename = "race")]
         pub race: Option<String>,
-        #[serde(rename = "resume")]
-        pub resume: Option<String>,
         #[serde(rename = "ExtraCreditAssignment")]
         pub extra_credit_assignment: Option<Vec<super::extra_credit_assignment::Data>>,
         #[serde(rename = "Registration")]
         pub registration: Option<Vec<super::registration::Data>>,
         #[serde(rename = "Scan")]
         pub scan: Option<Vec<super::scan::Data>>,
+        #[serde(rename = "gcpId")]
+        pub gcp_id: String,
     }
     impl Data {
         pub fn extra_credit_assignment(
@@ -16239,16 +16447,10 @@ pub mod user {
         SetFirstName(String),
         SetLastName(String),
         SetGender(String),
-        SetShirtSize(String),
-        SetDietaryRestrictions(Option<String>),
-        SetAllergies(Option<String>),
-        SetUniversity(String),
         SetEmail(String),
-        SetMajor(String),
         SetPhone(String),
         SetCountry(String),
         SetRace(Option<String>),
-        SetResume(Option<String>),
         ConnectExtraCreditAssignment(Vec<super::extra_credit_assignment::UniqueWhereParam>),
         DisconnectExtraCreditAssignment(Vec<super::extra_credit_assignment::UniqueWhereParam>),
         SetExtraCreditAssignment(Vec<super::extra_credit_assignment::UniqueWhereParam>),
@@ -16258,6 +16460,7 @@ pub mod user {
         ConnectScan(Vec<super::scan::UniqueWhereParam>),
         DisconnectScan(Vec<super::scan::UniqueWhereParam>),
         SetScan(Vec<super::scan::UniqueWhereParam>),
+        SetGcpId(String),
     }
     impl From<SetParam> for (String, ::prisma_client_rust::PrismaValue) {
         fn from(param: SetParam) -> Self {
@@ -16278,32 +16481,8 @@ pub mod user {
                     gender::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(value),
                 ),
-                SetParam::SetShirtSize(value) => (
-                    shirt_size::NAME.to_string(),
-                    ::prisma_client_rust::PrismaValue::String(value),
-                ),
-                SetParam::SetDietaryRestrictions(value) => (
-                    dietary_restrictions::NAME.to_string(),
-                    value
-                        .map(|value| ::prisma_client_rust::PrismaValue::String(value))
-                        .unwrap_or_else(|| ::prisma_client_rust::PrismaValue::Null),
-                ),
-                SetParam::SetAllergies(value) => (
-                    allergies::NAME.to_string(),
-                    value
-                        .map(|value| ::prisma_client_rust::PrismaValue::String(value))
-                        .unwrap_or_else(|| ::prisma_client_rust::PrismaValue::Null),
-                ),
-                SetParam::SetUniversity(value) => (
-                    university::NAME.to_string(),
-                    ::prisma_client_rust::PrismaValue::String(value),
-                ),
                 SetParam::SetEmail(value) => (
                     email::NAME.to_string(),
-                    ::prisma_client_rust::PrismaValue::String(value),
-                ),
-                SetParam::SetMajor(value) => (
-                    major::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(value),
                 ),
                 SetParam::SetPhone(value) => (
@@ -16316,12 +16495,6 @@ pub mod user {
                 ),
                 SetParam::SetRace(value) => (
                     race::NAME.to_string(),
-                    value
-                        .map(|value| ::prisma_client_rust::PrismaValue::String(value))
-                        .unwrap_or_else(|| ::prisma_client_rust::PrismaValue::Null),
-                ),
-                SetParam::SetResume(value) => (
-                    resume::NAME.to_string(),
                     value
                         .map(|value| ::prisma_client_rust::PrismaValue::String(value))
                         .unwrap_or_else(|| ::prisma_client_rust::PrismaValue::Null),
@@ -16461,6 +16634,10 @@ pub mod user {
                         ),
                     )]),
                 ),
+                SetParam::SetGcpId(value) => (
+                    gcp_id::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(value),
+                ),
             }
         }
     }
@@ -16470,16 +16647,11 @@ pub mod user {
         FirstName(String),
         LastName(String),
         Gender(String),
-        ShirtSize(String),
-        DietaryRestrictions(Option<String>),
-        Allergies(Option<String>),
-        University(String),
         Email(String),
-        Major(String),
         Phone(String),
         Country(String),
         Race(Option<String>),
-        Resume(Option<String>),
+        GcpId(String),
     }
     impl From<UncheckedSetParam> for SetParam {
         fn from(param: UncheckedSetParam) -> Self {
@@ -16488,18 +16660,11 @@ pub mod user {
                 UncheckedSetParam::FirstName(value) => Self::SetFirstName(value),
                 UncheckedSetParam::LastName(value) => Self::SetLastName(value),
                 UncheckedSetParam::Gender(value) => Self::SetGender(value),
-                UncheckedSetParam::ShirtSize(value) => Self::SetShirtSize(value),
-                UncheckedSetParam::DietaryRestrictions(value) => {
-                    Self::SetDietaryRestrictions(value)
-                }
-                UncheckedSetParam::Allergies(value) => Self::SetAllergies(value),
-                UncheckedSetParam::University(value) => Self::SetUniversity(value),
                 UncheckedSetParam::Email(value) => Self::SetEmail(value),
-                UncheckedSetParam::Major(value) => Self::SetMajor(value),
                 UncheckedSetParam::Phone(value) => Self::SetPhone(value),
                 UncheckedSetParam::Country(value) => Self::SetCountry(value),
                 UncheckedSetParam::Race(value) => Self::SetRace(value),
-                UncheckedSetParam::Resume(value) => Self::SetResume(value),
+                UncheckedSetParam::GcpId(value) => Self::SetGcpId(value),
             }
         }
     }
@@ -16509,16 +16674,11 @@ pub mod user {
         FirstName(::prisma_client_rust::Direction),
         LastName(::prisma_client_rust::Direction),
         Gender(::prisma_client_rust::Direction),
-        ShirtSize(::prisma_client_rust::Direction),
-        DietaryRestrictions(::prisma_client_rust::Direction),
-        Allergies(::prisma_client_rust::Direction),
-        University(::prisma_client_rust::Direction),
         Email(::prisma_client_rust::Direction),
-        Major(::prisma_client_rust::Direction),
         Phone(::prisma_client_rust::Direction),
         Country(::prisma_client_rust::Direction),
         Race(::prisma_client_rust::Direction),
-        Resume(::prisma_client_rust::Direction),
+        GcpId(::prisma_client_rust::Direction),
     }
     impl Into<(String, ::prisma_client_rust::PrismaValue)> for OrderByParam {
         fn into(self) -> (String, ::prisma_client_rust::PrismaValue) {
@@ -16539,28 +16699,8 @@ pub mod user {
                     gender::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(direction.to_string()),
                 ),
-                Self::ShirtSize(direction) => (
-                    shirt_size::NAME.to_string(),
-                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
-                ),
-                Self::DietaryRestrictions(direction) => (
-                    dietary_restrictions::NAME.to_string(),
-                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
-                ),
-                Self::Allergies(direction) => (
-                    allergies::NAME.to_string(),
-                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
-                ),
-                Self::University(direction) => (
-                    university::NAME.to_string(),
-                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
-                ),
                 Self::Email(direction) => (
                     email::NAME.to_string(),
-                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
-                ),
-                Self::Major(direction) => (
-                    major::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(direction.to_string()),
                 ),
                 Self::Phone(direction) => (
@@ -16575,8 +16715,8 @@ pub mod user {
                     race::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(direction.to_string()),
                 ),
-                Self::Resume(direction) => (
-                    resume::NAME.to_string(),
+                Self::GcpId(direction) => (
+                    gcp_id::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(direction.to_string()),
                 ),
             }
@@ -16591,16 +16731,10 @@ pub mod user {
         FirstName(_prisma::read_filters::StringFilter),
         LastName(_prisma::read_filters::StringFilter),
         Gender(_prisma::read_filters::StringFilter),
-        ShirtSize(_prisma::read_filters::StringFilter),
-        DietaryRestrictions(_prisma::read_filters::StringNullableFilter),
-        Allergies(_prisma::read_filters::StringNullableFilter),
-        University(_prisma::read_filters::StringFilter),
         Email(_prisma::read_filters::StringFilter),
-        Major(_prisma::read_filters::StringFilter),
         Phone(_prisma::read_filters::StringFilter),
         Country(_prisma::read_filters::StringFilter),
         Race(_prisma::read_filters::StringNullableFilter),
-        Resume(_prisma::read_filters::StringNullableFilter),
         ExtraCreditAssignmentSome(Vec<super::extra_credit_assignment::WhereParam>),
         ExtraCreditAssignmentEvery(Vec<super::extra_credit_assignment::WhereParam>),
         ExtraCreditAssignmentNone(Vec<super::extra_credit_assignment::WhereParam>),
@@ -16610,6 +16744,7 @@ pub mod user {
         ScanSome(Vec<super::scan::WhereParam>),
         ScanEvery(Vec<super::scan::WhereParam>),
         ScanNone(Vec<super::scan::WhereParam>),
+        GcpId(_prisma::read_filters::StringFilter),
     }
     impl ::prisma_client_rust::WhereInput for WhereParam {
         fn serialize(self) -> ::prisma_client_rust::SerializedWhereInput {
@@ -16654,16 +16789,10 @@ pub mod user {
                 Self::FirstName(value) => (first_name::NAME, value.into()),
                 Self::LastName(value) => (last_name::NAME, value.into()),
                 Self::Gender(value) => (gender::NAME, value.into()),
-                Self::ShirtSize(value) => (shirt_size::NAME, value.into()),
-                Self::DietaryRestrictions(value) => (dietary_restrictions::NAME, value.into()),
-                Self::Allergies(value) => (allergies::NAME, value.into()),
-                Self::University(value) => (university::NAME, value.into()),
                 Self::Email(value) => (email::NAME, value.into()),
-                Self::Major(value) => (major::NAME, value.into()),
                 Self::Phone(value) => (phone::NAME, value.into()),
                 Self::Country(value) => (country::NAME, value.into()),
                 Self::Race(value) => (race::NAME, value.into()),
-                Self::Resume(value) => (resume::NAME, value.into()),
                 Self::ExtraCreditAssignmentSome(where_params) => (
                     extra_credit_assignment::NAME,
                     ::prisma_client_rust::SerializedWhereValue::Object(vec![(
@@ -16781,6 +16910,7 @@ pub mod user {
                         ),
                     )]),
                 ),
+                Self::GcpId(value) => (gcp_id::NAME, value.into()),
             };
             ::prisma_client_rust::SerializedWhereInput::new(name, value.into())
         }
@@ -16788,6 +16918,7 @@ pub mod user {
     #[derive(Clone)]
     pub enum UniqueWhereParam {
         EmailEquals(String),
+        GcpIdEquals(String),
         IdEquals(String),
     }
     impl From<UniqueWhereParam> for WhereParam {
@@ -16795,6 +16926,9 @@ pub mod user {
             match value {
                 UniqueWhereParam::EmailEquals(value) => {
                     Self::Email(_prisma::read_filters::StringFilter::Equals(value))
+                }
+                UniqueWhereParam::GcpIdEquals(value) => {
+                    Self::GcpId(_prisma::read_filters::StringFilter::Equals(value))
                 }
                 UniqueWhereParam::IdEquals(value) => {
                     Self::Id(_prisma::read_filters::StringFilter::Equals(value))
@@ -16828,16 +16962,11 @@ pub mod user {
                 ::prisma_client_rust::sel(first_name::NAME),
                 ::prisma_client_rust::sel(last_name::NAME),
                 ::prisma_client_rust::sel(gender::NAME),
-                ::prisma_client_rust::sel(shirt_size::NAME),
-                ::prisma_client_rust::sel(dietary_restrictions::NAME),
-                ::prisma_client_rust::sel(allergies::NAME),
-                ::prisma_client_rust::sel(university::NAME),
                 ::prisma_client_rust::sel(email::NAME),
-                ::prisma_client_rust::sel(major::NAME),
                 ::prisma_client_rust::sel(phone::NAME),
                 ::prisma_client_rust::sel(country::NAME),
                 ::prisma_client_rust::sel(race::NAME),
-                ::prisma_client_rust::sel(resume::NAME),
+                ::prisma_client_rust::sel(gcp_id::NAME),
             ]
         }
     }
@@ -16873,24 +17002,20 @@ pub mod user {
             first_name: String,
             last_name: String,
             gender: String,
-            shirt_size: String,
-            university: String,
             email: String,
-            major: String,
             phone: String,
             country: String,
+            gcp_id: String,
             mut _params: Vec<SetParam>,
         ) -> Create<'a> {
             _params.extend([
                 first_name::set(first_name),
                 last_name::set(last_name),
                 gender::set(gender),
-                shirt_size::set(shirt_size),
-                university::set(university),
                 email::set(email),
-                major::set(major),
                 phone::set(phone),
                 country::set(country),
+                gcp_id::set(gcp_id),
             ]);
             Create::new(self.client, _params)
         }
@@ -16899,32 +17024,26 @@ pub mod user {
             first_name: String,
             last_name: String,
             gender: String,
-            shirt_size: String,
-            university: String,
             email: String,
-            major: String,
             phone: String,
             country: String,
+            gcp_id: String,
             mut _params: Vec<UncheckedSetParam>,
         ) -> Create<'a> {
             _params.extend([
                 first_name::set(first_name),
                 last_name::set(last_name),
                 gender::set(gender),
-                shirt_size::set(shirt_size),
-                university::set(university),
                 email::set(email),
-                major::set(major),
                 phone::set(phone),
                 country::set(country),
+                gcp_id::set(gcp_id),
             ]);
             Create::new(self.client, _params.into_iter().map(Into::into).collect())
         }
         pub fn create_many(
             self,
             data: Vec<(
-                String,
-                String,
                 String,
                 String,
                 String,
@@ -16942,24 +17061,20 @@ pub mod user {
                         first_name,
                         last_name,
                         gender,
-                        shirt_size,
-                        university,
                         email,
-                        major,
                         phone,
                         country,
+                        gcp_id,
                         mut _params,
                     )| {
                         _params.extend([
                             first_name::set(first_name),
                             last_name::set(last_name),
                             gender::set(gender),
-                            shirt_size::set(shirt_size),
-                            university::set(university),
                             email::set(email),
-                            major::set(major),
                             phone::set(phone),
                             country::set(country),
+                            gcp_id::set(gcp_id),
                         ]);
                         _params
                     },
@@ -16992,20 +17107,7 @@ pub mod user {
         pub fn upsert(
             self,
             _where: UniqueWhereParam,
-            (
-                first_name,
-                last_name,
-                gender,
-                shirt_size,
-                university,
-                email,
-                major,
-                phone,
-                country,
-                mut _params,
-            ): (
-                String,
-                String,
+            (first_name, last_name, gender, email, phone, country, gcp_id, mut _params): (
                 String,
                 String,
                 String,
@@ -17021,12 +17123,10 @@ pub mod user {
                 first_name::set(first_name),
                 last_name::set(last_name),
                 gender::set(gender),
-                shirt_size::set(shirt_size),
-                university::set(university),
                 email::set(email),
-                major::set(major),
                 phone::set(phone),
                 country::set(country),
+                gcp_id::set(gcp_id),
             ]);
             Upsert::new(self.client, _where.into(), _params, _update)
         }
@@ -19559,8 +19659,14 @@ pub mod _prisma {
         AcademicYear,
         #[serde(rename = "educationalInstitutionType")]
         EducationalInstitutionType,
-        #[serde(rename = "codingExoerience")]
-        CodingExoerience,
+        #[serde(rename = "codingExperience")]
+        CodingExperience,
+        #[serde(rename = "shirtSize")]
+        ShirtSize,
+        #[serde(rename = "dietaryRestrictions")]
+        DietaryRestrictions,
+        #[serde(rename = "allergies")]
+        Allergies,
         #[serde(rename = "eighteenBeforeEvent")]
         EighteenBeforeEvent,
         #[serde(rename = "mlhCoc")]
@@ -19569,6 +19675,12 @@ pub mod _prisma {
         MlhDcp,
         #[serde(rename = "reference")]
         Reference,
+        #[serde(rename = "resume")]
+        Resume,
+        #[serde(rename = "university")]
+        University,
+        #[serde(rename = "major")]
+        Major,
         #[serde(rename = "projectId")]
         ProjectId,
         #[serde(rename = "expectations")]
@@ -19596,11 +19708,17 @@ pub mod _prisma {
                 Self::FirstHackathon => "firstHackathon".to_string(),
                 Self::AcademicYear => "academicYear".to_string(),
                 Self::EducationalInstitutionType => "educationalInstitutionType".to_string(),
-                Self::CodingExoerience => "codingExoerience".to_string(),
+                Self::CodingExperience => "codingExperience".to_string(),
+                Self::ShirtSize => "shirtSize".to_string(),
+                Self::DietaryRestrictions => "dietaryRestrictions".to_string(),
+                Self::Allergies => "allergies".to_string(),
                 Self::EighteenBeforeEvent => "eighteenBeforeEvent".to_string(),
                 Self::MlhCoc => "mlhCoc".to_string(),
                 Self::MlhDcp => "mlhDcp".to_string(),
                 Self::Reference => "reference".to_string(),
+                Self::Resume => "resume".to_string(),
+                Self::University => "university".to_string(),
+                Self::Major => "major".to_string(),
                 Self::ProjectId => "projectId".to_string(),
                 Self::Expectations => "expectations".to_string(),
                 Self::ShareAddressMlh => "shareAddressMlh".to_string(),
@@ -19758,26 +19876,16 @@ pub mod _prisma {
         LastName,
         #[serde(rename = "gender")]
         Gender,
-        #[serde(rename = "shirtSize")]
-        ShirtSize,
-        #[serde(rename = "dietaryRestrictions")]
-        DietaryRestrictions,
-        #[serde(rename = "allergies")]
-        Allergies,
-        #[serde(rename = "university")]
-        University,
         #[serde(rename = "email")]
         Email,
-        #[serde(rename = "major")]
-        Major,
         #[serde(rename = "phone")]
         Phone,
         #[serde(rename = "country")]
         Country,
         #[serde(rename = "race")]
         Race,
-        #[serde(rename = "resume")]
-        Resume,
+        #[serde(rename = "gcpId")]
+        GcpId,
     }
     impl ToString for UserScalarFieldEnum {
         fn to_string(&self) -> String {
@@ -19786,16 +19894,11 @@ pub mod _prisma {
                 Self::FirstName => "firstName".to_string(),
                 Self::LastName => "lastName".to_string(),
                 Self::Gender => "gender".to_string(),
-                Self::ShirtSize => "shirtSize".to_string(),
-                Self::DietaryRestrictions => "dietaryRestrictions".to_string(),
-                Self::Allergies => "allergies".to_string(),
-                Self::University => "university".to_string(),
                 Self::Email => "email".to_string(),
-                Self::Major => "major".to_string(),
                 Self::Phone => "phone".to_string(),
                 Self::Country => "country".to_string(),
                 Self::Race => "race".to_string(),
-                Self::Resume => "resume".to_string(),
+                Self::GcpId => "gcpId".to_string(),
             }
         }
     }

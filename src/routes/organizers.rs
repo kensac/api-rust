@@ -1,6 +1,5 @@
 use axum::{
     extract::{Path, State},
-    response::Response,
     Json, Router, routing::{post, get, delete},
 };
 use hyper::StatusCode;
@@ -8,7 +7,7 @@ use serde::Deserialize;
 use utoipa::ToSchema;
 
 use crate::{
-    base_types::{AppState, CreateResponse, DeleteResponse, GetResponse, StandardResponse},
+    base_types::{AppState, CreateResponse, DeleteResponse, GetResponse},
     prisma::{organizer::Data, Role},
 };
 
