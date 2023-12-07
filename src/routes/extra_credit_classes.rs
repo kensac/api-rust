@@ -130,8 +130,7 @@ async fn delete_extra_credit_class_by_id(
 }
 
 pub async fn extra_credit_class_get_router() -> Router {
-    let arc_state = AppState::new().await;
-    let state = *arc_state;
+    let state = AppState::new().await;
 
 
     Router::new()

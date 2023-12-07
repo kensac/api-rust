@@ -77,18 +77,20 @@ pub type DeleteResponse = Result<(StatusCode, ()), (StatusCode, String)>;
 
 pub type UpdateResponse<T> = Result<BaseResponse<T>, BaseError>;
 
-
+#[derive(Clone)]
 pub struct AppState {
-    pub client: PrismaClient,
+    pub client: Arc<PrismaClient>,
 }
 
 impl AppState {
-    pub async fn new() -> Arc<AppState> {
+    pub async fn new() -> AppState {
         let client = PrismaClient::_builder()
             .build()
             .await
             .expect("Didn't connect to database");
 
-        Arc::new(AppState { client })
+        AppState {
+            client: Arc::new(client),
+        }
     }
 }
