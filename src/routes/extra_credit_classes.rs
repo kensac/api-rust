@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use axum::{
     extract::{Path, State},
     response::Response,
@@ -128,7 +130,10 @@ async fn delete_extra_credit_class_by_id(
 }
 
 pub async fn extra_credit_class_get_router() -> Router {
-    let state = AppState::new().await;
+    let arc_state = AppState::new().await;
+    let state = *arc_state;
+
+
     Router::new()
         .route(
             "/",
