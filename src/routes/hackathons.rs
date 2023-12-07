@@ -13,9 +13,7 @@ use utoipa::{IntoParams, ToSchema};
 use crate::{
     auth_guard::{self, RequestUser},
     base_types::AppState,
-    base_types::{
-        CreateResponse, DeleteResponse, GetResponse,
-    },
+    base_types::{CreateResponse, DeleteResponse, GetResponse},
     prisma::hackathon::{self, Data, UniqueWhereParam},
 };
 
@@ -130,8 +128,7 @@ async fn get_hackathon_by_id(
             Some(hackathon) => Ok((StatusCode::OK, Json(hackathon))),
             None => Err((StatusCode::NOT_FOUND, "No hackathon found".to_string())),
         },
-        Err(e) =>
-            Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
+        Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
     }
 }
 

@@ -1,6 +1,7 @@
 use axum::{
     extract::{Path, State},
-    Json, Router, routing::{post, get, delete},
+    routing::{delete, get, post},
+    Json, Router,
 };
 use hyper::StatusCode;
 use serde::Deserialize;

@@ -19468,7 +19468,7 @@ pub mod _prisma {
             Ok(PrismaClient(internals))
         }
     }
-    
+
     #[derive(Clone)]
     pub struct PrismaClient(::prisma_client_rust::PrismaClientInternals);
     impl ::std::fmt::Debug for PrismaClient {

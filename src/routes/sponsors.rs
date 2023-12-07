@@ -36,7 +36,6 @@ pub async fn create_sponsor(
     State(state): State<AppState>,
     Valid(Json(body)): Valid<Json<CreateSponsorEntity>>,
 ) -> Result<String, (StatusCode, String)> {
-
     match state
         .client
         .sponsor()
