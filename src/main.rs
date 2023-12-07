@@ -24,7 +24,7 @@ async fn main() {
         .init();
 
     dotenv::dotenv().ok();
-
+    
     let port = get_port();
 
     let app = new_app().await;

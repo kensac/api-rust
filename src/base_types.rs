@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use axum::response::{IntoResponse, Response};
 use hyper::StatusCode;
 
@@ -77,7 +79,7 @@ pub type UpdateResponse<T> = Result<BaseResponse<T>, BaseError>;
 
 #[derive(Clone)]
 pub struct AppState {
-    pub client: PrismaClient,
+    pub client: Arc<PrismaClient>,
 }
 
 impl AppState {
@@ -87,6 +89,8 @@ impl AppState {
             .await
             .expect("Didn't connect to database");
 
-        AppState { client }
+        AppState {
+            client: Arc::new(client),
+        }
     }
 }
