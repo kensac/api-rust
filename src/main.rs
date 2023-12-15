@@ -6,6 +6,7 @@ pub mod docs;
 #[allow(warnings)]
 pub mod prisma;
 pub mod routes;
+pub mod upload_service;
 pub mod utils;
 
 use std::net::SocketAddr;
@@ -24,7 +25,7 @@ async fn main() {
         .init();
 
     dotenv::dotenv().ok();
-    
+
     let port = get_port();
 
     let app = new_app().await;

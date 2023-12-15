@@ -104,6 +104,7 @@ model Project {
 }
 
 model Registration {
+  // make primary key user + hackathon
   id                         String    @id @default(uuid())
   user                       User      @relation(fields: [userId], references: [id])
   userId                     String
