@@ -26,7 +26,7 @@ pub async fn get_all_scans(
 #[serde(rename_all = "camelCase")]
 pub struct ScanIdEntity {
     event_id: Uuid,
-    user_id: Uuid,
+    registration_id: Uuid,
 }
 
 pub async fn get_scan_by_id(
@@ -36,9 +36,9 @@ pub async fn get_scan_by_id(
     match app_state
         .client
         .scan()
-        .find_unique(scan::UniqueWhereParam::EventIdUserIdEquals(
+        .find_unique(scan::UniqueWhereParam::EventIdRegistrationIdEquals(
             path.event_id.to_string(),
-            path.user_id.to_string(),
+            path.registration_id.to_string(),
         ))
         .exec()
         .await
@@ -67,14 +67,14 @@ pub async fn get_scans_by_organizer_id(
     }
 }
 
-pub async fn get_scans_by_user_id(
+pub async fn get_scans_by_registration_id(
     State(app_state): State<AppState>,
     Path(id): Path<Uuid>,
 ) -> Result<Json<Vec<scan::Data>>, StatusCode> {
     match app_state
         .client
         .scan()
-        .find_many(vec![scan::user_id::equals(id.to_string())])
+        .find_many(vec![scan::registration_id::equals(id.to_string())])
         .exec()
         .await
     {
@@ -125,7 +125,7 @@ pub async fn scans_get_router() -> Router {
         .route("/", get(get_all_scans))
         .route("/:event_id/:user_id", get(get_scan_by_id))
         .route("/analytics/organizer/:id", get(get_scans_by_organizer_id))
-        .route("/analytics/user/:id", get(get_scans_by_user_id))
+        .route("/analytics/user/:id", get(get_scans_by_registration_id))
         .route("/analytics/events", get(get_all_events_with_scans))
         .route("/analytics/events/:id", get(get_event_with_scans_by_id))
         .with_state(state)
