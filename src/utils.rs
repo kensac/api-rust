@@ -1,18 +1,14 @@
 use std::process::exit;
 
-use axum::{http::status, routing::MethodRouter, Router};
+use axum::http::status;
 use hyper::StatusCode;
 use regex::Regex;
-
-fn _route(path: &str, method_router: MethodRouter) -> Router {
-    Router::new().route(path, method_router)
-}
 
 #[axum::debug_handler]
 pub async fn handle_404() -> (StatusCode, &'static str) {
     (
-        StatusCode::INTERNAL_SERVER_ERROR,
-        "The requested resource was not found.",
+        StatusCode::NOT_FOUND,
+        "We couldn't find the resource you requested.",
     )
 }
 
