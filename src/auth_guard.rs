@@ -115,7 +115,7 @@ pub enum RequestUser {
 pub fn permission_check(
     user: RequestUser,
     unrestricted_roles: Vec<Role>,
-    additional_check: Vec<(Role, fn(RequestUser) -> bool)>,
+    additional_check: Vec<(Role, Box<dyn Fn(RequestUser) -> bool>)>,
 ) -> bool {
     match user {
         RequestUser::Organizer(organizer) => {
