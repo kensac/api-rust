@@ -147,6 +147,7 @@ pub fn permission_check(
     }
 }
 
+
 /* Async version of the code is available in case you need to do async checks.
 Not sure if it works. I think I added the right traits to make it work but we'll find
 out when we try to use it.
