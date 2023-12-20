@@ -2,15 +2,15 @@ use serde::Deserialize;
 use utoipa::ToSchema;
 use uuid::Uuid;
 
-struct ExtraCreditAssignmentsEntity {
+struct _ExtraCreditAssignmentsEntity {
     user_id: Uuid,
     class_id: Uuid,
 }
 
 #[derive(Deserialize, ToSchema)]
 struct CreateExtraCreditAssignmentEntity {
-    user_id: Uuid,
-    class_id: Uuid,
+    _user_id: Uuid,
+    _class_id: Uuid,
 }
 
 /*

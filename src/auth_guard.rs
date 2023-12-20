@@ -62,7 +62,7 @@ pub async fn require_auth(
     // this might not be the best way to check the user's id because it checks only the first user in the list
     let user_uid = firebase_user.users[0].local_id.clone();
 
-    match app_state
+    if let Some(organizer) = app_state
         .client
         .organizer()
         .find_unique(organizer::UniqueWhereParam::GcpIdEquals(user_uid.clone()))
@@ -70,27 +70,21 @@ pub async fn require_auth(
         .await
         .unwrap()
     {
-        Some(organizer) => {
-            request
-                .extensions_mut()
-                .insert(RequestUser::Organizer(organizer));
-        }
-        None => (),
-    };
+        request
+            .extensions_mut()
+            .insert(RequestUser::Organizer(organizer));
+    }
 
-    match app_state
+    if let Some(user) = app_state
         .client
         .user()
-        .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid.clone()))
+        .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid))
         .exec()
         .await
         .unwrap()
     {
-        Some(user) => {
-            request.extensions_mut().insert(RequestUser::User(user));
-        }
-        None => (),
-    };
+        request.extensions_mut().insert(RequestUser::User(user));
+    }
 
     // Check if both organizer and user are not present
     if request.extensions().get::<RequestUser>().is_none() {
@@ -112,10 +106,12 @@ pub enum RequestUser {
     Then you can use the permission_check function like this:
     permission_check(user, vec![Role::Admin], |user| {user.id == params.id})
 */
+type Predicate = (Role, Box<dyn Fn(RequestUser) -> bool>);
+
 pub fn permission_check(
     user: RequestUser,
     unrestricted_roles: Vec<Role>,
-    additional_check: Vec<(Role, Box<dyn Fn(RequestUser) -> bool>)>,
+    additional_check: Vec<Predicate>,
 ) -> bool {
     match user {
         RequestUser::Organizer(organizer) => {

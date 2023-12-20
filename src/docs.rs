@@ -1,5 +1,6 @@
 use utoipa::openapi::security::{
-    ApiKey, ApiKeyValue, Flow, HttpAuthScheme, HttpBuilder, Password, Scopes, SecurityScheme,
+    /* ApiKey, ApiKeyValue, */ Flow, HttpAuthScheme, HttpBuilder, Password, Scopes,
+    SecurityScheme,
 };
 use utoipa::{Modify, OpenApi};
 
