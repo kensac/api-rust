@@ -155,10 +155,18 @@ model Scan {
   @@unique([eventId, registrationId])
 }
 
+enum SponsorLevel {
+  PLATINUM
+  GOLD
+  SILVER
+  BRONZE
+  NONE
+}
+
 model Sponsor {
   id          String    @id @default(uuid())
   name        String
-  level       String
+  level       SponsorLevel @default(NONE)
   link        String?
   darkLogo    String
   lightLogo   String
@@ -174,7 +182,7 @@ model User {
   email        String         @unique
   Registration Registration[]
   gcpId        String         @unique
-  role         Role           @default(NONE)
+  privilege         Role           @default(NONE)
 }
 
 model Score {
