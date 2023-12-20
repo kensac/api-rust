@@ -11,10 +11,13 @@ use hyper::StatusCode;
 use utoipa::{IntoParams, ToSchema};
 
 use crate::{
-    auth_guard::{self, RequestUser},
+    auth_guard::{self, permission_check, RequestUser},
     base_types::AppState,
     base_types::{CreateResponse, DeleteResponse, GetResponse},
-    prisma::hackathon::{self, Data, UniqueWhereParam},
+    prisma::{
+        hackathon::{self, Data, UniqueWhereParam},
+        Role,
+    },
 };
 
 #[derive(serde::Deserialize, ToSchema)]
@@ -84,6 +87,20 @@ async fn get_hackathon(
     Query(params): Query<Params>,
     Extension(request_user): Extension<RequestUser>,
 ) -> GetResponse<Json<Vec<Data>>> {
+    if !permission_check(
+        request_user,
+        vec![Role::Exec],
+        vec![(
+            Role::None,
+            Box::new(|user| match user {
+                RequestUser::User(user) => user.id == *"1",
+                _ => false,
+            }),
+        )],
+    ) {
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+    }
+
     if params.active.is_some() {
         match app_state
             .client

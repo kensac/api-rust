@@ -15,6 +15,7 @@ use crate::{
     prisma::{
         hackathon::UniqueWhereParam,
         sponsor::{self, Data},
+        SponsorLevel,
     },
 };
 
@@ -22,7 +23,7 @@ use crate::{
 #[serde(rename_all = "camelCase")]
 pub struct CreateSponsorEntity {
     name: String,
-    level: String,
+    level: SponsorLevel,
     #[validate(url)]
     link: Option<String>,
     dark_logo: String,

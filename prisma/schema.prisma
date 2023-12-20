@@ -166,7 +166,7 @@ enum SponsorLevel {
 model Sponsor {
   id          String    @id @default(uuid())
   name        String
-  level       SponsorLevel @default(NONE)
+  level       SponsorLevel
   link        String?
   darkLogo    String
   lightLogo   String

@@ -62,23 +62,42 @@ pub async fn require_auth(
     // this might not be the best way to check the user's id because it checks only the first user in the list
     let user_uid = firebase_user.users[0].local_id.clone();
 
-    let organizer = match app_state
+    if let Some(organizer) = app_state
         .client
         .organizer()
-        .find_unique(organizer::UniqueWhereParam::GcpIdEquals(user_uid))
+        .find_unique(organizer::UniqueWhereParam::GcpIdEquals(user_uid.clone()))
         .exec()
         .await
         .unwrap()
     {
-        Some(organizer) => organizer,
-        None => return Err(StatusCode::UNAUTHORIZED),
-    };
+        request
+            .extensions_mut()
+            .insert(RequestUser::Organizer(organizer));
+    }
 
-    request
-        .extensions_mut()
-        .insert(RequestUser::Organizer(organizer));
+    if let Some(user) = app_state
+        .client
+        .user()
+        .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid))
+        .exec()
+        .await
+        .unwrap()
+    {
+        request.extensions_mut().insert(RequestUser::User(user));
+    }
+
+    // Check if both organizer and user are not present
+    if request.extensions().get::<RequestUser>().is_none() {
+        return Err(StatusCode::UNAUTHORIZED);
+    }
 
     Ok(next.run(request).await)
+}
+
+#[derive(Debug, Clone)]
+pub enum RequestUser {
+    Organizer(organizer::Data),
+    User(user::Data),
 }
 
 /*
@@ -87,21 +106,40 @@ pub async fn require_auth(
     Then you can use the permission_check function like this:
     permission_check(user, vec![Role::Admin], |user| {user.id == params.id})
 */
+type Predicate = (Role, Box<dyn Fn(RequestUser) -> bool>);
+
 pub fn permission_check(
     user: RequestUser,
-    organizer_roles: Vec<Role>,
-    user_additional_check: fn(user::Data) -> bool,
+    unrestricted_roles: Vec<Role>,
+    additional_check: Vec<Predicate>,
 ) -> bool {
     match user {
         RequestUser::Organizer(organizer) => {
-            for role in organizer_roles {
-                if organizer.privilege != role {
-                    return false;
+            for role in unrestricted_roles {
+                if organizer.privilege == role {
+                    return true;
                 }
             }
-            true
+            for (role, check) in additional_check {
+                if organizer.privilege == role && check(RequestUser::Organizer(organizer.clone())) {
+                    return true;
+                }
+            }
+            false
         }
-        RequestUser::User(user) => user_additional_check(user),
+        RequestUser::User(user) => {
+            for role in unrestricted_roles {
+                if user.privilege == role {
+                    return true;
+                }
+            }
+            for (role, check) in additional_check {
+                if user.privilege == role && check(RequestUser::User(user.clone())) {
+                    return true;
+                }
+            }
+            false
+        }
     }
 }
 
@@ -135,10 +173,4 @@ async fn _auth_router_layer() -> Router {
     let state = AppState::new().await;
 
     Router::new().route_layer(middleware::from_fn_with_state(state.clone(), require_auth))
-}
-
-#[derive(Debug, Clone)]
-pub enum RequestUser {
-    Organizer(organizer::Data),
-    User(user::Data),
 }

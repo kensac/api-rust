@@ -42,7 +42,7 @@ impl<T> BaseResponse<T>
 where
     T: IntoResponse,
 {
-    fn _base_response(status_code: StatusCode, data: T) -> BaseResponse<T> {
+    fn _new(status_code: StatusCode, data: T) -> BaseResponse<T> {
         BaseResponse { status_code, data }
     }
 
