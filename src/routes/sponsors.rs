@@ -14,7 +14,8 @@ use crate::{
     base_types::AppState,
     prisma::{
         hackathon::UniqueWhereParam,
-        sponsor::{self, Data}, SponsorLevel,
+        sponsor::{self, Data},
+        SponsorLevel,
     },
 };
 

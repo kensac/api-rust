@@ -93,9 +93,7 @@ async fn get_hackathon(
         vec![(
             Role::None,
             Box::new(|user| match user {
-                RequestUser::User(user) => {
-                    user.id == "1".to_string()
-                }
+                RequestUser::User(user) => user.id == "1".to_string(),
                 _ => false,
             }),
         )],

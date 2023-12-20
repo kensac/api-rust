@@ -71,9 +71,11 @@ pub async fn require_auth(
         .unwrap()
     {
         Some(organizer) => {
-            request.extensions_mut().insert(RequestUser::Organizer(organizer));
+            request
+                .extensions_mut()
+                .insert(RequestUser::Organizer(organizer));
         }
-        None => ()
+        None => (),
     };
 
     match app_state
@@ -87,18 +89,16 @@ pub async fn require_auth(
         Some(user) => {
             request.extensions_mut().insert(RequestUser::User(user));
         }
-        None => ()
+        None => (),
     };
 
     // Check if both organizer and user are not present
     if request.extensions().get::<RequestUser>().is_none() {
         return Err(StatusCode::UNAUTHORIZED);
     }
-    
 
     Ok(next.run(request).await)
 }
-
 
 #[derive(Debug, Clone)]
 pub enum RequestUser {
@@ -146,7 +146,6 @@ pub fn permission_check(
         }
     }
 }
-
 
 /* Async version of the code is available in case you need to do async checks.
 Not sure if it works. I think I added the right traits to make it work but we'll find
