@@ -63,41 +63,42 @@ pub async fn require_auth(
     // this might not be the best way to check the user's id because it checks only the first user in the list
     let user_uid = firebase_user.users[0].local_id.clone();
 
+    // Start both queries in parallel
+    let organizer_future = app_state
+        .client
+        .organizer()
+        .find_unique(organizer::UniqueWhereParam::GcpIdEquals(user_uid.clone()))
+        .exec();
 
-        // Start both queries in parallel
-        let organizer_future = app_state
-            .client
-            .organizer()
-            .find_unique(organizer::UniqueWhereParam::GcpIdEquals(user_uid.clone()))
-            .exec();
-    
-        let user_future = app_state
-            .client
-            .user()
-            .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid))
-            .exec();
-    
-        // Wait for both futures to complete
-        match try_join!(organizer_future, user_future) {
-            Ok((Some(organizer), Some(user))) => {
-                request.extensions_mut().insert(RequestUser::Organizer(organizer));
-                request.extensions_mut().insert(RequestUser::User(user));
-            },
-            Ok((Some(organizer), None)) => {
-                request.extensions_mut().insert(RequestUser::Organizer(organizer));
-            },
-            Ok((None, Some(user))) => {
-                request.extensions_mut().insert(RequestUser::User(user));
-            },
-            Ok((None, None)) => {
-                // Handle case where both are None, if necessary
-            },
-            Err(_e) => {
-                // Handle error, if necessary
-            }
+    let user_future = app_state
+        .client
+        .user()
+        .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid))
+        .exec();
+
+    // Wait for both futures to complete
+    match try_join!(organizer_future, user_future) {
+        Ok((Some(organizer), Some(user))) => {
+            request
+                .extensions_mut()
+                .insert(RequestUser::Organizer(organizer));
+            request.extensions_mut().insert(RequestUser::User(user));
         }
-    
-    
+        Ok((Some(organizer), None)) => {
+            request
+                .extensions_mut()
+                .insert(RequestUser::Organizer(organizer));
+        }
+        Ok((None, Some(user))) => {
+            request.extensions_mut().insert(RequestUser::User(user));
+        }
+        Ok((None, None)) => {
+            // Handle case where both are None, if necessary
+        }
+        Err(_e) => {
+            // Handle error, if necessary
+        }
+    }
 
     // Check if both organizer and user are not present
     if request.extensions().get::<RequestUser>().is_none() {

@@ -55,10 +55,11 @@ struct Params {
 #[axum::debug_handler]
 #[utoipa::path(
     post,
-    path = "/hackathon",
+    context_path = "/hackathons",
+    path = "",
     responses(
         (status = 200, description = "Create a new hackathon"),
-        (status = 400, description = "Bad request", body = String),
+        (status = 400, description = "Bad request"),
         (status = 401, description = "Unauthorized")
     ),
     request_body = CreateHackathonEntity,
@@ -110,7 +111,8 @@ async fn create_hackathon(
 #[axum::debug_handler]
 #[utoipa::path(
     get,
-    path = "/hackathon",
+    context_path = "/hackathons",
+    path = "",
     responses(
         (status = 200, description = "Returns all hackathons", body = [HackathonEntity]),
         (status = 400, description = "Bad request"),
@@ -157,7 +159,8 @@ async fn get_all_hackathon(
 #[axum::debug_handler]
 #[utoipa::path(
     get,
-    path = "/hackathon/{id}",
+    context_path = "/hackathons",
+    path = "/{id}",
     responses(
         (status = 200, description = "Returns hackathon with id", body = HackathonEntity),
         (status = 400, description = "Bad request"),
@@ -199,7 +202,8 @@ async fn get_hackathon_by_id(
 #[axum::debug_handler]
 #[utoipa::path(
     delete,
-    path = "/hackathon/{id}",
+    context_path = "/hackathons",
+    path = "/{id}",
     responses((status = 204, description = "Delete hackathon with id"),
     (status = 400, description = "Bad request"),
     (status = 401, description = "Unauthorized"),
@@ -233,7 +237,8 @@ async fn delete_hackathon_by_id(
 #[axum::debug_handler]
 #[utoipa::path(
     post,
-    path = "/hackathon/{id}/active",
+    context_path = "/hackathons",
+    path = "/{id}/active",
     responses((status = 200, description = "Set hackathon with id to active"),
     (status = 400, description = "Bad request"),
     (status = 401, description = "Unauthorized"),
@@ -283,7 +288,8 @@ async fn set_active_hackathon(
 #[axum::debug_handler]
 #[utoipa::path(
     get,
-    path = "/hackathon/active",
+    context_path = "/hackathons",
+    path = "/active/static",
     responses((status = 200, description = "Returns active hackathon", body = HackathonEntity),
     (status = 400, description = "Bad request"),
     (status = 401, description = "Unauthorized"),

@@ -16,6 +16,7 @@ use crate::utils;
         hackathons::get_hackathon_by_id,
         hackathons::delete_hackathon_by_id,
         hackathons::set_active_hackathon,
+        hackathons::get_active_hackathon,
         extra_credit_classes::create_extra_credit_class,
         extra_credit_classes::get_all_extra_credit_classes,
         extra_credit_classes::get_extra_credit_class_by_id,
