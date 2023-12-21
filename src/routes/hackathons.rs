@@ -64,7 +64,7 @@ struct Params {
     ),
     request_body = CreateHackathonEntity,
     security(
-        ("OAuth2" = ["Exec", "Tech"])
+        ("api_key" = ["Exec", "Tech"])
     )
 )]
 async fn create_hackathon(
@@ -121,7 +121,7 @@ async fn create_hackathon(
     ),
     params(Params),
     security(
-        ("OAuth2" = ["Exec", "Team", "Tech"])
+                ("api_key" = ["Exec", "Tech"])
     )
 )]
 async fn get_all_hackathon(
@@ -169,7 +169,7 @@ async fn get_all_hackathon(
     ),
     params(("id" = String, Path, description = "id of hackathon to get")),
     security(
-        ("OAuth2" = ["Exec", "Team", "Tech"])
+                ("api_key" = ["Exec", "Tech"])
     )
 )]
 async fn get_hackathon_by_id(
@@ -211,7 +211,7 @@ async fn get_hackathon_by_id(
     ),
     params(("id" = String, Path, description = "id of hackathon to delete")),
     security(
-        ("OAuth2" = ["Exec", "Tech"])
+                ("api_key" = ["Exec", "Tech"])
     )
 )]
 async fn delete_hackathon_by_id(
@@ -246,9 +246,9 @@ async fn delete_hackathon_by_id(
     ),
     params(("id" = String, Path, description = "id of hackathon to set active")),
     security(
-        ("OAuth2" = ["Exec", "Tech"])
+                ("api_key" = ["Exec", "Tech"]
     )
-)]
+))]
 async fn set_active_hackathon(
     State(app_state): State<AppState>,
     Path(id): Path<String>,
@@ -296,7 +296,7 @@ async fn set_active_hackathon(
     (status = 404, description = "No hackathon found")
     ),
     security(
-        ("OAuth2" = ["Exec", "Team", "Tech"])
+                ()
     )
 )]
 async fn get_active_hackathon(State(app_state): State<AppState>) -> GetResponse<Json<Data>> {

@@ -1,6 +1,5 @@
 use utoipa::openapi::security::{
-    /* ApiKey, ApiKeyValue, */ Flow, HttpAuthScheme, HttpBuilder, Password, Scopes,
-    SecurityScheme,
+    /* ApiKey, ApiKeyValue, */ HttpAuthScheme, HttpBuilder, SecurityScheme,
 };
 use utoipa::{Modify, OpenApi};
 
@@ -51,11 +50,11 @@ impl Modify for SecurityAddon {
                 SecurityScheme::Http(
                     HttpBuilder::new()
                         .scheme(HttpAuthScheme::Bearer)
-                        .description(Some("GCP IdToken of the user"))
+                        .description(Some("Firebase idToken of the logged in user passed in the Authorization header with format Bearer idToken".to_string()))
                         .build(),
                 ),
             );
-            components.add_security_scheme(
+            /*             components.add_security_scheme(
                 "OAuth2",
                 SecurityScheme::OAuth2(utoipa::openapi::security::OAuth2::new(vec![
                     Flow::Password(Password::new(
@@ -70,7 +69,7 @@ impl Modify for SecurityAddon {
                         ]),
                     )),
                 ])),
-            );
+            ); */
         }
     }
 }
