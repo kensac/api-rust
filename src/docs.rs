@@ -12,7 +12,7 @@ use crate::utils;
     paths(
         utils::health_check,
         hackathons::create_hackathon,
-        hackathons::get_hackathon,
+        hackathons::get_all_hackathon,
         hackathons::get_hackathon_by_id,
         hackathons::delete_hackathon_by_id,
         hackathons::set_active_hackathon,
@@ -30,7 +30,7 @@ use crate::utils;
             hackathons::CreateHackathonEntity,
             hackathons::HackathonEntity,
             extra_credit_classes::CreateExtraCreditClassEntity,
-            locations::CreateLocationEntity
+            locations::CreateLocationEntity,
         )
     ),
     modifiers(&SecurityAddon),

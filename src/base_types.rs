@@ -2,9 +2,11 @@ use std::sync::Arc;
 
 use axum::response::{IntoResponse, Response};
 use hyper::StatusCode;
+use utoipa::ToSchema;
 
 use crate::prisma::PrismaClient;
 
+#[derive(ToSchema)]
 pub struct BaseError {
     status_code: StatusCode,
     message: String,
@@ -69,7 +71,6 @@ where
     }
 } */
 
-// Still unsure about which method to use for the responses
 type _StandardResponse<T> = Result<(StatusCode, T), (StatusCode, String)>;
 pub type GetResponse<T> = Result<(StatusCode, T), (StatusCode, String)>;
 pub type CreateResponse = Result<(StatusCode, ()), (StatusCode, String)>;
