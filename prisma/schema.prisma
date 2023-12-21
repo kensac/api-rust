@@ -92,6 +92,8 @@ model Organizer {
   gcpId     String  @unique
   Scan      Scan[]
   Score     Score[]
+
+  @@index([gcpId])
 }
 
 model Project {
@@ -183,6 +185,8 @@ model User {
   Registration Registration[]
   gcpId        String         @unique
   privilege         Role           @default(NONE)
+
+  @@index([gcpId])
 }
 
 model Score {

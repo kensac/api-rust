@@ -54,6 +54,14 @@ impl Modify for SecurityAddon {
                         .build(),
                 ),
             );
+            components.add_security_scheme("http", 
+                SecurityScheme::Http(
+                    HttpBuilder::new()
+                        .scheme(HttpAuthScheme::Bearer)
+                        .description(Some("Firebase idToken of the logged in user passed in the Authorization header with format Bearer idToken".to_string()))
+                        .build(),
+                )
+            );
             /*             components.add_security_scheme(
                 "OAuth2",
                 SecurityScheme::OAuth2(utoipa::openapi::security::OAuth2::new(vec![

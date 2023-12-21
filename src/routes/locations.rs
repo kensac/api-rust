@@ -1,17 +1,25 @@
 use axum::{
     extract::{Path, State},
-    response::Response,
+    middleware,
     routing::get,
-    Json, Router,
+    Extension, Json, Router,
 };
 use hyper::StatusCode;
 use serde::Deserialize;
 use utoipa::ToSchema;
 
 use crate::{
-    base_types::AppState,
-    prisma::{self, location::Data},
+    auth_guard::{self, permission_check},
+    base_types::{AppState, CreateResponse, DeleteResponse, GetResponse},
+    prisma::{self, location::Data, Role},
 };
+
+#[derive(Deserialize, ToSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct LocationEntity {
+    _id: String,
+    _name: String,
+}
 
 #[derive(Deserialize, ToSchema)]
 #[serde(rename_all = "camelCase")]
@@ -24,15 +32,24 @@ pub struct CreateLocationEntity {
     post,
     path = "/location",
     responses(
-        (status = 200, description = "Create a new location", body = String),
+        (status = 200, description = "Create a new location"),
         (status = 400, description = "Bad request")
     ),
     request_body = CreateLocationEntity
 )]
 async fn create_location(
     State(app_state): State<AppState>,
+    Extension(request_user): Extension<auth_guard::RequestUser>,
     Json(body): Json<CreateLocationEntity>,
-) -> Result<Response<String>, StatusCode> {
+) -> CreateResponse {
+    if !permission_check(
+        request_user,
+        vec![Role::Exec, Role::Team, Role::Tech],
+        vec![],
+    ) {
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+    }
+
     match app_state
         .client
         .location()
@@ -40,25 +57,39 @@ async fn create_location(
         .exec()
         .await
     {
-        Ok(_location) => Ok(Response::new("Created location succesfully".to_string())),
-        Err(_err) => Err(StatusCode::BAD_REQUEST),
+        Ok(_location) => Ok((StatusCode::OK, ())),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 #[axum::debug_handler]
 #[utoipa::path(
     get,
-    path = "/locations",
+    context_path = "/locations",
+    path = "",
     responses(
-        (status = 200, description = "Get all locations"),
-        (status = 400, description = "Bad request")
+        (status = 200, description = "Get all locations", body = [LocationEntity]),
+        (status = 400, description = "Bad request"),
+        (status = 401, description = "Unauthorized"),
+        (status = 404, description = "Not found")
+    ),
+    security(
+        ("http" = ["Exec", "Tech", "Team"])
     )
 )]
 async fn get_all_locations(
     State(app_state): State<AppState>,
-) -> Result<Json<Vec<Data>>, StatusCode> {
+    Extension(request_user): Extension<auth_guard::RequestUser>,
+) -> GetResponse<Json<Vec<Data>>> {
+    if !permission_check(
+        request_user,
+        vec![Role::Exec, Role::Team, Role::Tech],
+        vec![],
+    ) {
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+    }
     match app_state.client.location().find_many(vec![]).exec().await {
-        Ok(locations) => Ok(Json(locations)),
-        Err(_err) => Err(StatusCode::BAD_REQUEST),
+        Ok(locations) => Ok((StatusCode::OK, Json(locations))),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 #[axum::debug_handler]
@@ -66,14 +97,27 @@ async fn get_all_locations(
     get,
     path = "/locations/{id}",
     responses(
-        (status = 200, description = "Get a location by id"),
-        (status = 400, description = "Bad request")
+        (status = 200, description = "Get a location by id", body = LocationEntity),
+        (status = 400, description = "Bad request"),
+        (status = 401, description = "Unauthorized"),
+        (status = 404, description = "Not found")
+    ),
+    security(
+        ("http" = ["Exec", "Tech", "Team"])
     )
 )]
 async fn get_location_by_id(
     State(app_state): State<AppState>,
     Path(id): Path<String>,
-) -> Result<Json<Data>, (StatusCode, String)> {
+    Extension(request_user): Extension<auth_guard::RequestUser>,
+) -> GetResponse<Json<Data>> {
+    if !permission_check(
+        request_user,
+        vec![Role::Exec, Role::Team, Role::Tech],
+        vec![],
+    ) {
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+    }
     match app_state
         .client
         .location()
@@ -82,8 +126,8 @@ async fn get_location_by_id(
         .await
     {
         Ok(location) => match location {
-            Some(location) => Ok(Json(location)),
-            None => Err((StatusCode::NOT_FOUND, "".to_string())),
+            Some(location) => Ok((StatusCode::OK, Json(location))),
+            None => Err((StatusCode::NOT_FOUND, "Location not found".to_string())),
         },
         Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
@@ -94,13 +138,26 @@ async fn get_location_by_id(
     path = "/locations/{id}",
     responses(
         (status = 200, description = "Delete a location by id"),
-        (status = 400, description = "Bad request")
+        (status = 400, description = "Bad request"),
+        (status = 401, description = "Unauthorized"),
+        (status = 404, description = "Not found")
+    ),
+    security(
+        ("http" = ["Exec", "Tech", "Team"])
     )
 )]
 async fn delete_location_by_id(
     State(app_state): State<AppState>,
     Path(id): Path<String>,
-) -> Result<Response<String>, StatusCode> {
+    Extension(request_user): Extension<auth_guard::RequestUser>,
+) -> DeleteResponse {
+    if !permission_check(
+        request_user,
+        vec![Role::Exec, Role::Team, Role::Tech],
+        vec![],
+    ) {
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+    }
     match app_state
         .client
         .location()
@@ -108,8 +165,8 @@ async fn delete_location_by_id(
         .exec()
         .await
     {
-        Ok(_) => Ok(Response::new("Deleted location succesfully".to_string())),
-        Err(_err) => Err(StatusCode::BAD_REQUEST),
+        Ok(_) => Ok((StatusCode::NO_CONTENT, ())),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 
@@ -121,5 +178,9 @@ pub async fn location_get_router() -> Router {
             "/{id}",
             get(get_location_by_id).delete(delete_location_by_id),
         )
+        .route_layer(middleware::from_fn_with_state(
+            state.clone(),
+            auth_guard::require_auth,
+        ))
         .with_state(state)
 }
