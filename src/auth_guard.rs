@@ -8,6 +8,7 @@ use axum::{
 };
 use hyper::{HeaderMap, Request, StatusCode};
 use serde::{Deserialize, Serialize};
+use tokio::try_join;
 
 use crate::{
     base_types::AppState,
@@ -62,29 +63,41 @@ pub async fn require_auth(
     // this might not be the best way to check the user's id because it checks only the first user in the list
     let user_uid = firebase_user.users[0].local_id.clone();
 
-    if let Some(organizer) = app_state
-        .client
-        .organizer()
-        .find_unique(organizer::UniqueWhereParam::GcpIdEquals(user_uid.clone()))
-        .exec()
-        .await
-        .unwrap()
-    {
-        request
-            .extensions_mut()
-            .insert(RequestUser::Organizer(organizer));
-    }
 
-    if let Some(user) = app_state
-        .client
-        .user()
-        .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid))
-        .exec()
-        .await
-        .unwrap()
-    {
-        request.extensions_mut().insert(RequestUser::User(user));
-    }
+        // Start both queries in parallel
+        let organizer_future = app_state
+            .client
+            .organizer()
+            .find_unique(organizer::UniqueWhereParam::GcpIdEquals(user_uid.clone()))
+            .exec();
+    
+        let user_future = app_state
+            .client
+            .user()
+            .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid))
+            .exec();
+    
+        // Wait for both futures to complete
+        match try_join!(organizer_future, user_future) {
+            Ok((Some(organizer), Some(user))) => {
+                request.extensions_mut().insert(RequestUser::Organizer(organizer));
+                request.extensions_mut().insert(RequestUser::User(user));
+            },
+            Ok((Some(organizer), None)) => {
+                request.extensions_mut().insert(RequestUser::Organizer(organizer));
+            },
+            Ok((None, Some(user))) => {
+                request.extensions_mut().insert(RequestUser::User(user));
+            },
+            Ok((None, None)) => {
+                // Handle case where both are None, if necessary
+            },
+            Err(_e) => {
+                // Handle error, if necessary
+            }
+        }
+    
+    
 
     // Check if both organizer and user are not present
     if request.extensions().get::<RequestUser>().is_none() {
