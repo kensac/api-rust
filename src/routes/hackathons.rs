@@ -16,7 +16,7 @@ use crate::{
     base_types::{CreateResponse, DeleteResponse, GetResponse},
     prisma::{
         hackathon::{self, Data, UniqueWhereParam},
-        Role,
+        location, EventType, Role,
     },
 };
 
@@ -57,17 +57,23 @@ struct Params {
     post,
     path = "/hackathon",
     responses(
-        (status = 200, description = "Create a new hackathon", body = String),
-        (status = 400, description = "Bad request")
+        (status = 200, description = "Create a new hackathon"),
+        (status = 400, description = "Bad request", body = String),
+        (status = 401, description = "Unauthorized")
     ),
-    request_body = CreateHackathonEntity
+    request_body = CreateHackathonEntity,
+    security(
+        ("OAuth2" = ["Exec", "Tech"])
+    )
 )]
 async fn create_hackathon(
     State(app_state): State<AppState>,
+    Extension(request_user): Extension<RequestUser>,
     Json(body): Json<CreateHackathonEntity>,
 ) -> CreateResponse {
-    //add event that also serves as check-in for hackathon
-
+    if !permission_check(request_user, vec![Role::Exec, Role::Tech], vec![]) {
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+    }
     match app_state
         .client
         .hackathon()
@@ -75,28 +81,56 @@ async fn create_hackathon(
         .exec()
         .await
     {
-        Ok(_hackathon) => Ok((StatusCode::OK, ())),
+        Ok(hackathon) => {
+            let event = app_state
+                .client
+                .event()
+                .create(
+                    "Hackathon CheckIn".to_string(),
+                    EventType::CheckIn,
+                    "CheckIn for Hackathon".to_string(),
+                    location::UniqueWhereParam::IdEquals("0".to_string()),
+                    body.start_time,
+                    body.end_time,
+                    hackathon::UniqueWhereParam::IdEquals(hackathon.id),
+                    vec![],
+                )
+                .exec()
+                .await;
+
+            match event {
+                Ok(_) => Ok((StatusCode::OK, ())),
+                Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
+            }
+        }
         Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
     }
 }
 
 #[axum::debug_handler]
-#[utoipa::path(get, path = "/hackathon", responses((status = 200, description = "Returns all hackathons", body = Vec<HackathonEntity>), (status=404, description = "No hackathon found")) , params(Params))]
-async fn get_hackathon(
+#[utoipa::path(
+    get,
+    path = "/hackathon",
+    responses(
+        (status = 200, description = "Returns all hackathons", body = [HackathonEntity]),
+        (status = 400, description = "Bad request"),
+        (status = 401, description = "Unauthorized"),
+        (status = 404, description = "No hackathon found")
+    ),
+    params(Params),
+    security(
+        ("OAuth2" = ["Exec", "Team", "Tech"])
+    )
+)]
+async fn get_all_hackathon(
     State(app_state): State<AppState>,
     Query(params): Query<Params>,
     Extension(request_user): Extension<RequestUser>,
 ) -> GetResponse<Json<Vec<Data>>> {
     if !permission_check(
         request_user,
-        vec![Role::Exec],
-        vec![(
-            Role::None,
-            Box::new(|user| match user {
-                RequestUser::User(user) => user.id == *"1",
-                _ => false,
-            }),
-        )],
+        vec![Role::Exec, Role::Team, Role::Tech],
+        vec![],
     ) {
         return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
     }
@@ -126,14 +160,27 @@ async fn get_hackathon(
     path = "/hackathon/{id}",
     responses(
         (status = 200, description = "Returns hackathon with id", body = HackathonEntity),
+        (status = 400, description = "Bad request"),
+        (status = 401, description = "Unauthorized"),
         (status = 404, description = "No hackathon found")
     ),
-    params(("id" = String, Path, description = "id of hackathon to get"))
+    params(("id" = String, Path, description = "id of hackathon to get")),
+    security(
+        ("OAuth2" = ["Exec", "Team", "Tech"])
+    )
 )]
 async fn get_hackathon_by_id(
     State(app_state): State<AppState>,
     Path(id): Path<String>,
+    Extension(request_user): Extension<RequestUser>,
 ) -> GetResponse<Json<Data>> {
+    if !permission_check(
+        request_user,
+        vec![Role::Exec, Role::Team, Role::Tech],
+        vec![],
+    ) {
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+    }
     match app_state
         .client
         .hackathon()
@@ -153,12 +200,24 @@ async fn get_hackathon_by_id(
 #[utoipa::path(
     delete,
     path = "/hackathon/{id}",
-    responses((status = 204, description = "Delete hackathon with id"))
+    responses((status = 204, description = "Delete hackathon with id"),
+    (status = 400, description = "Bad request"),
+    (status = 401, description = "Unauthorized"),
+    (status = 404, description = "No hackathon found")
+    ),
+    params(("id" = String, Path, description = "id of hackathon to delete")),
+    security(
+        ("OAuth2" = ["Exec", "Tech"])
+    )
 )]
 async fn delete_hackathon_by_id(
     State(app_state): State<AppState>,
     Path(id): Path<String>,
+    Extension(request_user): Extension<RequestUser>,
 ) -> DeleteResponse {
+    if !permission_check(request_user, vec![Role::Exec, Role::Tech], vec![]) {
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+    }
     match app_state
         .client
         .hackathon()
@@ -175,16 +234,37 @@ async fn delete_hackathon_by_id(
 #[utoipa::path(
     post,
     path = "/hackathon/{id}/active",
-    responses((status = 200, description = "Set hackathon with id to active")),
+    responses((status = 200, description = "Set hackathon with id to active"),
+    (status = 400, description = "Bad request"),
+    (status = 401, description = "Unauthorized"),
+    (status = 404, description = "No hackathon found")
+    ),
+    params(("id" = String, Path, description = "id of hackathon to set active")),
     security(
-        ("api_key" = ["Admin", "Organizer"]),
-        ("OAuth2" = ["Admin", "Organizer"])
+        ("OAuth2" = ["Exec", "Tech"])
     )
 )]
 async fn set_active_hackathon(
     State(app_state): State<AppState>,
     Path(id): Path<String>,
+    Extension(request_user): Extension<RequestUser>,
 ) -> Result<StatusCode, StatusCode> {
+    if !permission_check(request_user, vec![Role::Exec, Role::Tech], vec![]) {
+        return Err(StatusCode::UNAUTHORIZED);
+    }
+    //set all hackathons to inactive
+    match app_state
+        .client
+        .hackathon()
+        .update_many(vec![], vec![hackathon::active::set(false)])
+        .exec()
+        .await
+    {
+        Ok(_) => (),
+        Err(_) => return Err(StatusCode::BAD_REQUEST),
+    }
+
+    //set hackathon with id to active
     match app_state
         .client
         .hackathon()
@@ -200,18 +280,48 @@ async fn set_active_hackathon(
     }
 }
 
+#[axum::debug_handler]
+#[utoipa::path(
+    get,
+    path = "/hackathon/active",
+    responses((status = 200, description = "Returns active hackathon", body = HackathonEntity),
+    (status = 400, description = "Bad request"),
+    (status = 401, description = "Unauthorized"),
+    (status = 404, description = "No hackathon found")
+    ),
+    security(
+        ("OAuth2" = ["Exec", "Team", "Tech"])
+    )
+)]
+async fn get_active_hackathon(State(app_state): State<AppState>) -> GetResponse<Json<Data>> {
+    match app_state
+        .client
+        .hackathon()
+        .find_first(vec![hackathon::active::equals(true)])
+        .exec()
+        .await
+    {
+        Ok(hackathons) => match hackathons {
+            Some(hackathon) => Ok((StatusCode::OK, Json(hackathon))),
+            None => Err((StatusCode::NOT_FOUND, "No hackathon found".to_string())),
+        },
+        Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
+    }
+}
+
 pub async fn hackathon_get_router() -> Router {
     let state = AppState::new().await;
     Router::new()
-        .route("/", post(create_hackathon).get(get_hackathon))
-        .route_layer(middleware::from_fn_with_state(
-            state.clone(),
-            auth_guard::require_auth,
-        ))
+        .route("/", post(create_hackathon).get(get_all_hackathon))
         .route(
             "/:id",
             get(get_hackathon_by_id).delete(delete_hackathon_by_id),
         )
         .route("/:id/active", patch(set_active_hackathon))
+        .route_layer(middleware::from_fn_with_state(
+            state.clone(),
+            auth_guard::require_auth,
+        ))
+        .route("/active/static", get(get_active_hackathon))
         .with_state(state)
 }
