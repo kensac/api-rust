@@ -16,20 +16,21 @@ use tower_http::trace::TraceLayer;
 use utoipa::OpenApi;
 use utoipa_redoc::{Redoc, Servable};
 
+use crate::base_types::AppState;
 use crate::{docs, routes, utils};
 
-pub async fn new_app() -> Router {
+pub async fn new_app(app_state: AppState) -> Router {
     let service_layer = new_service_layer();
     let cors_layer = new_cors_layer();
 
-    let sponsor_routes = routes::sponsors::sponsor_get_router().await;
-    let hackathon_routes = routes::hackathons::hackathon_get_router().await;
+    let sponsor_routes = routes::sponsors::sponsor_get_router(app_state.clone()).await;
+    let hackathon_routes = routes::hackathons::hackathon_get_router(app_state.clone()).await;
     let extra_credit_class_routes =
-        routes::extra_credit_classes::extra_credit_class_get_router().await;
-    let location_routes = routes::locations::location_get_router().await;
-    let event_routes = routes::events::events_get_router().await;
-    let scans_routes = routes::scans::scans_get_router().await;
-    let organizer_routes = routes::organizers::routes().await;
+        routes::extra_credit_classes::extra_credit_class_get_router(app_state.clone()).await;
+    let location_routes = routes::locations::location_get_router(app_state.clone()).await;
+    let event_routes = routes::events::events_get_router(app_state.clone()).await;
+    let scans_routes = routes::scans::scans_get_router(app_state.clone()).await;
+    let organizer_routes = routes::organizers::routes(app_state.clone()).await;
 
     Router::new()
         .route("/shutdown", get(utils::shutdown))

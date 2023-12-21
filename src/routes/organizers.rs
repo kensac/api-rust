@@ -87,13 +87,11 @@ async fn delete_organizer_by_id(
     }
 }
 
-pub async fn routes() -> Router {
-    let state = AppState::new().await;
-
+pub async fn routes(app_state: AppState) -> Router {
     axum::Router::new()
         .route("/", post(create_organizer))
         .route("/", get(get_all_organizers))
         .route("/:id", get(get_organizer_by_id))
         .route("/:id", delete(delete_organizer_by_id))
-        .with_state(state)
+        .with_state(app_state)
 }

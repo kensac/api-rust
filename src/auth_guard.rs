@@ -43,7 +43,8 @@ pub async fn require_auth(
         None => return Err(StatusCode::UNAUTHORIZED),
     };
 
-    let user_data = reqwest::Client::new()
+    let user_data = app_state
+        .reqwest_client
         .post(std::env::var("FIREBASE_USER_DATA_ENDPOINT").unwrap())
         .query(&[("key", std::env::var("FIREBASE_API_KEY").unwrap())])
         .json(&serde_json::json!({
@@ -63,17 +64,20 @@ pub async fn require_auth(
     // this might not be the best way to check the user's id because it checks only the first user in the list
     let user_uid = firebase_user.users[0].local_id.clone();
 
+    let state1 = app_state.clone();
+    let state2 = app_state.clone();
+
     // Start both queries in parallel
-    let organizer_future = app_state
+    let organizer_future = state1
         .client
         .organizer()
         .find_unique(organizer::UniqueWhereParam::GcpIdEquals(user_uid.clone()))
         .exec();
 
-    let user_future = app_state
+    let user_future = state2
         .client
         .user()
-        .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid))
+        .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid.clone()))
         .exec();
 
     // Wait for both futures to complete

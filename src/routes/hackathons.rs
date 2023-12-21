@@ -315,8 +315,7 @@ async fn get_active_hackathon(State(app_state): State<AppState>) -> GetResponse<
     }
 }
 
-pub async fn hackathon_get_router() -> Router {
-    let state = AppState::new().await;
+pub async fn hackathon_get_router(app_state: AppState) -> Router {
     Router::new()
         .route("/", post(create_hackathon).get(get_all_hackathon))
         .route(
@@ -325,9 +324,9 @@ pub async fn hackathon_get_router() -> Router {
         )
         .route("/:id/active", patch(set_active_hackathon))
         .route_layer(middleware::from_fn_with_state(
-            state.clone(),
+            app_state.clone(),
             auth_guard::require_auth,
         ))
         .route("/active/static", get(get_active_hackathon))
-        .with_state(state)
+        .with_state(app_state)
 }

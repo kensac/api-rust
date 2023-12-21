@@ -127,9 +127,7 @@ async fn delete_extra_credit_class_by_id(
     }
 }
 
-pub async fn extra_credit_class_get_router() -> Router {
-    let state = AppState::new().await;
-
+pub async fn extra_credit_class_get_router(app_state: AppState) -> Router {
     Router::new()
         .route(
             "/",
@@ -139,5 +137,5 @@ pub async fn extra_credit_class_get_router() -> Router {
             "/:id",
             get(get_extra_credit_class_by_id).delete(delete_extra_credit_class_by_id),
         )
-        .with_state(state)
+        .with_state(app_state)
 }

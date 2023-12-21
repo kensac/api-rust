@@ -81,6 +81,7 @@ pub type UpdateResponse<T> = Result<BaseResponse<T>, BaseError>;
 #[derive(Clone)]
 pub struct AppState {
     pub client: Arc<PrismaClient>,
+    pub reqwest_client: reqwest::Client,
 }
 
 impl AppState {
@@ -92,6 +93,7 @@ impl AppState {
 
         AppState {
             client: Arc::new(client),
+            reqwest_client: reqwest::Client::new(),
         }
     }
 }

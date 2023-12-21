@@ -119,8 +119,7 @@ pub async fn get_event_with_scans_by_id(
     }
 }
 
-pub async fn scans_get_router() -> Router {
-    let state = AppState::new().await;
+pub async fn scans_get_router(app_state: AppState) -> Router {
     Router::new()
         .route("/", get(get_all_scans))
         .route("/:event_id/:user_id", get(get_scan_by_id))
@@ -128,5 +127,5 @@ pub async fn scans_get_router() -> Router {
         .route("/analytics/user/:id", get(get_scans_by_registration_id))
         .route("/analytics/events", get(get_all_events_with_scans))
         .route("/analytics/events/:id", get(get_event_with_scans_by_id))
-        .with_state(state)
+        .with_state(app_state)
 }

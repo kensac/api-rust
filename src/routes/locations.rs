@@ -170,8 +170,7 @@ async fn delete_location_by_id(
     }
 }
 
-pub async fn location_get_router() -> Router {
-    let state = AppState::new().await;
+pub async fn location_get_router(app_state: AppState) -> Router {
     Router::new()
         .route("/", get(get_all_locations).post(create_location))
         .route(
@@ -179,8 +178,8 @@ pub async fn location_get_router() -> Router {
             get(get_location_by_id).delete(delete_location_by_id),
         )
         .route_layer(middleware::from_fn_with_state(
-            state.clone(),
+            app_state.clone(),
             auth_guard::require_auth,
         ))
-        .with_state(state)
+        .with_state(app_state)
 }

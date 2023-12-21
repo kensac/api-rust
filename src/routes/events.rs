@@ -143,9 +143,7 @@ pub async fn check_in_user_to_event(
     }
 }
 
-pub async fn events_get_router() -> Router {
-    let state = AppState::new().await;
-
+pub async fn events_get_router(app_state: AppState) -> Router {
     Router::new()
         .route("/", post(create_event).get(get_events))
         .route(
@@ -156,5 +154,5 @@ pub async fn events_get_router() -> Router {
             "/:event_id/check-in/user/:user_id",
             post(check_in_user_to_event),
         )
-        .with_state(state)
+        .with_state(app_state)
 }
