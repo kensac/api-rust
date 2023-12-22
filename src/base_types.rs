@@ -75,8 +75,9 @@ type _StandardResponse<T> = Result<(StatusCode, T), (StatusCode, String)>;
 pub type GetResponse<T> = Result<(StatusCode, T), (StatusCode, String)>;
 pub type CreateResponse = Result<(StatusCode, ()), (StatusCode, String)>;
 pub type DeleteResponse = Result<(StatusCode, ()), (StatusCode, String)>;
+pub type UpdateResponse = Result<(StatusCode, ()), (StatusCode, String)>;
 
-pub type UpdateResponse<T> = Result<BaseResponse<T>, BaseError>;
+/* pub type UpdateResponse<T> = Result<BaseResponse<T>, BaseError>; */
 
 #[derive(Clone)]
 pub struct AppState {

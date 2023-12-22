@@ -3,8 +3,8 @@ use utoipa::openapi::security::{
 };
 use utoipa::{Modify, OpenApi};
 
-use crate::routes::{extra_credit_classes, hackathons, locations};
-use crate::utils;
+use crate::routes::{events, extra_credit_classes, hackathons, locations};
+use crate::{prisma, utils};
 
 #[derive(OpenApi)]
 #[openapi(
@@ -16,28 +16,44 @@ use crate::utils;
         hackathons::delete_hackathon_by_id,
         hackathons::set_active_hackathon,
         hackathons::get_active_hackathon,
+
+        locations::create_location,
+        locations::get_all_locations,
+        locations::get_location_by_id,
+        locations::delete_location_by_id,
+
+        events::create_event,
+        events::get_all_events,
+        events::get_event_by_id,
+        events::delete_event_by_id,
+        events::check_in_user_to_event,
+
         extra_credit_classes::create_extra_credit_class,
         extra_credit_classes::get_all_extra_credit_classes,
         extra_credit_classes::get_extra_credit_class_by_id,
         extra_credit_classes::delete_extra_credit_class_by_id,
-        locations::create_location,
-        locations::get_all_locations,
-        locations::get_location_by_id,
-        locations::delete_location_by_id
     ),
     components(
         schemas(
             hackathons::CreateHackathonEntity,
             hackathons::HackathonEntity,
-            extra_credit_classes::CreateExtraCreditClassEntity,
+
             locations::CreateLocationEntity,
+            locations::LocationEntity,
+
+            events::CreateEventEntity,
+            events::CheckInUserToEventEntity,
+            prisma::EventType,
+            events::EventEntity,
+
+            extra_credit_classes::CreateExtraCreditClassEntity,
         )
     ),
     modifiers(&SecurityAddon),
     tags(
-        (name = "hackathons", description = "Hackathon related operations"),
+/*         (name = "hackathons", description = "Hackathon related operations"),
         (name = "extra_credit_class", description = "Extra Credit Class related operations"),
-        (name = "location", description = "Location related operations")
+        (name = "locations", description = "Location related operations") */
     )
 )]
 pub struct ApiDoc;

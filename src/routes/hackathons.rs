@@ -13,7 +13,7 @@ use utoipa::{IntoParams, ToSchema};
 use crate::{
     auth_guard::{self, permission_check, RequestUser},
     base_types::AppState,
-    base_types::{CreateResponse, DeleteResponse, GetResponse},
+    base_types::{CreateResponse, DeleteResponse, GetResponse, UpdateResponse},
     prisma::{
         hackathon::{self, Data, UniqueWhereParam},
         location, EventType, Role,
@@ -58,7 +58,7 @@ struct Params {
     context_path = "/hackathons",
     path = "",
     responses(
-        (status = 200, description = "Create a new hackathon"),
+        (status = 201, description = "Created a new hackathon"),
         (status = 400, description = "Bad request"),
         (status = 401, description = "Unauthorized")
     ),
@@ -100,7 +100,7 @@ async fn create_hackathon(
                 .await;
 
             match event {
-                Ok(_) => Ok((StatusCode::OK, ())),
+                Ok(_) => Ok((StatusCode::CREATED, ())),
                 Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
             }
         }
@@ -117,7 +117,6 @@ async fn create_hackathon(
         (status = 200, description = "Returns all hackathons", body = [HackathonEntity]),
         (status = 400, description = "Bad request"),
         (status = 401, description = "Unauthorized"),
-        (status = 404, description = "No hackathon found")
     ),
     params(Params),
     security(
@@ -146,12 +145,12 @@ async fn get_all_hackathon(
             .await
         {
             Ok(hackathons) => Ok((StatusCode::OK, Json(hackathons))),
-            Err(_) => Err((StatusCode::NOT_FOUND, "No hackathon found".to_string())),
+            Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
         }
     } else {
         match app_state.client.hackathon().find_many(vec![]).exec().await {
             Ok(hackathons) => Ok((StatusCode::OK, Json(hackathons))),
-            Err(_) => Err((StatusCode::NOT_FOUND, "No hackathon found".to_string())),
+            Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
         }
     }
 }
@@ -207,7 +206,6 @@ async fn get_hackathon_by_id(
     responses((status = 204, description = "Delete hackathon with id"),
     (status = 400, description = "Bad request"),
     (status = 401, description = "Unauthorized"),
-    (status = 404, description = "No hackathon found")
     ),
     params(("id" = String, Path, description = "id of hackathon to delete")),
     security(
@@ -242,7 +240,6 @@ async fn delete_hackathon_by_id(
     responses((status = 200, description = "Set hackathon with id to active"),
     (status = 400, description = "Bad request"),
     (status = 401, description = "Unauthorized"),
-    (status = 404, description = "No hackathon found")
     ),
     params(("id" = String, Path, description = "id of hackathon to set active")),
     security(
@@ -253,9 +250,9 @@ async fn set_active_hackathon(
     State(app_state): State<AppState>,
     Path(id): Path<String>,
     Extension(request_user): Extension<RequestUser>,
-) -> Result<StatusCode, StatusCode> {
+) -> UpdateResponse {
     if !permission_check(request_user, vec![Role::Exec, Role::Tech], vec![]) {
-        return Err(StatusCode::UNAUTHORIZED);
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
     }
     //set all hackathons to inactive
     match app_state
@@ -266,7 +263,7 @@ async fn set_active_hackathon(
         .await
     {
         Ok(_) => (),
-        Err(_) => return Err(StatusCode::BAD_REQUEST),
+        Err(e) => return Err((StatusCode::BAD_REQUEST, e.to_string())),
     }
 
     //set hackathon with id to active
@@ -280,8 +277,8 @@ async fn set_active_hackathon(
         .exec()
         .await
     {
-        Ok(_) => Ok(StatusCode::OK),
-        Err(_) => Err(StatusCode::BAD_REQUEST),
+        Ok(_) => Ok((StatusCode::OK, ())),
+        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
     }
 }
 
@@ -292,7 +289,6 @@ async fn set_active_hackathon(
     path = "/active/static",
     responses((status = 200, description = "Returns active hackathon", body = HackathonEntity),
     (status = 400, description = "Bad request"),
-    (status = 401, description = "Unauthorized"),
     (status = 404, description = "No hackathon found")
     ),
     security(

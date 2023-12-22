@@ -32,10 +32,14 @@ pub struct CreateLocationEntity {
     post,
     path = "/location",
     responses(
-        (status = 200, description = "Create a new location"),
-        (status = 400, description = "Bad request")
+        (status = 201, description = "Created a new location"),
+        (status = 400, description = "Bad request"),
+        (status = 401, description = "Unauthorized")
     ),
-    request_body = CreateLocationEntity
+    request_body = CreateLocationEntity,
+    security(
+        ("http" = ["Exec", "Tech", "Team"])
+    )
 )]
 async fn create_location(
     State(app_state): State<AppState>,
@@ -57,7 +61,7 @@ async fn create_location(
         .exec()
         .await
     {
-        Ok(_location) => Ok((StatusCode::OK, ())),
+        Ok(_location) => Ok((StatusCode::CREATED, ())),
         Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
