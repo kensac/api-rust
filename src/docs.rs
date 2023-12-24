@@ -66,7 +66,7 @@ impl Modify for SecurityAddon {
                 SecurityScheme::Http(
                     HttpBuilder::new()
                         .scheme(HttpAuthScheme::Bearer)
-                        .description(Some("Firebase idToken of the logged in user passed in the Authorization header with format Bearer idToken".to_string()))
+                        .description(Some("Firebase idToken of the logged in user passed in the Authorization header with format Bearer idToken".to_owned()))
                         .build(),
                 ),
             );
@@ -74,7 +74,7 @@ impl Modify for SecurityAddon {
                 SecurityScheme::Http(
                     HttpBuilder::new()
                         .scheme(HttpAuthScheme::Bearer)
-                        .description(Some("Firebase idToken of the logged in user passed in the Authorization header with format Bearer idToken".to_string()))
+                        .description(Some("Firebase idToken of the logged in user passed in the Authorization header with format Bearer idToken".to_owned()))
                         .build(),
                 )
             );
@@ -84,12 +84,12 @@ impl Modify for SecurityAddon {
                     Flow::Password(Password::new(
                         "/registration",
                         Scopes::from_iter(vec![
-                            ("None".to_string(), "None".to_string()),
-                            ("Volunteer".to_string(), "Volunteer".to_string()),
-                            ("Team".to_string(), "Team".to_string()),
-                            ("Exec".to_string(), "Exec".to_string()),
-                            ("Tech".to_string(), "Tech".to_string()),
-                            ("Finance".to_string(), "Finance".to_string()),
+                            ("None".to_owned(), "None".to_owned()),
+                            ("Volunteer".to_owned(), "Volunteer".to_owned()),
+                            ("Team".to_owned(), "Team".to_owned()),
+                            ("Exec".to_owned(), "Exec".to_owned()),
+                            ("Tech".to_owned(), "Tech".to_owned()),
+                            ("Finance".to_owned(), "Finance".to_owned()),
                         ]),
                     )),
                 ])),
