@@ -311,7 +311,7 @@ async fn get_active_hackathon(State(app_state): State<AppState>) -> GetResponse<
     }
 }
 
-pub async fn hackathon_get_router(app_state: AppState) -> Router {
+pub fn hackathon_get_router(app_state: AppState) -> Router {
     Router::new()
         .route("/", post(create_hackathon).get(get_all_hackathon))
         .route(

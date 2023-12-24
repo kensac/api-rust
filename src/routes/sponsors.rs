@@ -67,7 +67,7 @@ pub async fn get_all_sponsors(
     }
 }
 
-pub async fn sponsor_get_router(app_state: AppState) -> Router {
+pub fn sponsor_get_router(app_state: AppState) -> Router {
     Router::new()
         .route("/", post(create_sponsor).get(get_all_sponsors))
         .with_state(app_state)

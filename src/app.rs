@@ -23,14 +23,14 @@ pub async fn new_app(app_state: AppState) -> Router {
     let service_layer = new_service_layer();
     let cors_layer = new_cors_layer();
 
-    let sponsor_routes = routes::sponsors::sponsor_get_router(app_state.clone()).await;
-    let hackathon_routes = routes::hackathons::hackathon_get_router(app_state.clone()).await;
+    let sponsor_routes = routes::sponsors::sponsor_get_router(app_state.clone());
+    let hackathon_routes = routes::hackathons::hackathon_get_router(app_state.clone());
     let extra_credit_class_routes =
-        routes::extra_credit_classes::extra_credit_class_get_router(app_state.clone()).await;
-    let location_routes = routes::locations::location_get_router(app_state.clone()).await;
-    let event_routes = routes::events::events_get_router(app_state.clone()).await;
-    let scans_routes = routes::scans::scans_get_router(app_state.clone()).await;
-    let organizer_routes = routes::organizers::routes(app_state.clone()).await;
+        routes::extra_credit_classes::extra_credit_class_get_router(app_state.clone());
+    let location_routes = routes::locations::location_get_router(app_state.clone());
+    let event_routes = routes::events::events_get_router(app_state.clone());
+    let scans_routes = routes::scans::scans_get_router(app_state.clone());
+    let organizer_routes = routes::organizers::routes(app_state.clone());
 
     Router::new()
         .route("/shutdown", get(utils::shutdown))

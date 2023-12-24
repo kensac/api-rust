@@ -119,7 +119,7 @@ pub async fn get_event_with_scans_by_id(
     }
 }
 
-pub async fn scans_get_router(app_state: AppState) -> Router {
+pub fn scans_get_router(app_state: AppState) -> Router {
     Router::new()
         .route("/", get(get_all_scans))
         .route("/:event_id/:user_id", get(get_scan_by_id))

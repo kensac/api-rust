@@ -89,7 +89,7 @@ async fn get_all_locations(
         vec![Role::Exec, Role::Team, Role::Tech],
         vec![],
     ) {
-        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state.client.location().find_many(vec![]).exec().await {
         Ok(locations) => Ok((StatusCode::OK, Json(locations))),
@@ -174,7 +174,7 @@ async fn delete_location_by_id(
     }
 }
 
-pub async fn location_get_router(app_state: AppState) -> Router {
+pub fn location_get_router(app_state: AppState) -> Router {
     Router::new()
         .route("/", get(get_all_locations).post(create_location))
         .route(

@@ -87,7 +87,7 @@ async fn delete_organizer_by_id(
     }
 }
 
-pub async fn routes(app_state: AppState) -> Router {
+pub fn routes(app_state: AppState) -> Router {
     axum::Router::new()
         .route("/", post(create_organizer))
         .route("/", get(get_all_organizers))

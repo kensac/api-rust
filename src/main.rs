@@ -1,3 +1,13 @@
+#![warn(
+    clippy::all,
+    clippy::restriction,
+    clippy::pedantic,
+    clippy::nursery,
+    clippy::cargo
+)]
+
+#![allow(clippy::single_call_fn)]
+
 pub mod app;
 pub mod auth_guard;
 pub mod base_types;
@@ -14,6 +24,7 @@ use std::net::SocketAddr;
 use app::new_app;
 
 use base_types::AppState;
+use tokio::net::TcpListener;
 use utils::get_port;
 
 #[macro_use]
@@ -33,7 +44,7 @@ async fn main() {
 
     let app = new_app(app_state).await;
     let address = SocketAddr::from(([0, 0, 0, 0], port));
-    let listener = tokio::net::TcpListener::bind(address).await.unwrap();
+    let listener = TcpListener::bind(address).await.unwrap();
 
     axum::serve(listener, app).await.unwrap();
 }

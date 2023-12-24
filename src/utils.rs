@@ -28,7 +28,7 @@ pub async fn shutdown() {
 pub fn get_port() -> u16 {
     std::env::var("PORT")
         .ok()
-        .and_then(|s| s.parse().ok())
+        .and_then(|port| port.parse().ok())
         .unwrap_or(3000)
 }
 

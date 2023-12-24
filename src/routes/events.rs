@@ -268,7 +268,7 @@ pub async fn check_in_user_to_event(
     }
 }
 
-pub async fn events_get_router(app_state: AppState) -> Router {
+pub fn events_get_router(app_state: AppState) -> Router {
     Router::new()
         .route("/", post(create_event))
         .route("/:event_id", delete(delete_event_by_id))

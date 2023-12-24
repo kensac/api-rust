@@ -127,7 +127,7 @@ async fn delete_extra_credit_class_by_id(
     }
 }
 
-pub async fn extra_credit_class_get_router(app_state: AppState) -> Router {
+pub fn extra_credit_class_get_router(app_state: AppState) -> Router {
     Router::new()
         .route(
             "/",
