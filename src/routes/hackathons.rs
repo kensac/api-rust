@@ -101,10 +101,10 @@ async fn create_hackathon(
 
             match event {
                 Ok(_) => Ok((StatusCode::CREATED, ())),
-                Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
+                Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string())),
             }
         }
-        Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
+        Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string())),
     }
 }
 
@@ -145,12 +145,12 @@ async fn get_all_hackathon(
             .await
         {
             Ok(hackathons) => Ok((StatusCode::OK, Json(hackathons))),
-            Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
+            Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string())),
         }
     } else {
         match app_state.client.hackathon().find_many(vec![]).exec().await {
             Ok(hackathons) => Ok((StatusCode::OK, Json(hackathons))),
-            Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
+            Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string())),
         }
     }
 }
@@ -194,7 +194,7 @@ async fn get_hackathon_by_id(
             Some(hackathon) => Ok((StatusCode::OK, Json(hackathon))),
             None => Err((StatusCode::NOT_FOUND, "No hackathon found".to_owned())),
         },
-        Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
+        Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string())),
     }
 }
 
@@ -228,7 +228,7 @@ async fn delete_hackathon_by_id(
         .await
     {
         Ok(_) => Ok((StatusCode::NO_CONTENT, ())),
-        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 
@@ -263,7 +263,7 @@ async fn set_active_hackathon(
         .await
     {
         Ok(_) => (),
-        Err(e) => return Err((StatusCode::BAD_REQUEST, e.to_string())),
+        Err(err) => return Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 
     //set hackathon with id to active
@@ -278,7 +278,7 @@ async fn set_active_hackathon(
         .await
     {
         Ok(_) => Ok((StatusCode::OK, ())),
-        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 
@@ -307,7 +307,7 @@ async fn get_active_hackathon(State(app_state): State<AppState>) -> GetResponse<
             Some(hackathon) => Ok((StatusCode::OK, Json(hackathon))),
             None => Err((StatusCode::NOT_FOUND, "No hackathon found".to_owned())),
         },
-        Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
+        Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string())),
     }
 }
 

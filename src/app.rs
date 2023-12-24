@@ -30,7 +30,7 @@ pub async fn new_app(app_state: AppState) -> Router {
     let location_routes = routes::locations::location_get_router(app_state.clone());
     let event_routes = routes::events::events_get_router(app_state.clone());
     let scans_routes = routes::scans::scans_get_router(app_state.clone());
-    let organizer_routes = routes::organizers::routes(app_state.clone());
+    let organizer_routes = routes::organizers::routes(app_state);
 
     Router::new()
         .route("/shutdown", get(utils::shutdown))
@@ -57,7 +57,7 @@ fn new_service_layer() -> Router {
             .layer(HandleErrorLayer::new(|err: BoxError| async move {
                 (
                     StatusCode::INTERNAL_SERVER_ERROR,
-                    format!("Unhandled error: {}", err),
+                    format!("Unhandled error: {err}"),
                 )
             }))
             .layer(BufferLayer::new(1024))

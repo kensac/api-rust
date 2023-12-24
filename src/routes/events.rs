@@ -26,11 +26,15 @@ impl<'__s> utoipa::ToSchema<'__s> for EventType {
             "EventType",
             utoipa::openapi::ObjectBuilder::new()
                 .schema_type(utoipa::openapi::SchemaType::String)
-                .enum_values::<[&str; 4usize], &str>(Some([
+                .enum_values::<[&str; 4_usize], &str>(Some([
                     "Activity", "Food", "Workshop", "CheckIn",
                 ]))
                 .into(),
         )
+    }
+
+    fn aliases() -> Vec<(&'__s str, utoipa::openapi::schema::Schema)> {
+        vec![]
     }
 }
 
@@ -119,7 +123,7 @@ pub async fn create_event(
         .await
     {
         Ok(_event) => Ok((StatusCode::CREATED, ())),
-        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 
@@ -148,7 +152,7 @@ pub async fn get_all_events(
         .await
     {
         Ok(events) => Ok((StatusCode::OK, Json(events))),
-        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 
@@ -181,7 +185,7 @@ pub async fn get_event_by_id(
             Some(event) => Ok((StatusCode::OK, Json(event))),
             None => Err((StatusCode::NOT_FOUND, "No event found".to_owned())),
         },
-        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 
@@ -211,7 +215,7 @@ pub async fn delete_event_by_id(
         .await
     {
         Ok(_) => Ok((StatusCode::NO_CONTENT, ())),
-        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 
@@ -264,7 +268,7 @@ pub async fn check_in_user_to_event(
         .await
     {
         Ok(_) => Ok((StatusCode::OK, ())),
-        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 

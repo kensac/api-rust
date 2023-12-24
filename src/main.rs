@@ -5,8 +5,26 @@
     clippy::nursery,
     clippy::cargo
 )]
-
-#![allow(clippy::single_call_fn, clippy::exhaustive_structs)]
+#![allow(
+    clippy::single_call_fn,
+    clippy::exhaustive_structs,
+    clippy::implicit_return
+)]
+#![allow(
+    clippy::unwrap_used,
+    clippy::exit,
+    clippy::str_to_string,
+    clippy::missing_docs_in_private_items,
+    clippy::missing_errors_doc,
+    clippy::must_use_candidate,
+    clippy::shadow_reuse,
+    clippy::option_if_let_else,
+    clippy::module_name_repetitions,
+    clippy::mod_module_files,
+    clippy::std_instead_of_alloc,
+    clippy::std_instead_of_core,
+    clippy::cargo_common_metadata
+)]
 
 pub mod app;
 pub mod auth_guard;

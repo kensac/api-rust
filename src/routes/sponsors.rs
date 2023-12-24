@@ -53,7 +53,7 @@ pub async fn create_sponsor(
         .await
     {
         Ok(_sponsor) => Ok("Created sponsor successfully".to_owned()),
-        Err(_err) => Err((StatusCode::BAD_REQUEST, _err.to_string())),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 

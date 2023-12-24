@@ -9,7 +9,10 @@ use utoipa::ToSchema;
 
 use crate::{
     base_types::{AppState, CreateResponse, DeleteResponse, GetResponse},
-    prisma::{organizer::Data, Role},
+    prisma::{
+        organizer::{Data, UniqueWhereParam},
+        Role,
+    },
 };
 
 #[derive(Deserialize, ToSchema)]
@@ -41,14 +44,14 @@ async fn create_organizer(
         .await
     {
         Ok(_organizer) => Ok((StatusCode::CREATED, ())),
-        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 
 async fn get_all_organizers(State(app_state): State<AppState>) -> GetResponse<Json<Vec<Data>>> {
     match app_state.client.organizer().find_many(vec![]).exec().await {
         Ok(organizers) => Ok((StatusCode::OK, Json(organizers))),
-        Err(e) => Err((StatusCode::NOT_FOUND, e.to_string())),
+        Err(err) => Err((StatusCode::NOT_FOUND, err.to_string())),
     }
 }
 
@@ -67,7 +70,7 @@ async fn get_organizer_by_id(
             Some(organizer) => Ok((StatusCode::OK, Json(organizer))),
             None => Err((StatusCode::NOT_FOUND, "No organizer found".to_owned())),
         },
-        Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
+        Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string())),
     }
 }
 
@@ -78,12 +81,12 @@ async fn delete_organizer_by_id(
     match app_state
         .client
         .organizer()
-        .delete(crate::prisma::organizer::UniqueWhereParam::IdEquals(id))
+        .delete(UniqueWhereParam::IdEquals(id))
         .exec()
         .await
     {
         Ok(_) => Ok((StatusCode::NO_CONTENT, ())),
-        Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
+        Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
 }
 

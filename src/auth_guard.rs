@@ -39,7 +39,17 @@ pub async fn require_auth(
     next: Next,
 ) -> Result<Response, StatusCode> {
     let auth_header = match headers.get("Authorization") {
-        Some(header) => header.to_str().unwrap().split(' ').collect::<Vec<&str>>()[1],
+        Some(header) => match header.to_str() {
+            Ok(header_str) => {
+                let parts = header_str.split(' ').collect::<Vec<&str>>();
+                if parts.len() > 1 {
+                    parts[1]
+                } else {
+                    return Err(StatusCode::UNAUTHORIZED);
+                }
+            }
+            Err(_) => return Err(StatusCode::UNAUTHORIZED),
+        },
         None => return Err(StatusCode::UNAUTHORIZED),
     };
 
@@ -62,7 +72,11 @@ pub async fn require_auth(
         serde_json::from_str(&user_data.text().await.unwrap()).unwrap();
 
     // this might not be the best way to check the user's id because it checks only the first user in the list
-    let user_uid = firebase_user.users[0].local_id.clone();
+    let user_uid = firebase_user
+        .users
+        .get(0)
+        .map(|user| user.local_id.clone())
+        .ok_or_else(|| StatusCode::UNAUTHORIZED)?;
 
     let state1 = app_state.clone();
     let state2 = app_state.clone();

@@ -3,6 +3,7 @@ use std::process::exit;
 use axum::http::status;
 use hyper::StatusCode;
 use regex::Regex;
+use std::env;
 
 #[axum::debug_handler]
 pub async fn handle_404() -> (StatusCode, &'static str) {
@@ -26,7 +27,7 @@ pub async fn shutdown() {
 }
 
 pub fn get_port() -> u16 {
-    std::env::var("PORT")
+    env::var("PORT")
         .ok()
         .and_then(|port| port.parse().ok())
         .unwrap_or(3000)
