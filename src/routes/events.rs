@@ -26,7 +26,7 @@ impl<'__s> utoipa::ToSchema<'__s> for EventType {
             "EventType",
             utoipa::openapi::ObjectBuilder::new()
                 .schema_type(utoipa::openapi::SchemaType::String)
-                .enum_values::<[&str; 4_usize], &str>(Some([
+                .enum_values::<[&str; 4usize], &str>(Some([
                     "Activity", "Food", "Workshop", "CheckIn",
                 ]))
                 .into(),

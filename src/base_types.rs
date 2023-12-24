@@ -18,7 +18,7 @@ impl IntoResponse for BaseError {
     }
 }
 impl BaseError {
-    pub fn new(status_code: StatusCode, message: String) -> BaseError {
+    pub fn new(status_code: StatusCode, message: String) -> Self {
         BaseError {
             status_code,
             message,

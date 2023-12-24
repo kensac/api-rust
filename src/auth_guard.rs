@@ -74,7 +74,7 @@ pub async fn require_auth(
     // this might not be the best way to check the user's id because it checks only the first user in the list
     let user_uid = firebase_user
         .users
-        .get(0)
+        .first()
         .map(|user| user.local_id.clone())
         .ok_or_else(|| StatusCode::UNAUTHORIZED)?;
 
