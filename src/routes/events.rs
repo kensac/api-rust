@@ -93,7 +93,7 @@ pub async fn create_event(
         vec![prisma::Role::Exec, prisma::Role::Team, prisma::Role::Tech],
         vec![],
     ) {
-        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
 
     match app_state
@@ -179,7 +179,7 @@ pub async fn get_event_by_id(
     {
         Ok(event) => match event {
             Some(event) => Ok((StatusCode::OK, Json(event))),
-            None => Err((StatusCode::NOT_FOUND, "No event found".to_string())),
+            None => Err((StatusCode::NOT_FOUND, "No event found".to_owned())),
         },
         Err(e) => Err((StatusCode::BAD_REQUEST, e.to_string())),
     }
@@ -248,7 +248,7 @@ pub async fn check_in_user_to_event(
         vec![prisma::Role::Exec, prisma::Role::Team, prisma::Role::Tech],
         vec![],
     ) {
-        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state
         .client

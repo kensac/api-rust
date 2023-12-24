@@ -52,7 +52,7 @@ pub async fn create_sponsor(
         .exec()
         .await
     {
-        Ok(_sponsor) => Ok("Created sponsor successfully".to_string()),
+        Ok(_sponsor) => Ok("Created sponsor successfully".to_owned()),
         Err(_err) => Err((StatusCode::BAD_REQUEST, _err.to_string())),
     }
 }
@@ -63,7 +63,7 @@ pub async fn get_all_sponsors(
 ) -> Result<Json<Vec<Data>>, String> {
     match app_state.client.sponsor().find_many(vec![]).exec().await {
         Ok(sponsors) => Ok(Json(sponsors)),
-        Err(_err) => Err("Error getting all sponsors".to_string()),
+        Err(_err) => Err("Error getting all sponsors".to_owned()),
     }
 }
 

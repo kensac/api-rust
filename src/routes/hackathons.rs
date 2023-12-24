@@ -73,7 +73,7 @@ async fn create_hackathon(
     Json(body): Json<CreateHackathonEntity>,
 ) -> CreateResponse {
     if !permission_check(request_user, vec![Role::Exec, Role::Tech], vec![]) {
-        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state
         .client
@@ -87,10 +87,10 @@ async fn create_hackathon(
                 .client
                 .event()
                 .create(
-                    "Hackathon CheckIn".to_string(),
+                    "Hackathon CheckIn".to_owned(),
                     EventType::CheckIn,
-                    "CheckIn for Hackathon".to_string(),
-                    location::UniqueWhereParam::IdEquals("0".to_string()),
+                    "CheckIn for Hackathon".to_owned(),
+                    location::UniqueWhereParam::IdEquals("0".to_owned()),
                     body.start_time,
                     body.end_time,
                     hackathon::UniqueWhereParam::IdEquals(hackathon.id),
@@ -133,7 +133,7 @@ async fn get_all_hackathon(
         vec![Role::Exec, Role::Team, Role::Tech],
         vec![],
     ) {
-        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
 
     if params.active.is_some() {
@@ -181,7 +181,7 @@ async fn get_hackathon_by_id(
         vec![Role::Exec, Role::Team, Role::Tech],
         vec![],
     ) {
-        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state
         .client
@@ -192,7 +192,7 @@ async fn get_hackathon_by_id(
     {
         Ok(hackathons) => match hackathons {
             Some(hackathon) => Ok((StatusCode::OK, Json(hackathon))),
-            None => Err((StatusCode::NOT_FOUND, "No hackathon found".to_string())),
+            None => Err((StatusCode::NOT_FOUND, "No hackathon found".to_owned())),
         },
         Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
     }
@@ -218,7 +218,7 @@ async fn delete_hackathon_by_id(
     Extension(request_user): Extension<RequestUser>,
 ) -> DeleteResponse {
     if !permission_check(request_user, vec![Role::Exec, Role::Tech], vec![]) {
-        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state
         .client
@@ -252,7 +252,7 @@ async fn set_active_hackathon(
     Extension(request_user): Extension<RequestUser>,
 ) -> UpdateResponse {
     if !permission_check(request_user, vec![Role::Exec, Role::Tech], vec![]) {
-        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     //set all hackathons to inactive
     match app_state
@@ -305,7 +305,7 @@ async fn get_active_hackathon(State(app_state): State<AppState>) -> GetResponse<
     {
         Ok(hackathons) => match hackathons {
             Some(hackathon) => Ok((StatusCode::OK, Json(hackathon))),
-            None => Err((StatusCode::NOT_FOUND, "No hackathon found".to_string())),
+            None => Err((StatusCode::NOT_FOUND, "No hackathon found".to_owned())),
         },
         Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
     }

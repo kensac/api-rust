@@ -51,7 +51,7 @@ async fn create_location(
         vec![Role::Exec, Role::Team, Role::Tech],
         vec![],
     ) {
-        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
 
     match app_state
@@ -120,7 +120,7 @@ async fn get_location_by_id(
         vec![Role::Exec, Role::Team, Role::Tech],
         vec![],
     ) {
-        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state
         .client
@@ -131,7 +131,7 @@ async fn get_location_by_id(
     {
         Ok(location) => match location {
             Some(location) => Ok((StatusCode::OK, Json(location))),
-            None => Err((StatusCode::NOT_FOUND, "Location not found".to_string())),
+            None => Err((StatusCode::NOT_FOUND, "Location not found".to_owned())),
         },
         Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }
@@ -160,7 +160,7 @@ async fn delete_location_by_id(
         vec![Role::Exec, Role::Team, Role::Tech],
         vec![],
     ) {
-        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_string()));
+        return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state
         .client

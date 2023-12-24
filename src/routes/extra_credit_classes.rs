@@ -46,7 +46,7 @@ async fn create_extra_credit_class(
         .await
     {
         Ok(_hackathon) => Ok(Response::new(
-            "Created extra credit class successfully".to_string(),
+            "Created extra credit class successfully".to_owned(),
         )),
         Err(_err) => Err(StatusCode::BAD_REQUEST),
     }
@@ -96,7 +96,7 @@ async fn get_extra_credit_class_by_id(
     {
         Ok(extra_credit_class) => match extra_credit_class {
             Some(extra_credit_class) => Ok(Json(extra_credit_class)),
-            None => Err((StatusCode::NOT_FOUND, "".to_string())),
+            None => Err((StatusCode::NOT_FOUND, "".to_owned())),
         },
         Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }

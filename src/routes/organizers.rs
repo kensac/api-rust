@@ -65,7 +65,7 @@ async fn get_organizer_by_id(
     {
         Ok(organizer) => match organizer {
             Some(organizer) => Ok((StatusCode::OK, Json(organizer))),
-            None => Err((StatusCode::NOT_FOUND, "No organizer found".to_string())),
+            None => Err((StatusCode::NOT_FOUND, "No organizer found".to_owned())),
         },
         Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
     }
