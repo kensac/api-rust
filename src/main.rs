@@ -6,7 +6,7 @@
     clippy::cargo
 )]
 
-#![allow(clippy::single_call_fn)]
+#![allow(clippy::single_call_fn, clippy::exhaustive_structs)]
 
 pub mod app;
 pub mod auth_guard;
