@@ -129,20 +129,20 @@ async fn delete_user_by_id(
         .exec()
         .await
     {
-        Ok(_) => Ok((StatusCode::OK, ())),
+        Ok(_) => Ok((StatusCode::NO_CONTENT, ())),
         Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string())),
     }
 }
 
 // Function to setup user routes
-pub fn user_router(app_state: AppState) -> Router {
+pub fn user_get_router(app_state: AppState) -> Router {
     Router::new()
-        .route("/", post(create_user))
+        .route("/", get(get_all_users))
         .route("/:id", get(get_user_by_id).delete(delete_user_by_id))
         .route_layer(middleware::from_fn_with_state(
             app_state.clone(),
             auth_guard::require_auth,
         ))
-        .route("/", get(get_all_users))
+        .route("/", post(create_user))
         .with_state(app_state)
 }
