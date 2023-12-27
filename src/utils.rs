@@ -2,6 +2,7 @@ use std::process::exit;
 
 use axum::http::status;
 use hyper::StatusCode;
+use lazy_static::lazy_static;
 use regex::Regex;
 use std::env;
 
