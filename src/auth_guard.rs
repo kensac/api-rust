@@ -73,7 +73,7 @@ pub async fn require_auth(
         .users
         .first()
         .map(|user| user.local_id.clone())
-        .ok_or( StatusCode::UNAUTHORIZED)?;
+        .ok_or(StatusCode::UNAUTHORIZED)?;
 
     match app_state
         .client
