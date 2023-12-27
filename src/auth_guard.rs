@@ -1,5 +1,3 @@
-use std::future::Future;
-
 use axum::{
     extract::State,
     middleware::{self, Next},
@@ -8,11 +6,10 @@ use axum::{
 };
 use hyper::{HeaderMap, Request, StatusCode};
 use serde::{Deserialize, Serialize};
-use tokio::try_join;
 
 use crate::{
     base_types::AppState,
-    prisma::{organizer, user, Role},
+    prisma::{user, Role},
 };
 
 #[derive(Deserialize, Serialize, Debug, Clone, Default)]
@@ -78,58 +75,23 @@ pub async fn require_auth(
         .map(|user| user.local_id.clone())
         .ok_or_else(|| StatusCode::UNAUTHORIZED)?;
 
-    let state1 = app_state.clone();
-    let state2 = app_state.clone();
-
-    // Start both queries in parallel
-    let organizer_future = state1
-        .client
-        .organizer()
-        .find_unique(organizer::UniqueWhereParam::GcpIdEquals(user_uid.clone()))
-        .exec();
-
-    let user_future = state2
+    match app_state
         .client
         .user()
         .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid.clone()))
-        .exec();
-
-    // Wait for both futures to complete
-    match try_join!(organizer_future, user_future) {
-        Ok((Some(organizer), Some(user))) => {
-            request
-                .extensions_mut()
-                .insert(RequestUser::Organizer(organizer));
-            request.extensions_mut().insert(RequestUser::User(user));
-        }
-        Ok((Some(organizer), None)) => {
-            request
-                .extensions_mut()
-                .insert(RequestUser::Organizer(organizer));
-        }
-        Ok((None, Some(user))) => {
-            request.extensions_mut().insert(RequestUser::User(user));
-        }
-        Ok((None, None)) => {
-            // Handle case where both are None, if necessary
-        }
-        Err(_e) => {
-            // Handle error, if necessary
-        }
-    }
-
-    // Check if both organizer and user are not present
-    if request.extensions().get::<RequestUser>().is_none() {
-        return Err(StatusCode::UNAUTHORIZED);
+        .exec()
+        .await
+    {
+        Ok(user) => match user {
+            Some(user) => {
+                request.extensions_mut().insert(user);
+            }
+            None => return Err(StatusCode::UNAUTHORIZED),
+        },
+        Err(_) => return Err(StatusCode::INTERNAL_SERVER_ERROR),
     }
 
     Ok(next.run(request).await)
-}
-
-#[derive(Debug, Clone)]
-pub enum RequestUser {
-    Organizer(organizer::Data),
-    User(user::Data),
 }
 
 /*
@@ -138,40 +100,26 @@ pub enum RequestUser {
     Then you can use the permission_check function like this:
     permission_check(user, vec![Role::Admin], |user| {user.id == params.id})
 */
-type Predicate = (Role, Box<dyn Fn(RequestUser) -> bool>);
+type Predicate = (Role, Box<dyn Fn(user::Data) -> bool>);
+pub type RequestUser = user::Data;
 
 pub fn permission_check(
     user: RequestUser,
     unrestricted_roles: Vec<Role>,
     additional_check: Vec<Predicate>,
 ) -> bool {
-    match user {
-        RequestUser::Organizer(organizer) => {
-            for role in unrestricted_roles {
-                if organizer.privilege == role {
-                    return true;
-                }
+    {
+        for role in unrestricted_roles {
+            if user.privilege == role {
+                return true;
             }
-            for (role, check) in additional_check {
-                if organizer.privilege == role && check(RequestUser::Organizer(organizer.clone())) {
-                    return true;
-                }
-            }
-            false
         }
-        RequestUser::User(user) => {
-            for role in unrestricted_roles {
-                if user.privilege == role {
-                    return true;
-                }
+        for (role, check) in additional_check {
+            if user.privilege == role && check(user.clone()) {
+                return true;
             }
-            for (role, check) in additional_check {
-                if user.privilege == role && check(RequestUser::User(user.clone())) {
-                    return true;
-                }
-            }
-            false
         }
+        false
     }
 }
 
@@ -179,7 +127,8 @@ pub fn permission_check(
 Not sure if it works. I think I added the right traits to make it work but we'll find
 out when we try to use it.
  */
-pub async fn permission_check_async<T>(
+
+/* pub async fn permission_check_async<T>(
     user: RequestUser,
     organizer_roles: Vec<Role>,
     user_additional_check: fn(user::Data) -> T,
@@ -198,7 +147,7 @@ where
         }
         RequestUser::User(user) => user_additional_check(user).await,
     }
-}
+} */
 
 // Doesn't work that's why it's private. Will try to fix later as that will reduce code duplication
 async fn _auth_router_layer() -> Router {

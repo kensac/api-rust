@@ -30,7 +30,6 @@ pub async fn new_app(app_state: AppState) -> Router {
     let location_routes = routes::locations::location_get_router(app_state.clone());
     let event_routes = routes::events::events_get_router(app_state.clone());
     let scans_routes = routes::scans::scans_get_router(app_state.clone());
-    let organizer_routes = routes::organizers::routes(app_state);
 
     Router::new()
         .route("/shutdown", get(utils::shutdown))
@@ -42,7 +41,6 @@ pub async fn new_app(app_state: AppState) -> Router {
         .nest("/locations", location_routes)
         .nest("/events", event_routes)
         .nest("/scans", scans_routes)
-        .nest("/organizers", organizer_routes)
         .merge(Redoc::with_url("/docs", ApiDoc::openapi()))
         .merge(service_layer)
         .merge(cors_layer)

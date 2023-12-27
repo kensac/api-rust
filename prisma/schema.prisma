@@ -83,18 +83,18 @@ enum Role {
   FINANCE
 }
 
-model Organizer {
-  id        String  @id @default(uuid())
-  firstName String
-  lastName  String
-  email     String  @unique
-  privilege Role
-  gcpId     String  @unique
-  Scan      Scan[]
-  Score     Score[]
+// model Organizer {
+//   id        String  @id @default(uuid())
+//   firstName String
+//   lastName  String
+//   email     String  @unique
+//   privilege Role
+//   gcpId     String  @unique
+//   Scan      Scan[]
+//   Score     Score[]
 
-  @@index([gcpId])
-}
+//   @@index([gcpId])
+// }
 
 model Project {
   id           String         @id @default(uuid())
@@ -149,7 +149,7 @@ model Scan {
   eventId        String
   registrationId String
   registration   Registration @relation(fields: [registrationId], references: [id])
-  organizer      Organizer    @relation(fields: [organizerId], references: [id])
+  organizer      User         @relation(fields: [organizerId], references: [id])
   organizerId    String
   hackathonId    String
   Event          Event        @relation(fields: [eventId], references: [id])
@@ -166,14 +166,14 @@ enum SponsorLevel {
 }
 
 model Sponsor {
-  id          String    @id @default(uuid())
+  id          String       @id @default(uuid())
   name        String
   level       SponsorLevel
   link        String?
   darkLogo    String
   lightLogo   String
   order       Int
-  hackathon   Hackathon @relation(fields: [hackathonId], references: [id])
+  hackathon   Hackathon    @relation(fields: [hackathonId], references: [id])
   hackathonId String
 }
 
@@ -184,7 +184,9 @@ model User {
   email        String         @unique
   Registration Registration[]
   gcpId        String         @unique
-  privilege         Role           @default(NONE)
+  privilege    Role           @default(NONE)
+  Scan         Scan[]
+  Score        Score[]
 
   @@index([gcpId])
 }
@@ -192,9 +194,9 @@ model User {
 model Score {
   hackathonId    String
   projectID      String
-  project        Project   @relation(fields: [projectID], references: [id])
+  project        Project @relation(fields: [projectID], references: [id])
   judgeID        String
-  judge          Organizer @relation(fields: [judgeID], references: [id])
+  judge          User    @relation(fields: [judgeID], references: [id])
   submitted      Boolean
   creativity     Int
   technicality   Int

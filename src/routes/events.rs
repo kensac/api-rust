@@ -259,7 +259,7 @@ pub async fn check_in_user_to_event(
         .scan()
         .create(
             prisma::registration::UniqueWhereParam::IdEquals(registration_id.to_string()),
-            prisma::organizer::UniqueWhereParam::IdEquals(body.organizer_id.to_string()),
+            prisma::user::UniqueWhereParam::IdEquals(body.organizer_id.to_string()),
             body.hackathon_id.to_string(),
             event::UniqueWhereParam::IdEquals(event_id.to_string()),
             vec![],
