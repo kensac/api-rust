@@ -6,6 +6,7 @@ use axum::{
 };
 use hyper::{HeaderMap, Request, StatusCode};
 use serde::{Deserialize, Serialize};
+use socketioxide::extract::SocketRef;
 
 use crate::{
     base_types::AppState,
@@ -121,6 +122,11 @@ pub fn permission_check(
         }
         false
     }
+}
+
+pub async fn  permission_check_socket(socket: SocketRef, unrestricted_roles: Vec<Role>, additional_check: Vec<Predicate>) -> bool {
+    let user = socket.req_parts().headers.get("Authorization").unwrap();
+    todo!()
 }
 
 /* Async version of the code is available in case you need to do async checks.
