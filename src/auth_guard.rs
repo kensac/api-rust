@@ -1,5 +1,6 @@
 use axum::{
     extract::State,
+    http::HeaderValue,
     middleware::{self, Next},
     response::Response,
     Router,
@@ -9,6 +10,7 @@ use serde::{Deserialize, Serialize};
 use socketioxide::extract::SocketRef;
 
 use crate::{
+    app,
     base_types::AppState,
     prisma::{user, Role},
 };
@@ -124,9 +126,90 @@ pub fn permission_check(
     }
 }
 
-pub async fn  permission_check_socket(socket: SocketRef, unrestricted_roles: Vec<Role>, additional_check: Vec<Predicate>) -> bool {
-    let user = socket.req_parts().headers.get("Authorization").unwrap();
-    todo!()
+impl Role {
+    pub fn from_str(role: &str) -> Option<Role> {
+        match role {
+            "None" => Some(Role::None),
+            "Volunteer" => Some(Role::Volunteer),
+            "Team" => Some(Role::Team),
+            "Tech" => Some(Role::Tech),
+            "Exec" => Some(Role::Exec),
+            "Finance" => Some(Role::Finance),
+            _ => None,
+        }
+    }
+}
+
+pub async fn permission_check_socket(
+    headers: HeaderMap<HeaderValue>,
+    unrestricted_roles: Vec<String>,
+) -> bool {
+    let auth_header = match headers.get("Authorization") {
+        Some(header) => match header.to_str() {
+            Ok(header_str) => {
+                let parts = header_str.split(' ').collect::<Vec<&str>>();
+                if parts.len() > 1 {
+                    parts[1]
+                } else {
+                    return false;
+                }
+            }
+            Err(_) => return false,
+        },
+        None => return false,
+    };
+
+    let app_state = AppState::new().await;
+
+    let user_data = app_state
+        .reqwest_client
+        .post(std::env::var("FIREBASE_USER_DATA_ENDPOINT").unwrap())
+        .query(&[("key", std::env::var("FIREBASE_API_KEY").unwrap())])
+        .json(&serde_json::json!({
+            "idToken": auth_header
+        }))
+        .send()
+        .await
+        .unwrap();
+
+    if user_data.status() != reqwest::StatusCode::OK {
+        return false;
+    }
+
+    let firebase_user: FirebaseUserResult =
+        serde_json::from_str(&user_data.text().await.unwrap()).unwrap();
+
+    let user_uid = firebase_user
+        .users
+        .first()
+        .map(|user| user.local_id.clone())
+        .ok_or(false);
+
+    match app_state
+        .client
+        .user()
+        .find_unique(user::UniqueWhereParam::GcpIdEquals(
+            user_uid.unwrap().clone(),
+        ))
+        .exec()
+        .await
+    {
+        Ok(user) => match user {
+            Some(user) => {
+                let user = user::Data::from(user);
+                {
+                    for role in unrestricted_roles {
+                        if user.privilege == Role::from_str(role.as_str()).unwrap_or(Role::None) {
+                            return true;
+                        }
+                    }
+                    false
+                }
+            }
+            None => return false,
+        },
+        Err(_) => return false,
+    }
 }
 
 /* Async version of the code is available in case you need to do async checks.
