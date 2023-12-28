@@ -6,5 +6,6 @@ pub mod docs;
 #[allow(warnings)]
 pub mod prisma;
 pub mod routes;
+pub mod socket;
 pub mod upload_service;
 pub mod utils;

@@ -6,6 +6,7 @@ use axum::routing::get;
 use axum::{BoxError, Router};
 use docs::ApiDoc;
 use hyper::{Method, StatusCode};
+use socketioxide::SocketIo;
 use tower::buffer::BufferLayer;
 use tower::limit::RateLimitLayer;
 use tower::ServiceBuilder;
@@ -17,11 +18,16 @@ use utoipa::OpenApi;
 use utoipa_redoc::{Redoc, Servable};
 
 use crate::base_types::AppState;
+use crate::socket::on_connect;
 use crate::{docs, routes, utils};
 
 pub async fn new_app(app_state: AppState) -> Router {
     let service_layer = new_service_layer();
     let cors_layer = new_cors_layer();
+
+    let (socket_layer, io) = SocketIo::new_layer();
+
+    io.ns("/socket", on_connect);
 
     let sponsor_routes = routes::sponsors::sponsor_get_router(app_state.clone());
     let hackathon_routes = routes::hackathons::hackathon_get_router(app_state.clone());
@@ -49,6 +55,7 @@ pub async fn new_app(app_state: AppState) -> Router {
         .layer(TraceLayer::new_for_http())
         .layer(CookieManagerLayer::new())
         .fallback(get(utils::handle_404))
+        .layer(socket_layer)
 }
 
 fn new_service_layer() -> Router {

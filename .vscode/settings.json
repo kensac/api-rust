@@ -15,6 +15,7 @@
         "Redoc",
         "reqwest",
         "serde",
+        "socketioxide",
         "struct",
         "structs",
         "utoipa"
