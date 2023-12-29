@@ -18,6 +18,7 @@ use utoipa::OpenApi;
 use utoipa_redoc::{Redoc, Servable};
 
 use crate::base_types::{AppState, APP_STATE};
+use crate::email_service::send_test_email;
 use crate::socket::on_connect;
 use crate::{docs, routes, utils};
 
@@ -53,6 +54,7 @@ pub async fn new_app() -> Router {
         .nest("/events", event_routes)
         .nest("/scans", scans_routes)
         .nest("/users", user_routes)
+        .route("/email", get(send_test_email))
         .merge(Redoc::with_url("/docs", ApiDoc::openapi()))
         .merge(service_layer)
         .merge(cors_layer)

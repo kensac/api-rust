@@ -57,3 +57,8 @@ url = "2.5.0"
 
 # Development Tools
 cargo-update = "13.3.0"
+
+# Email
+sendgrid = {version = "0.19.2", features = ["async"]}
+mrml = "3.0.0"
+handlebars = "4.5.0"
