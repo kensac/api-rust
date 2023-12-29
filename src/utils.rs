@@ -31,9 +31,14 @@ pub fn get_port() -> u16 {
     env::var("PORT")
         .ok()
         .and_then(|port| port.parse().ok())
-        .unwrap_or(3000)
+        .unwrap_or_else(|| {
+            eprintln!(
+                "Warning: Using default port 3000. 'PORT' environment variable not set or invalid."
+            );
+            3000
+        })
 }
 
 lazy_static! {
-    pub static ref UUID_VALIDATOR: Regex = Regex::new(r"[a-z]{2}$").unwrap();
+    pub static ref UUID_VALIDATOR: Regex = Regex::new(r"[0-9a-fA-F-]{36}$").unwrap();
 }

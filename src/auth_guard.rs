@@ -26,68 +26,76 @@ pub struct FirebaseUserResult {
     users: Vec<FirebaseUserResponse>,
 }
 
+async fn extract_auth_header(headers: &HeaderMap) -> Result<String, StatusCode> {
+    let header = headers
+        .get("Authorization")
+        .ok_or(StatusCode::UNAUTHORIZED)?;
+    let header_str = header.to_str().map_err(|_| StatusCode::UNAUTHORIZED)?;
+    let parts: Vec<&str> = header_str.split_whitespace().collect();
+    parts
+        .get(1)
+        .cloned()
+        .map(|s| s.to_string())
+        .ok_or(StatusCode::UNAUTHORIZED)
+}
+
+async fn fetch_firebase_user(
+    auth_header: &str,
+    app_state: &AppState,
+) -> Result<FirebaseUserResult, StatusCode> {
+    let user_data = app_state
+        .reqwest_client
+        .post(
+            std::env::var("FIREBASE_USER_DATA_ENDPOINT")
+                .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?,
+        )
+        .query(&[(
+            "key",
+            std::env::var("FIREBASE_API_KEY").map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?,
+        )])
+        .json(&serde_json::json!({ "idToken": auth_header }))
+        .send()
+        .await
+        .map_err(|_| StatusCode::UNAUTHORIZED)?;
+
+    if user_data.status() != reqwest::StatusCode::OK {
+        Err(StatusCode::UNAUTHORIZED)
+    } else {
+        serde_json::from_str(
+            &user_data
+                .text()
+                .await
+                .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?,
+        )
+        .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)
+    }
+}
+
 pub async fn require_auth(
     State(app_state): State<AppState>,
     headers: HeaderMap,
     mut request: Request<axum::body::Body>,
     next: Next,
 ) -> Result<Response, StatusCode> {
-    let auth_header = match headers.get("Authorization") {
-        Some(header) => match header.to_str() {
-            Ok(header_str) => {
-                let parts = header_str.split(' ').collect::<Vec<&str>>();
-                if parts.len() > 1 {
-                    parts[1]
-                } else {
-                    return Err(StatusCode::UNAUTHORIZED);
-                }
-            }
-            Err(_) => return Err(StatusCode::UNAUTHORIZED),
-        },
-        None => return Err(StatusCode::UNAUTHORIZED),
-    };
+    let auth_header = extract_auth_header(&headers).await?;
+    let firebase_user = fetch_firebase_user(&auth_header, &app_state).await?;
 
-    let user_data = app_state
-        .reqwest_client
-        .post(std::env::var("FIREBASE_USER_DATA_ENDPOINT").unwrap())
-        .query(&[("key", std::env::var("FIREBASE_API_KEY").unwrap())])
-        .json(&serde_json::json!({
-            "idToken": auth_header
-        }))
-        .send()
-        .await
-        .unwrap();
-
-    if user_data.status() != reqwest::StatusCode::OK {
-        return Err(StatusCode::UNAUTHORIZED);
-    }
-
-    let firebase_user: FirebaseUserResult =
-        serde_json::from_str(&user_data.text().await.unwrap()).unwrap();
-
-    // this might not be the best way to check the user's id because it checks only the first user in the list
     let user_uid = firebase_user
         .users
         .first()
         .map(|user| user.local_id.clone())
         .ok_or(StatusCode::UNAUTHORIZED)?;
 
-    match app_state
+    let user = app_state
         .client
         .user()
-        .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid.clone()))
+        .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid))
         .exec()
         .await
-    {
-        Ok(user) => match user {
-            Some(user) => {
-                request.extensions_mut().insert(user);
-            }
-            None => return Err(StatusCode::UNAUTHORIZED),
-        },
-        Err(_) => return Err(StatusCode::INTERNAL_SERVER_ERROR),
-    }
+        .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?
+        .ok_or(StatusCode::UNAUTHORIZED)?;
 
+    request.extensions_mut().insert(user);
     Ok(next.run(request).await)
 }
 
@@ -118,19 +126,9 @@ pub async fn permission_check_socket(
     headers: HeaderMap<HeaderValue>,
     unrestricted_roles: Vec<Role>,
 ) -> bool {
-    let auth_header = match headers.get("Authorization") {
-        Some(header) => match header.to_str() {
-            Ok(header_str) => {
-                let parts = header_str.split(' ').collect::<Vec<&str>>();
-                if parts.len() > 1 {
-                    parts[1]
-                } else {
-                    return false;
-                }
-            }
-            Err(_) => return false,
-        },
-        None => return false,
+    let auth_header = match extract_auth_header(&headers).await {
+        Ok(header) => header,
+        Err(_) => return false,
     };
 
     let app_state = match APP_STATE.get() {
@@ -138,51 +136,25 @@ pub async fn permission_check_socket(
         None => return false,
     };
 
-    let user_data = app_state
-        .reqwest_client
-        .post(std::env::var("FIREBASE_USER_DATA_ENDPOINT").unwrap())
-        .query(&[("key", std::env::var("FIREBASE_API_KEY").unwrap())])
-        .json(&serde_json::json!({
-            "idToken": auth_header
-        }))
-        .send()
-        .await
-        .unwrap();
+    let firebase_user = match fetch_firebase_user(&auth_header, app_state).await {
+        Ok(user) => user,
+        Err(_) => return false,
+    };
 
-    if user_data.status() != reqwest::StatusCode::OK {
-        return false;
-    }
-
-    let firebase_user: FirebaseUserResult =
-        serde_json::from_str(&user_data.text().await.unwrap()).unwrap();
-
-    let user_uid = firebase_user
-        .users
-        .first()
-        .map(|user| user.local_id.clone())
-        .ok_or(false);
+    let user_uid = match firebase_user.users.first() {
+        Some(user) => user.local_id.clone(),
+        None => return false,
+    };
 
     match app_state
         .client
         .user()
-        .find_unique(user::UniqueWhereParam::GcpIdEquals(
-            user_uid.unwrap().clone(),
-        ))
+        .find_unique(user::UniqueWhereParam::GcpIdEquals(user_uid))
         .exec()
         .await
     {
-        Ok(user) => match user {
-            Some(user) => {
-                for role in unrestricted_roles {
-                    if user.privilege == role {
-                        return true;
-                    }
-                }
-                false
-            }
-            None => false,
-        },
-        Err(_) => false,
+        Ok(Some(user)) => unrestricted_roles.contains(&user.privilege),
+        _ => false,
     }
 }
 

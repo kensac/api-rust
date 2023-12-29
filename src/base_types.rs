@@ -63,15 +63,6 @@ impl BaseResponse<()> {
     }
 }
 
-/* impl<T> From<(StatusCode, T)> for BaseResponse<T>
-where
-    T: IntoResponse,
-{
-    fn from((status_code, data): (StatusCode, T)) -> BaseResponse<T> {
-        BaseResponse { status_code, data }
-    }
-} */
-
 type _StandardResponse<T> = Result<(StatusCode, T), (StatusCode, String)>;
 pub type GetResponse<T> = Result<(StatusCode, T), (StatusCode, String)>;
 pub type CreateResponse = Result<(StatusCode, ()), (StatusCode, String)>;
