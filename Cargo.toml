@@ -36,7 +36,6 @@ uuid = { version = "1.6.1", features = ["serde", "v4"] }
 # Database and ORM
 dotenv = "0.15.0"
 prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.6.10" }
-prisma-client-rust-cli = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.6.10" }
 
 # Data Validation
 validator = { version = "0.16", features = ["derive"] }
@@ -62,3 +61,6 @@ cargo-update = "13.3.0"
 sendgrid = {version = "0.19.2", features = ["async"]}
 mrml = "3.0.0"
 handlebars = "4.5.0"
+
+openssl = { version = "0.10", features = ["vendored"] }
+
