@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::sync::{Arc, OnceLock};
 
 use axum::response::{IntoResponse, Response};
 use hyper::StatusCode;
@@ -79,7 +79,7 @@ pub type UpdateResponse = Result<(StatusCode, ()), (StatusCode, String)>;
 
 /* pub type UpdateResponse<T> = Result<BaseResponse<T>, BaseError>; */
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct AppState {
     pub client: Arc<PrismaClient>,
     pub reqwest_client: reqwest::Client,
@@ -98,3 +98,5 @@ impl AppState {
         }
     }
 }
+
+pub static APP_STATE: OnceLock<AppState> = OnceLock::new();

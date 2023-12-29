@@ -23,7 +23,8 @@ use crate::{docs, routes, utils};
 pub async fn new_app(app_state: AppState) -> Router {
     let service_layer = new_service_layer();
     let cors_layer = new_cors_layer();
-    let socket_layer = socket::get_socket_layer(app_state.clone());
+
+    let socket_layer = socket::get_socket_layer();
 
     let sponsor_routes = routes::sponsors::sponsor_get_router(app_state.clone());
     let hackathon_routes = routes::hackathons::hackathon_get_router(app_state.clone());

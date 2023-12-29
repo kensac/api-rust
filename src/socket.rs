@@ -5,7 +5,7 @@ use socketioxide::{
     SocketIo,
 };
 
-use crate::{auth_guard::permission_check_socket, base_types::AppState, prisma::Role};
+use crate::auth_guard::permission_check_socket;
 
 pub enum Rooms {
     Mobile,
@@ -62,6 +62,7 @@ pub fn on_connect(socket: SocketRef, Data(_value): Data<Value>) {
             let headers = &socket.req_parts().headers;
             if !permission_check_socket(headers.clone(), vec!["Exec".to_string()]).await {
                 socket.emit("error", "Unauthorized").ok();
+                return;
             }
             socket.join(Rooms::Admin.to_string()).ok();
             socket.emit("ping:admin", "Pong").ok();
@@ -69,7 +70,7 @@ pub fn on_connect(socket: SocketRef, Data(_value): Data<Value>) {
     );
 }
 
-pub fn get_socket_layer(app_state: AppState) -> SocketIoLayer {
+pub fn get_socket_layer() -> SocketIoLayer {
     let (socket_layer, io) = SocketIo::new_layer();
 
     io.ns("/socket", on_connect);

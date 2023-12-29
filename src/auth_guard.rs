@@ -7,11 +7,9 @@ use axum::{
 };
 use hyper::{HeaderMap, Request, StatusCode};
 use serde::{Deserialize, Serialize};
-use socketioxide::extract::SocketRef;
 
 use crate::{
-    app,
-    base_types::AppState,
+    base_types::{AppState, APP_STATE},
     prisma::{user, Role},
 };
 
@@ -159,7 +157,10 @@ pub async fn permission_check_socket(
         None => return false,
     };
 
-    let app_state = AppState::new().await;
+    let app_state = match APP_STATE.get() {
+        Some(state) => state,
+        None => return false,
+    };
 
     let user_data = app_state
         .reqwest_client
