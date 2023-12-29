@@ -13,9 +13,7 @@ pub mod utils;
 use std::net::SocketAddr;
 
 use app::new_app;
-use base_types::APP_STATE;
 
-use base_types::AppState;
 use tokio::net::TcpListener;
 use utils::get_port;
 
@@ -31,11 +29,7 @@ async fn main() {
 
     let port = get_port();
 
-    let app_state = AppState::new().await;
-
-    APP_STATE.set(app_state.clone()).unwrap();
-
-    let app = new_app(app_state).await;
+    let app = new_app().await;
     let address = SocketAddr::from(([0, 0, 0, 0], port));
     let listener = TcpListener::bind(address).await.unwrap();
 

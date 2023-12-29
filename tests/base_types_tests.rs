@@ -1,26 +1,13 @@
 #[cfg(test)]
 mod tests {
-    use api_rust::{base_types::*, prisma::PrismaClient};
+    use api_rust::base_types::*;
     use axum::http::StatusCode;
-    use std::sync::Arc;
 
     // Test for AppState creation
     #[tokio::test]
     async fn test_app_state_creation() {
         // Use MockPrismaClient instead of PrismaClient for testing
-        let client = PrismaClient::_builder()
-            .build()
-            .await
-            .expect("Didn't connect to database");
-        let app_state = AppState {
-            client: Arc::new(client),
-            reqwest_client: reqwest::Client::new(),
-        };
-
-        assert!(
-            Arc::strong_count(&app_state.client) > 0,
-            "Prisma client should be initialized."
-        );
+        todo!()
     }
 
     // Tests for the response types

@@ -2,6 +2,7 @@ use std::sync::{Arc, OnceLock};
 
 use axum::response::{IntoResponse, Response};
 use hyper::StatusCode;
+use socketioxide::SocketIo;
 use utoipa::ToSchema;
 
 use crate::prisma::PrismaClient;
@@ -83,10 +84,11 @@ pub type UpdateResponse = Result<(StatusCode, ()), (StatusCode, String)>;
 pub struct AppState {
     pub client: Arc<PrismaClient>,
     pub reqwest_client: reqwest::Client,
+    pub io: Arc<SocketIo>,
 }
 
 impl AppState {
-    pub async fn new() -> AppState {
+    pub async fn new(socket: SocketIo) -> AppState {
         let client = PrismaClient::_builder()
             .build()
             .await
@@ -95,6 +97,7 @@ impl AppState {
         AppState {
             client: Arc::new(client),
             reqwest_client: reqwest::Client::new(),
+            io: Arc::new(socket),
         }
     }
 }

@@ -1,12 +1,6 @@
 use std::future::Future;
 
-use axum::{
-    extract::State,
-    http::HeaderValue,
-    middleware::{self, Next},
-    response::Response,
-    Router,
-};
+use axum::{extract::State, http::HeaderValue, middleware::Next, response::Response, Router};
 use hyper::{HeaderMap, Request, StatusCode};
 use serde::{Deserialize, Serialize};
 
@@ -205,7 +199,5 @@ where
 
 // Doesn't work that's why it's private. Will try to fix later as that will reduce code duplication
 async fn _auth_router_layer() -> Router {
-    let state = AppState::new().await;
-
-    Router::new().route_layer(middleware::from_fn_with_state(state.clone(), require_auth))
+    todo!()
 }
