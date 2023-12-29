@@ -19,7 +19,6 @@ use base_types::AppState;
 use tokio::net::TcpListener;
 use utils::get_port;
 
-
 extern crate lazy_static;
 
 #[tokio::main]
