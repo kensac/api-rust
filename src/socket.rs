@@ -7,7 +7,7 @@ use socketioxide::{
     SocketIo,
 };
 
-use crate::auth_guard::permission_check_socket;
+use crate::{auth_guard::permission_check_socket, prisma::Role};
 
 pub enum Rooms {
     Mobile,
@@ -64,7 +64,7 @@ pub fn on_connect(socket: SocketRef, Data(_value): Data<Value>) {
         "ping:admin",
         |socket: SocketRef, Data(_value): Data<String>| async move {
             let headers = &socket.req_parts().headers;
-            if !permission_check_socket(headers.clone(), vec!["Exec".to_string()]).await {
+            if !permission_check_socket(headers.clone(), vec![Role::Exec]).await {
                 socket.emit("error", "Unauthorized").ok();
                 return;
             }

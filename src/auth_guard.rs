@@ -1,3 +1,5 @@
+use std::future::Future;
+
 use axum::{
     extract::State,
     http::HeaderValue,
@@ -95,12 +97,6 @@ pub async fn require_auth(
     Ok(next.run(request).await)
 }
 
-/*
-    To use permission_check on any route, you need to extract the user with the following code:
-    Extension(user): Extension<RequestUser>
-    Then you can use the permission_check function like this:
-    permission_check(user, vec![Role::Admin], |user| {user.id == params.id})
-*/
 type Predicate = (Role, Box<dyn Fn(user::Data) -> bool>);
 pub type RequestUser = user::Data;
 
@@ -124,23 +120,9 @@ pub fn permission_check(
     }
 }
 
-impl Role {
-    pub fn new_from_str(role: &str) -> Option<Role> {
-        match role {
-            "None" => Some(Role::None),
-            "Volunteer" => Some(Role::Volunteer),
-            "Team" => Some(Role::Team),
-            "Tech" => Some(Role::Tech),
-            "Exec" => Some(Role::Exec),
-            "Finance" => Some(Role::Finance),
-            _ => None,
-        }
-    }
-}
-
 pub async fn permission_check_socket(
     headers: HeaderMap<HeaderValue>,
-    unrestricted_roles: Vec<String>,
+    unrestricted_roles: Vec<Role>,
 ) -> bool {
     let auth_header = match headers.get("Authorization") {
         Some(header) => match header.to_str() {
@@ -198,7 +180,7 @@ pub async fn permission_check_socket(
         Ok(user) => match user {
             Some(user) => {
                 for role in unrestricted_roles {
-                    if user.privilege == Role::new_from_str(role.as_str()).unwrap_or(Role::None) {
+                    if user.privilege == role {
                         return true;
                     }
                 }
@@ -210,31 +192,16 @@ pub async fn permission_check_socket(
     }
 }
 
-/* Async version of the code is available in case you need to do async checks.
-Not sure if it works. I think I added the right traits to make it work but we'll find
-out when we try to use it.
- */
-
-/* pub async fn permission_check_async<T>(
-    user: RequestUser,
-    organizer_roles: Vec<Role>,
-    user_additional_check: fn(user::Data) -> T,
+pub async fn permission_check_async<T>(
+    _user: RequestUser,
+    _organizer_roles: Vec<Role>,
+    _user_additional_check: fn(user::Data) -> T,
 ) -> bool
 where
     T: Future<Output = bool>,
 {
-    match user {
-        RequestUser::Organizer(organizer) => {
-            for role in organizer_roles {
-                if organizer.privilege != role {
-                    return false;
-                }
-            }
-            true
-        }
-        RequestUser::User(user) => user_additional_check(user).await,
-    }
-} */
+    todo!()
+}
 
 // Doesn't work that's why it's private. Will try to fix later as that will reduce code duplication
 async fn _auth_router_layer() -> Router {
