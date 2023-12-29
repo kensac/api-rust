@@ -1,4 +1,4 @@
-use std::fmt::{Formatter, Display};
+use std::fmt::{Display, Formatter};
 
 use serde_json::Value;
 use socketioxide::{
@@ -16,7 +16,7 @@ pub enum Rooms {
 }
 
 impl Rooms {
-        fn from_string(room: &str) -> Option<Rooms> {
+    fn from_string(room: &str) -> Option<Rooms> {
         match room {
             "mobile" => Some(Rooms::Mobile),
             "admin" => Some(Rooms::Admin),

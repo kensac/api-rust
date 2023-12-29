@@ -197,14 +197,12 @@ pub async fn permission_check_socket(
     {
         Ok(user) => match user {
             Some(user) => {
-                {
-                    for role in unrestricted_roles {
-                        if user.privilege == Role::new_from_str(role.as_str()).unwrap_or(Role::None) {
-                            return true;
-                        }
+                for role in unrestricted_roles {
+                    if user.privilege == Role::new_from_str(role.as_str()).unwrap_or(Role::None) {
+                        return true;
                     }
-                    false
                 }
+                false
             }
             None => false,
         },
