@@ -8,7 +8,6 @@ use axum::{
 use hyper::{HeaderMap, Request, StatusCode};
 use serde::{Deserialize, Serialize};
 
-
 use crate::{
     base_types::{AppState, APP_STATE},
     prisma::{user, Role},
