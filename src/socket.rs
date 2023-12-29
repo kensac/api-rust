@@ -1,3 +1,5 @@
+use std::fmt::{Formatter, Display};
+
 use serde_json::Value;
 use socketioxide::{
     extract::{Data, SocketRef},
@@ -14,20 +16,22 @@ pub enum Rooms {
 }
 
 impl Rooms {
-    fn to_string(&self) -> String {
-        match self {
-            Rooms::Mobile => "mobile".to_string(),
-            Rooms::Admin => "admin".to_string(),
-            Rooms::Exec => "exec".to_string(),
-        }
-    }
-
-    fn from_string(room: &str) -> Option<Rooms> {
+        fn from_string(room: &str) -> Option<Rooms> {
         match room {
             "mobile" => Some(Rooms::Mobile),
             "admin" => Some(Rooms::Admin),
             "exec" => Some(Rooms::Exec),
             _ => None,
+        }
+    }
+}
+
+impl Display for Rooms {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Rooms::Mobile => write!(f, "mobile"),
+            Rooms::Admin => write!(f, "admin"),
+            Rooms::Exec => write!(f, "exec"),
         }
     }
 }

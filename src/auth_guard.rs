@@ -125,7 +125,7 @@ pub fn permission_check(
 }
 
 impl Role {
-    pub fn from_str(role: &str) -> Option<Role> {
+    pub fn new_from_str(role: &str) -> Option<Role> {
         match role {
             "None" => Some(Role::None),
             "Volunteer" => Some(Role::Volunteer),
@@ -197,19 +197,18 @@ pub async fn permission_check_socket(
     {
         Ok(user) => match user {
             Some(user) => {
-                let user = user::Data::from(user);
                 {
                     for role in unrestricted_roles {
-                        if user.privilege == Role::from_str(role.as_str()).unwrap_or(Role::None) {
+                        if user.privilege == Role::new_from_str(role.as_str()).unwrap_or(Role::None) {
                             return true;
                         }
                     }
                     false
                 }
             }
-            None => return false,
+            None => false,
         },
-        Err(_) => return false,
+        Err(_) => false,
     }
 }
 
