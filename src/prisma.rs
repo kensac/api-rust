@@ -19666,7 +19666,7 @@ pub enum EventType {
     Food,
     #[serde(rename = "Workshop")]
     Workshop,
-    #[serde(rename = "checkIn")]
+    #[serde(rename = "CheckIn")]
     CheckIn,
 }
 impl ToString for EventType {
@@ -19675,7 +19675,7 @@ impl ToString for EventType {
             Self::Activity => "Activity".to_string(),
             Self::Food => "Food".to_string(),
             Self::Workshop => "Workshop".to_string(),
-            Self::CheckIn => "checkIn".to_string(),
+            Self::CheckIn => "CheckIn".to_string(),
         }
     }
 }

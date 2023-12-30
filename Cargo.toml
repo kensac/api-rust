@@ -62,5 +62,6 @@ sendgrid = {version = "0.19.2", features = ["async"]}
 mrml = "3.0.0"
 handlebars = "4.5.0"
 
+# Cryptography (Had to add this so it links to the correct openssl version)
 openssl = { version = "0.10", features = ["vendored"] }
 

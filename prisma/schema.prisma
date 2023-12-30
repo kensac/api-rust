@@ -16,7 +16,7 @@ enum EventType {
   Activity
   Food
   Workshop
-  checkIn
+  CheckIn
 }
 
 model Event {
