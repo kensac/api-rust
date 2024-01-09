@@ -104,14 +104,12 @@ pub type RequestUser = user::Data;
 
 pub fn permission_check(
     user: RequestUser,
-    unrestricted_roles: Vec<Role>,
+    unrestricted_role: Role,
     additional_check: Vec<Predicate>,
 ) -> bool {
     {
-        for role in unrestricted_roles {
-            if user.privilege == role {
-                return true;
-            }
+        if user.privilege >= unrestricted_role {
+            return true;
         }
         for (role, check) in additional_check {
             if user.privilege == role && check(user.clone()) {
@@ -124,7 +122,7 @@ pub fn permission_check(
 
 pub async fn permission_check_socket(
     headers: HeaderMap<HeaderValue>,
-    unrestricted_roles: Vec<Role>,
+    unrestricted_role: Role,
 ) -> bool {
     let auth_header = match extract_auth_header(&headers).await {
         Ok(header) => header,
@@ -153,7 +151,7 @@ pub async fn permission_check_socket(
         .exec()
         .await
     {
-        Ok(Some(user)) => unrestricted_roles.contains(&user.privilege),
+        Ok(Some(user)) => user.privilege >= unrestricted_role,
         _ => false,
     }
 }

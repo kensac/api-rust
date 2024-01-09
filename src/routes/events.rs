@@ -92,11 +92,7 @@ pub async fn create_event(
     Extension(request_user): Extension<RequestUser>,
     Json(body): Json<CreateEventEntity>,
 ) -> CreateResponse {
-    if !permission_check(
-        request_user,
-        vec![prisma::Role::Exec, prisma::Role::Team, prisma::Role::Tech],
-        vec![],
-    ) {
+    if !permission_check(request_user, prisma::Role::Team, vec![]) {
         return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
 
@@ -247,11 +243,7 @@ pub async fn check_in_user_to_event(
     Extension(request_user): Extension<RequestUser>,
     Json(body): Json<CheckInUserToEventEntity>,
 ) -> CreateResponse {
-    if !permission_check(
-        request_user,
-        vec![prisma::Role::Exec, prisma::Role::Team, prisma::Role::Tech],
-        vec![],
-    ) {
+    if !permission_check(request_user, prisma::Role::Team, vec![]) {
         return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state

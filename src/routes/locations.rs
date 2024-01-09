@@ -46,11 +46,7 @@ async fn create_location(
     Extension(request_user): Extension<auth_guard::RequestUser>,
     Json(body): Json<CreateLocationEntity>,
 ) -> CreateResponse {
-    if !permission_check(
-        request_user,
-        vec![Role::Exec, Role::Team, Role::Tech],
-        vec![],
-    ) {
+    if !permission_check(request_user, Role::Team, vec![]) {
         return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
 
@@ -84,11 +80,7 @@ async fn get_all_locations(
     State(app_state): State<AppState>,
     Extension(request_user): Extension<auth_guard::RequestUser>,
 ) -> GetResponse<Json<Vec<Data>>> {
-    if !permission_check(
-        request_user,
-        vec![Role::Exec, Role::Team, Role::Tech],
-        vec![],
-    ) {
+    if !permission_check(request_user, Role::Team, vec![]) {
         return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state.client.location().find_many(vec![]).exec().await {
@@ -115,11 +107,7 @@ async fn get_location_by_id(
     Path(id): Path<String>,
     Extension(request_user): Extension<auth_guard::RequestUser>,
 ) -> GetResponse<Json<Data>> {
-    if !permission_check(
-        request_user,
-        vec![Role::Exec, Role::Team, Role::Tech],
-        vec![],
-    ) {
+    if !permission_check(request_user, Role::Team, vec![]) {
         return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state
@@ -155,11 +143,7 @@ async fn delete_location_by_id(
     Path(id): Path<String>,
     Extension(request_user): Extension<auth_guard::RequestUser>,
 ) -> DeleteResponse {
-    if !permission_check(
-        request_user,
-        vec![Role::Exec, Role::Team, Role::Tech],
-        vec![],
-    ) {
+    if !permission_check(request_user, Role::Team, vec![]) {
         return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state

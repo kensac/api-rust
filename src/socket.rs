@@ -37,7 +37,7 @@ pub fn on_connect(socket: SocketRef, Data(_value): Data<Value>) {
         "ping:mobile",
         |socket: SocketRef, Data(_value): Data<String>| async move {
             let headers = &socket.req_parts().headers;
-            if !permission_check_socket(headers.clone(), vec![Role::None]).await {
+            if !permission_check_socket(headers.clone(), Role::None).await {
                 return;
             }
             socket.join(Rooms::Mobile.to_string()).ok();
@@ -48,11 +48,12 @@ pub fn on_connect(socket: SocketRef, Data(_value): Data<Value>) {
         "ping:admin",
         |socket: SocketRef, Data(_value): Data<String>| async move {
             let headers = &socket.req_parts().headers;
-            if !permission_check_socket(headers.clone(), vec![Role::Exec]).await {
-                return;
+            if permission_check_socket(headers.clone(), Role::Exec).await {
+                socket.join(Rooms::Exec.to_string()).ok();
             }
-            socket.join(Rooms::Exec.to_string()).ok();
-            socket.join(Rooms::Admin.to_string()).ok();
+            if permission_check_socket(headers.clone(), Role::Team).await {
+                socket.join(Rooms::Admin.to_string()).ok();
+            }
         },
     );
 }

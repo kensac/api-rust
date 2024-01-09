@@ -72,7 +72,7 @@ async fn create_hackathon(
     Extension(request_user): Extension<RequestUser>,
     Json(body): Json<CreateHackathonEntity>,
 ) -> CreateResponse {
-    if !permission_check(request_user, vec![Role::Exec, Role::Tech], vec![]) {
+    if !permission_check(request_user, Role::Exec, vec![]) {
         return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state
@@ -128,11 +128,7 @@ async fn get_all_hackathon(
     Query(params): Query<Params>,
     Extension(request_user): Extension<RequestUser>,
 ) -> GetResponse<Json<Vec<Data>>> {
-    if !permission_check(
-        request_user,
-        vec![Role::Exec, Role::Team, Role::Tech],
-        vec![],
-    ) {
+    if !permission_check(request_user, Role::Team, vec![]) {
         return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
 
@@ -176,11 +172,7 @@ async fn get_hackathon_by_id(
     Path(id): Path<String>,
     Extension(request_user): Extension<RequestUser>,
 ) -> GetResponse<Json<Data>> {
-    if !permission_check(
-        request_user,
-        vec![Role::Exec, Role::Team, Role::Tech],
-        vec![],
-    ) {
+    if !permission_check(request_user, Role::Team, vec![]) {
         return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state
@@ -217,7 +209,7 @@ async fn delete_hackathon_by_id(
     Path(id): Path<String>,
     Extension(request_user): Extension<RequestUser>,
 ) -> DeleteResponse {
-    if !permission_check(request_user, vec![Role::Exec, Role::Tech], vec![]) {
+    if !permission_check(request_user, Role::Exec, vec![]) {
         return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     match app_state
@@ -251,7 +243,7 @@ async fn set_active_hackathon(
     Path(id): Path<String>,
     Extension(request_user): Extension<RequestUser>,
 ) -> UpdateResponse {
-    if !permission_check(request_user, vec![Role::Exec, Role::Tech], vec![]) {
+    if !permission_check(request_user, Role::Exec, vec![]) {
         return Err((StatusCode::UNAUTHORIZED, "Unauthorized".to_owned()));
     }
     //set all hackathons to inactive
