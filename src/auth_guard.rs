@@ -26,7 +26,7 @@ pub struct FirebaseUserResult {
     users: Vec<FirebaseUserResponse>,
 }
 
-async fn extract_auth_header(headers: &HeaderMap) -> Result<String, StatusCode> {
+fn extract_auth_header(headers: &HeaderMap) -> Result<String, StatusCode> {
     let header = headers
         .get("Authorization")
         .ok_or(StatusCode::UNAUTHORIZED)?;
@@ -77,7 +77,7 @@ pub async fn require_auth(
     mut request: Request<axum::body::Body>,
     next: Next,
 ) -> Result<Response, StatusCode> {
-    let auth_header = extract_auth_header(&headers).await?;
+    let auth_header = extract_auth_header(&headers)?;
     let firebase_user = fetch_firebase_user(&auth_header, &app_state).await?;
 
     let user_uid = firebase_user
@@ -124,7 +124,7 @@ pub async fn permission_check_socket(
     headers: HeaderMap<HeaderValue>,
     unrestricted_role: Role,
 ) -> bool {
-    let auth_header = match extract_auth_header(&headers).await {
+    let auth_header = match extract_auth_header(&headers) {
         Ok(header) => header,
         Err(_) => return false,
     };
@@ -156,7 +156,7 @@ pub async fn permission_check_socket(
     }
 }
 
-pub async fn permission_check_async<T>(
+pub fn permission_check_async<T>(
     _user: RequestUser,
     _organizer_roles: Vec<Role>,
     _user_additional_check: fn(user::Data) -> T,
@@ -168,6 +168,6 @@ where
 }
 
 // Doesn't work that's why it's private. Will try to fix later as that will reduce code duplication
-async fn _auth_router_layer() -> Router {
+fn _async_auth_router_layer() -> Router {
     todo!()
 }

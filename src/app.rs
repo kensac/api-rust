@@ -30,11 +30,12 @@ pub async fn new_app() -> Router {
     APP_STATE.set(app_state.clone()).unwrap();
 
     Router::new()
+        .route("/email", get(send_test_email))
+        .with_state(app_state.clone())
         .route("/shutdown", get(utils::shutdown))
         .route("/", get(utils::hello_world))
         .route("/health", get(utils::health_check))
         .merge(setup_routes(app_state))
-        .route("/email", get(send_test_email))
         .merge(Redoc::with_url("/docs", ApiDoc::openapi()))
         .merge(service_layer)
         .merge(cors_layer)

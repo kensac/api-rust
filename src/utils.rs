@@ -32,9 +32,7 @@ pub fn get_port() -> u16 {
         .ok()
         .and_then(|port| port.parse().ok())
         .unwrap_or_else(|| {
-            eprintln!(
-                "Warning: Using default port 3000. 'PORT' environment variable not set or invalid."
-            );
+            tracing::warn!("No PORT environment variable found, defaulting to 3000");
             3000
         })
 }
