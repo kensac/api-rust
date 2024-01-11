@@ -12,7 +12,7 @@ pub enum Rooms {
 }
 
 impl Rooms {
-    fn from_string(room: &str) -> Option<Rooms> {
+    fn _from_string(room: &str) -> Option<Rooms> {
         match room {
             "mobile" => Some(Rooms::Mobile),
             "admin" => Some(Rooms::Admin),

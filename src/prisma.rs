@@ -2253,36 +2253,36 @@ pub mod extra_credit_assignment {
     use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "ExtraCreditAssignment";
-    pub mod registraion_id {
+    pub mod registration_id {
         use super::super::*;
         use super::_prisma::*;
         use super::{
             OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
         };
-        pub const NAME: &str = "registraionID";
+        pub const NAME: &str = "registrationID";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
             fn from(Set(v): Set) -> Self {
-                Self::SetRegistraionId(v)
+                Self::SetRegistrationId(v)
             }
         }
         impl From<Set> for UncheckedSetParam {
             fn from(Set(v): Set) -> Self {
-                Self::RegistraionId(v)
+                Self::RegistrationId(v)
             }
         }
         pub fn set<T: From<Set>>(value: String) -> T {
             Set(value).into()
         }
         pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
-            OrderByParam::RegistraionId(direction)
+            OrderByParam::RegistrationId(direction)
         }
         pub fn equals(value: String) -> WhereParam {
-            WhereParam::RegistraionId(_prisma::read_filters::StringFilter::Equals(value))
+            WhereParam::RegistrationId(_prisma::read_filters::StringFilter::Equals(value))
         }
         ::prisma_client_rust::scalar_where_param_fns!(
             _prisma::read_filters::StringFilter,
-            RegistraionId,
+            RegistrationId,
             {
                 fn in_vec(_: Vec<String>) -> InVec;
                 fn not_in_vec(_: Vec<String>) -> NotInVec;
@@ -2299,7 +2299,7 @@ pub mod extra_credit_assignment {
         pub struct Include;
         impl Into<super::IncludeParam> for Include {
             fn into(self) -> super::IncludeParam {
-                super::IncludeParam::RegistraionId(self)
+                super::IncludeParam::RegistrationId(self)
             }
         }
         impl Include {
@@ -2310,7 +2310,7 @@ pub mod extra_credit_assignment {
         pub struct Select;
         impl Into<super::SelectParam> for Select {
             fn into(self) -> super::SelectParam {
-                super::SelectParam::RegistraionId(self)
+                super::SelectParam::RegistrationId(self)
             }
         }
         impl Select {
@@ -2575,11 +2575,11 @@ pub mod extra_credit_assignment {
             }
         }
     }
-    pub fn registraion_id_class_id<T: From<UniqueWhereParam>>(
-        registraion_id: String,
+    pub fn registration_id_class_id<T: From<UniqueWhereParam>>(
+        registration_id: String,
         class_id: String,
     ) -> T {
-        UniqueWhereParam::RegistraionIdClassIdEquals(registraion_id, class_id).into()
+        UniqueWhereParam::RegistrationIdClassIdEquals(registration_id, class_id).into()
     }
     pub fn create(
         registration: super::registration::UniqueWhereParam,
@@ -2593,17 +2593,17 @@ pub mod extra_credit_assignment {
         (registration, class, _params)
     }
     pub fn create_unchecked(
-        registraion_id: String,
+        registration_id: String,
         class_id: String,
         _params: Vec<SetParam>,
     ) -> (String, String, Vec<SetParam>) {
-        (registraion_id, class_id, _params)
+        (registration_id, class_id, _params)
     }
     #[macro_export]
-    macro_rules ! _select_extra_credit_assignment { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: extra_credit_assignment :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: extra_credit_assignment :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: extra_credit_assignment :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: extra_credit_assignment :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: extra_credit_assignment :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: extra_credit_assignment :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { registraion_id , registration , class , class_id } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: extra_credit_assignment :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: extra_credit_assignment :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: extra_credit_assignment :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: extra_credit_assignment :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: extra_credit_assignment :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: extra_credit_assignment :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["registraionID" , "registration" , "class" , "classId"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: extra_credit_assignment :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; registraion_id) => { String } ; (@ field_type ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { registration :: Data } ; (@ field_type ; registration) => { crate :: prisma :: registration :: Data } ; (@ field_type ; class : $ selection_mode : ident { $ ($ selections : tt) + }) => { class :: Data } ; (@ field_type ; class) => { crate :: prisma :: extra_credit_class :: Data } ; (@ field_type ; class_id) => { String } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "ExtraCreditAssignment" , available relations are "registraion_id, registration, class, class_id")) } ; (@ field_module ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: registration :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; class : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: extra_credit_class :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; registraion_id) => { Into :: < crate :: prisma :: extra_credit_assignment :: SelectParam > :: into (crate :: prisma :: extra_credit_assignment :: registraion_id :: Select) } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: extra_credit_assignment :: SelectParam > :: into (crate :: prisma :: extra_credit_assignment :: registration :: Select :: $ selection_mode (crate :: prisma :: registration :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: extra_credit_assignment :: SelectParam > :: into (crate :: prisma :: extra_credit_assignment :: registration :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; class $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: extra_credit_assignment :: SelectParam > :: into (crate :: prisma :: extra_credit_assignment :: class :: Select :: $ selection_mode (crate :: prisma :: extra_credit_class :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; class $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: extra_credit_assignment :: SelectParam > :: into (crate :: prisma :: extra_credit_assignment :: class :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; class_id) => { Into :: < crate :: prisma :: extra_credit_assignment :: SelectParam > :: into (crate :: prisma :: extra_credit_assignment :: class_id :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: extra_credit_assignment :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; registraion_id) => { "registraionID" } ; (@ field_serde_name ; registration) => { "registration" } ; (@ field_serde_name ; class) => { "class" } ; (@ field_serde_name ; class_id) => { "classId" } ; }
+    macro_rules ! _select_extra_credit_assignment { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: extra_credit_assignment :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: extra_credit_assignment :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: extra_credit_assignment :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: extra_credit_assignment :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: extra_credit_assignment :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: extra_credit_assignment :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { registration_id , registration , class , class_id } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: extra_credit_assignment :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: extra_credit_assignment :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: extra_credit_assignment :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: extra_credit_assignment :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: extra_credit_assignment :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: extra_credit_assignment :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["registrationID" , "registration" , "class" , "classId"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: extra_credit_assignment :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; registration_id) => { String } ; (@ field_type ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { registration :: Data } ; (@ field_type ; registration) => { crate :: prisma :: registration :: Data } ; (@ field_type ; class : $ selection_mode : ident { $ ($ selections : tt) + }) => { class :: Data } ; (@ field_type ; class) => { crate :: prisma :: extra_credit_class :: Data } ; (@ field_type ; class_id) => { String } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "ExtraCreditAssignment" , available relations are "registration_id, registration, class, class_id")) } ; (@ field_module ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: registration :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; class : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: extra_credit_class :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; registration_id) => { Into :: < crate :: prisma :: extra_credit_assignment :: SelectParam > :: into (crate :: prisma :: extra_credit_assignment :: registration_id :: Select) } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: extra_credit_assignment :: SelectParam > :: into (crate :: prisma :: extra_credit_assignment :: registration :: Select :: $ selection_mode (crate :: prisma :: registration :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: extra_credit_assignment :: SelectParam > :: into (crate :: prisma :: extra_credit_assignment :: registration :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; class $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: extra_credit_assignment :: SelectParam > :: into (crate :: prisma :: extra_credit_assignment :: class :: Select :: $ selection_mode (crate :: prisma :: extra_credit_class :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; class $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: extra_credit_assignment :: SelectParam > :: into (crate :: prisma :: extra_credit_assignment :: class :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; class_id) => { Into :: < crate :: prisma :: extra_credit_assignment :: SelectParam > :: into (crate :: prisma :: extra_credit_assignment :: class_id :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: extra_credit_assignment :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; registration_id) => { "registrationID" } ; (@ field_serde_name ; registration) => { "registration" } ; (@ field_serde_name ; class) => { "class" } ; (@ field_serde_name ; class_id) => { "classId" } ; }
     pub use _select_extra_credit_assignment as select;
     pub enum SelectParam {
-        RegistraionId(registraion_id::Select),
+        RegistrationId(registration_id::Select),
         Registration(registration::Select),
         Class(class::Select),
         ClassId(class_id::Select),
@@ -2611,7 +2611,7 @@ pub mod extra_credit_assignment {
     impl SelectParam {
         pub fn to_selection(self) -> ::prisma_client_rust::Selection {
             match self {
-                Self::RegistraionId(data) => data.to_selection(),
+                Self::RegistrationId(data) => data.to_selection(),
                 Self::Registration(data) => data.to_selection(),
                 Self::Class(data) => data.to_selection(),
                 Self::ClassId(data) => data.to_selection(),
@@ -2619,10 +2619,10 @@ pub mod extra_credit_assignment {
         }
     }
     #[macro_export]
-    macro_rules ! _include_extra_credit_assignment { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: extra_credit_assignment :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: extra_credit_assignment :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: extra_credit_assignment :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: extra_credit_assignment :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: extra_credit_assignment :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: extra_credit_assignment :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: extra_credit_assignment :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: extra_credit_assignment :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { registration , class } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { pub registraion_id : String , pub class_id : String , $ (pub $ field : crate :: prisma :: extra_credit_assignment :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (registraion_id) , stringify ! (class_id)] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: extra_credit_assignment :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: prisma :: extra_credit_assignment :: registraion_id :: NAME , & self . registraion_id) ? ; state . serialize_field (crate :: prisma :: extra_credit_assignment :: class_id :: NAME , & self . class_id) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , registraion_id , class_id } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: extra_credit_assignment :: $ field :: NAME) , + , crate :: prisma :: extra_credit_assignment :: registraion_id :: NAME , crate :: prisma :: extra_credit_assignment :: class_id :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: extra_credit_assignment :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: prisma :: extra_credit_assignment :: registraion_id :: NAME => Ok (Field :: registraion_id) , crate :: prisma :: extra_credit_assignment :: class_id :: NAME => Ok (Field :: class_id) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut registraion_id = None ; let mut class_id = None ; while let Some (key) = map . next_key () ? { match key { Field :: registraion_id => { if registraion_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: extra_credit_assignment :: registraion_id :: NAME)) ; } registraion_id = Some (map . next_value () ?) ; } Field :: class_id => { if class_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: extra_credit_assignment :: class_id :: NAME)) ; } class_id = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: extra_credit_assignment :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: extra_credit_assignment :: $ field :: NAME)) ? ;) * let registraion_id = registraion_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: extra_credit_assignment :: registraion_id :: NAME)) ? ; let class_id = class_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: extra_credit_assignment :: class_id :: NAME)) ? ; Ok (Data { registraion_id , class_id , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["registraionID" , "registration" , "class" , "classId"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: extra_credit_assignment :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { registration :: Data } ; (@ field_type ; registration) => { crate :: prisma :: registration :: Data } ; (@ field_type ; class : $ selection_mode : ident { $ ($ selections : tt) + }) => { class :: Data } ; (@ field_type ; class) => { crate :: prisma :: extra_credit_class :: Data } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "ExtraCreditAssignment" , available relations are "registration, class")) } ; (@ field_module ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: registration :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; class : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: extra_credit_class :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: extra_credit_assignment :: IncludeParam > :: into (crate :: prisma :: extra_credit_assignment :: registration :: Include :: $ selection_mode (crate :: prisma :: registration :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: extra_credit_assignment :: IncludeParam > :: into (crate :: prisma :: extra_credit_assignment :: registration :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; class $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: extra_credit_assignment :: IncludeParam > :: into (crate :: prisma :: extra_credit_assignment :: class :: Include :: $ selection_mode (crate :: prisma :: extra_credit_class :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; class $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: extra_credit_assignment :: IncludeParam > :: into (crate :: prisma :: extra_credit_assignment :: class :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: extra_credit_assignment :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; registraion_id) => { "registraionID" } ; (@ field_serde_name ; registration) => { "registration" } ; (@ field_serde_name ; class) => { "class" } ; (@ field_serde_name ; class_id) => { "classId" } ; }
+    macro_rules ! _include_extra_credit_assignment { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: extra_credit_assignment :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: extra_credit_assignment :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: extra_credit_assignment :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: extra_credit_assignment :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: extra_credit_assignment :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: extra_credit_assignment :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: extra_credit_assignment :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: extra_credit_assignment :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { registration , class } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { pub registration_id : String , pub class_id : String , $ (pub $ field : crate :: prisma :: extra_credit_assignment :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (registration_id) , stringify ! (class_id)] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: extra_credit_assignment :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: prisma :: extra_credit_assignment :: registration_id :: NAME , & self . registration_id) ? ; state . serialize_field (crate :: prisma :: extra_credit_assignment :: class_id :: NAME , & self . class_id) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , registration_id , class_id } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: extra_credit_assignment :: $ field :: NAME) , + , crate :: prisma :: extra_credit_assignment :: registration_id :: NAME , crate :: prisma :: extra_credit_assignment :: class_id :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: extra_credit_assignment :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: prisma :: extra_credit_assignment :: registration_id :: NAME => Ok (Field :: registration_id) , crate :: prisma :: extra_credit_assignment :: class_id :: NAME => Ok (Field :: class_id) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut registration_id = None ; let mut class_id = None ; while let Some (key) = map . next_key () ? { match key { Field :: registration_id => { if registration_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: extra_credit_assignment :: registration_id :: NAME)) ; } registration_id = Some (map . next_value () ?) ; } Field :: class_id => { if class_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: extra_credit_assignment :: class_id :: NAME)) ; } class_id = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: extra_credit_assignment :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: extra_credit_assignment :: $ field :: NAME)) ? ;) * let registration_id = registration_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: extra_credit_assignment :: registration_id :: NAME)) ? ; let class_id = class_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: extra_credit_assignment :: class_id :: NAME)) ? ; Ok (Data { registration_id , class_id , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["registrationID" , "registration" , "class" , "classId"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: extra_credit_assignment :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { registration :: Data } ; (@ field_type ; registration) => { crate :: prisma :: registration :: Data } ; (@ field_type ; class : $ selection_mode : ident { $ ($ selections : tt) + }) => { class :: Data } ; (@ field_type ; class) => { crate :: prisma :: extra_credit_class :: Data } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "ExtraCreditAssignment" , available relations are "registration, class")) } ; (@ field_module ; registration : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: registration :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; class : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: extra_credit_class :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: extra_credit_assignment :: IncludeParam > :: into (crate :: prisma :: extra_credit_assignment :: registration :: Include :: $ selection_mode (crate :: prisma :: registration :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; registration $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: extra_credit_assignment :: IncludeParam > :: into (crate :: prisma :: extra_credit_assignment :: registration :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; class $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: extra_credit_assignment :: IncludeParam > :: into (crate :: prisma :: extra_credit_assignment :: class :: Include :: $ selection_mode (crate :: prisma :: extra_credit_class :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; class $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: extra_credit_assignment :: IncludeParam > :: into (crate :: prisma :: extra_credit_assignment :: class :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: extra_credit_assignment :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; registration_id) => { "registrationID" } ; (@ field_serde_name ; registration) => { "registration" } ; (@ field_serde_name ; class) => { "class" } ; (@ field_serde_name ; class_id) => { "classId" } ; }
     pub use _include_extra_credit_assignment as include;
     pub enum IncludeParam {
-        RegistraionId(registraion_id::Include),
+        RegistrationId(registration_id::Include),
         Registration(registration::Include),
         Class(class::Include),
         ClassId(class_id::Include),
@@ -2630,7 +2630,7 @@ pub mod extra_credit_assignment {
     impl IncludeParam {
         pub fn to_selection(self) -> ::prisma_client_rust::Selection {
             match self {
-                Self::RegistraionId(data) => data.to_selection(),
+                Self::RegistrationId(data) => data.to_selection(),
                 Self::Registration(data) => data.to_selection(),
                 Self::Class(data) => data.to_selection(),
                 Self::ClassId(data) => data.to_selection(),
@@ -2638,12 +2638,12 @@ pub mod extra_credit_assignment {
         }
     }
     #[macro_export]
-    macro_rules ! _partial_unchecked_extra_credit_assignment { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: prisma :: extra_credit_assignment struct $ struct_name { # [serde (rename = "registraionID")] pub registraion_id : String , # [serde (rename = "classId")] pub class_id : String } [$ ($ scalar_field) , +] } } ; }
+    macro_rules ! _partial_unchecked_extra_credit_assignment { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: prisma :: extra_credit_assignment struct $ struct_name { # [serde (rename = "registrationID")] pub registration_id : String , # [serde (rename = "classId")] pub class_id : String } [$ ($ scalar_field) , +] } } ; }
     pub use _partial_unchecked_extra_credit_assignment as partial_unchecked;
     #[derive(Debug, Clone, :: serde :: Serialize, :: serde :: Deserialize)]
     pub struct Data {
-        #[serde(rename = "registraionID")]
-        pub registraion_id: String,
+        #[serde(rename = "registrationID")]
+        pub registration_id: String,
         #[serde(rename = "registration")]
         pub registration: Option<Box<super::registration::Data>>,
         #[serde(rename = "class")]
@@ -2706,7 +2706,7 @@ pub mod extra_credit_assignment {
     }
     #[derive(Clone)]
     pub enum SetParam {
-        SetRegistraionId(String),
+        SetRegistrationId(String),
         ConnectRegistration(super::registration::UniqueWhereParam),
         ConnectClass(super::extra_credit_class::UniqueWhereParam),
         SetClassId(String),
@@ -2714,8 +2714,8 @@ pub mod extra_credit_assignment {
     impl From<SetParam> for (String, ::prisma_client_rust::PrismaValue) {
         fn from(param: SetParam) -> Self {
             match param {
-                SetParam::SetRegistraionId(value) => (
-                    registraion_id::NAME.to_string(),
+                SetParam::SetRegistrationId(value) => (
+                    registration_id::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(value),
                 ),
                 SetParam::ConnectRegistration(where_param) => (
@@ -2755,27 +2755,27 @@ pub mod extra_credit_assignment {
     }
     #[derive(Clone)]
     pub enum UncheckedSetParam {
-        RegistraionId(String),
+        RegistrationId(String),
         ClassId(String),
     }
     impl From<UncheckedSetParam> for SetParam {
         fn from(param: UncheckedSetParam) -> Self {
             match param {
-                UncheckedSetParam::RegistraionId(value) => Self::SetRegistraionId(value),
+                UncheckedSetParam::RegistrationId(value) => Self::SetRegistrationId(value),
                 UncheckedSetParam::ClassId(value) => Self::SetClassId(value),
             }
         }
     }
     #[derive(Clone)]
     pub enum OrderByParam {
-        RegistraionId(::prisma_client_rust::Direction),
+        RegistrationId(::prisma_client_rust::Direction),
         ClassId(::prisma_client_rust::Direction),
     }
     impl Into<(String, ::prisma_client_rust::PrismaValue)> for OrderByParam {
         fn into(self) -> (String, ::prisma_client_rust::PrismaValue) {
             match self {
-                Self::RegistraionId(direction) => (
-                    registraion_id::NAME.to_string(),
+                Self::RegistrationId(direction) => (
+                    registration_id::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(direction.to_string()),
                 ),
                 Self::ClassId(direction) => (
@@ -2790,8 +2790,8 @@ pub mod extra_credit_assignment {
         Not(Vec<WhereParam>),
         Or(Vec<WhereParam>),
         And(Vec<WhereParam>),
-        RegistraionIdClassIdEquals(String, String),
-        RegistraionId(_prisma::read_filters::StringFilter),
+        RegistrationIdClassIdEquals(String, String),
+        RegistrationId(_prisma::read_filters::StringFilter),
         RegistrationIs(Vec<super::registration::WhereParam>),
         RegistrationIsNot(Vec<super::registration::WhereParam>),
         ClassIs(Vec<super::extra_credit_class::WhereParam>),
@@ -2837,12 +2837,12 @@ pub mod extra_credit_assignment {
                         ),
                     ),
                 ),
-                Self::RegistraionIdClassIdEquals(registraion_id, class_id) => (
-                    "registraionID_classId",
+                Self::RegistrationIdClassIdEquals(registration_id, class_id) => (
+                    "registrationID_classId",
                     ::prisma_client_rust::SerializedWhereValue::Object(vec![
                         (
-                            registraion_id::NAME.to_string(),
-                            ::prisma_client_rust::PrismaValue::String(registraion_id),
+                            registration_id::NAME.to_string(),
+                            ::prisma_client_rust::PrismaValue::String(registration_id),
                         ),
                         (
                             class_id::NAME.to_string(),
@@ -2850,7 +2850,7 @@ pub mod extra_credit_assignment {
                         ),
                     ]),
                 ),
-                Self::RegistraionId(value) => (registraion_id::NAME, value.into()),
+                Self::RegistrationId(value) => (registration_id::NAME, value.into()),
                 Self::RegistrationIs(where_params) => (
                     registration::NAME,
                     ::prisma_client_rust::SerializedWhereValue::Object(vec![(
@@ -2910,13 +2910,13 @@ pub mod extra_credit_assignment {
     }
     #[derive(Clone)]
     pub enum UniqueWhereParam {
-        RegistraionIdClassIdEquals(String, String),
+        RegistrationIdClassIdEquals(String, String),
     }
     impl From<UniqueWhereParam> for WhereParam {
         fn from(value: UniqueWhereParam) -> Self {
             match value {
-                UniqueWhereParam::RegistraionIdClassIdEquals(registraion_id, class_id) => {
-                    Self::RegistraionIdClassIdEquals(registraion_id, class_id)
+                UniqueWhereParam::RegistrationIdClassIdEquals(registration_id, class_id) => {
+                    Self::RegistrationIdClassIdEquals(registration_id, class_id)
                 }
             }
         }
@@ -2943,7 +2943,7 @@ pub mod extra_credit_assignment {
         const MODEL: &'static str = NAME;
         fn scalar_selections() -> Vec<::prisma_client_rust::Selection> {
             vec![
-                ::prisma_client_rust::sel(registraion_id::NAME),
+                ::prisma_client_rust::sel(registration_id::NAME),
                 ::prisma_client_rust::sel(class_id::NAME),
             ]
         }
@@ -2986,18 +2986,24 @@ pub mod extra_credit_assignment {
         }
         pub fn create_unchecked(
             self,
-            registraion_id: String,
+            registration_id: String,
             class_id: String,
             mut _params: Vec<UncheckedSetParam>,
         ) -> Create<'a> {
-            _params.extend([registraion_id::set(registraion_id), class_id::set(class_id)]);
+            _params.extend([
+                registration_id::set(registration_id),
+                class_id::set(class_id),
+            ]);
             Create::new(self.client, _params.into_iter().map(Into::into).collect())
         }
         pub fn create_many(self, data: Vec<(String, String, Vec<SetParam>)>) -> CreateMany<'a> {
             let data = data
                 .into_iter()
-                .map(|(registraion_id, class_id, mut _params)| {
-                    _params.extend([registraion_id::set(registraion_id), class_id::set(class_id)]);
+                .map(|(registration_id, class_id, mut _params)| {
+                    _params.extend([
+                        registration_id::set(registration_id),
+                        class_id::set(class_id),
+                    ]);
                     _params
                 })
                 .collect();
@@ -18787,15 +18793,15 @@ pub mod _prisma {
     }
     #[derive(Debug, Clone, Copy, :: serde :: Serialize, :: serde :: Deserialize, PartialEq, Eq)]
     pub enum ExtraCreditAssignmentScalarFieldEnum {
-        #[serde(rename = "registraionID")]
-        RegistraionId,
+        #[serde(rename = "registrationID")]
+        RegistrationId,
         #[serde(rename = "classId")]
         ClassId,
     }
     impl ToString for ExtraCreditAssignmentScalarFieldEnum {
         fn to_string(&self) -> String {
             match self {
-                Self::RegistraionId => "registraionID".to_string(),
+                Self::RegistrationId => "registrationID".to_string(),
                 Self::ClassId => "classId".to_string(),
             }
         }

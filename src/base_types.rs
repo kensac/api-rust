@@ -2,6 +2,7 @@ use std::sync::{Arc, OnceLock};
 
 use axum::response::{IntoResponse, Response};
 use hyper::StatusCode;
+use sendgrid::SGClient;
 use socketioxide::SocketIo;
 use utoipa::ToSchema;
 
@@ -76,6 +77,7 @@ pub struct AppState {
     pub client: Arc<PrismaClient>,
     pub reqwest_client: reqwest::Client,
     pub io: Arc<SocketIo>,
+    pub send_grid: sendgrid::SGClient,
 }
 
 impl AppState {
@@ -85,10 +87,13 @@ impl AppState {
             .await
             .expect("Didn't connect to database");
 
+        let sendgrid_key = std::env::var("SENDGRID_API_KEY").expect("SENDGRID_API_KEY must be set");
+
         AppState {
             client: Arc::new(client),
             reqwest_client: reqwest::Client::new(),
             io: Arc::new(socket),
+            send_grid: SGClient::new(sendgrid_key),
         }
     }
 }

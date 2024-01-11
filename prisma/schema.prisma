@@ -39,12 +39,12 @@ model Event {
 }
 
 model ExtraCreditAssignment {
-  registraionID String
-  registration  Registration     @relation(fields: [registraionID], references: [id])
+  registrationID String
+  registration  Registration     @relation(fields: [registrationID], references: [id])
   class         ExtraCreditClass @relation(fields: [classId], references: [id])
   classId       String
 
-  @@unique([registraionID, classId])
+  @@unique([registrationID, classId])
 }
 
 model ExtraCreditClass {
