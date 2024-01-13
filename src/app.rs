@@ -13,7 +13,6 @@ use utoipa_redoc::{Redoc, Servable};
 use crate::{
     base_types::{AppState, APP_STATE},
     docs::ApiDoc,
-    email_service::send_test_email,
     routes,
     socket::on_connect,
     utils,
@@ -30,7 +29,6 @@ pub async fn new_app() -> Router {
     APP_STATE.set(app_state.clone()).unwrap();
 
     Router::new()
-        .route("/email", get(send_test_email))
         .with_state(app_state.clone())
         .route("/shutdown", get(utils::shutdown))
         .route("/", get(utils::hello_world))

@@ -57,7 +57,7 @@ where
 
 impl BaseResponse<()> {
     pub fn delete_response(status_code: StatusCode) -> BaseResponse<()> {
-        BaseResponse {
+        Self {
             status_code,
             data: (),
         }
@@ -81,7 +81,7 @@ pub struct AppState {
 }
 
 impl AppState {
-    pub async fn new(socket: SocketIo) -> AppState {
+    pub async fn new(socket: SocketIo) -> Self {
         let client = PrismaClient::_builder()
             .build()
             .await
@@ -89,7 +89,7 @@ impl AppState {
 
         let sendgrid_key = std::env::var("SENDGRID_API_KEY").expect("SENDGRID_API_KEY must be set");
 
-        AppState {
+        Self {
             client: Arc::new(client),
             reqwest_client: reqwest::Client::new(),
             io: Arc::new(socket),

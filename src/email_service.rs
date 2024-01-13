@@ -1,47 +1,70 @@
 use std::fs;
 
 use axum::extract::State;
-use handlebars::Handlebars;
+use handlebars::{template, Handlebars};
 use hyper::StatusCode;
-use mrml;
-use sendgrid::{Destination, Mail, SGClient};
+use mrml::{self, parse, prelude::render::RenderOptions};
+use sendgrid::{Destination, Mail};
 use serde_json::json;
 
 use crate::base_types::AppState;
 
-pub async fn send_test_email(State(state): State<AppState>) -> Result<StatusCode, StatusCode> {
-    let mail_text = mrml::parse(fs::read_to_string("registration.mjml").unwrap().as_str())
-        .expect("Failed to parse HTML");
-    let opts = mrml::prelude::render::RenderOptions::default();
+pub struct MailData<'a> {
+    from: &'a str,
+    to: Destination<'a>,
+    subject: &'a str,
+    html: &'a str,
+}
+
+impl<'a> MailData<'a> {
+    pub const fn new(from: &'a str, to: Destination<'a>, subject: &'a str, html: &'a str) -> Self {
+        Self {
+            from,
+            to,
+            subject,
+            html,
+        }
+    }
+}
+
+pub async fn send_email(
+    State(state): State<AppState>,
+    mail_data: MailData<'_>,
+) -> Result<StatusCode, (String, StatusCode)> {
+    let mail_entity = Mail::new()
+        .add_from(mail_data.from)
+        .add_to(mail_data.to)
+        .add_subject(mail_data.subject)
+        .add_html(mail_data.html);
+
+    match state.send_grid.send(mail_entity).await {
+        Ok(_) => Ok(StatusCode::OK),
+        Err(err) => Err((err.to_string(), StatusCode::INTERNAL_SERVER_ERROR)),
+    }
+}
+
+pub fn render_template(
+    template_html: &str,
+    template_data: &serde_json::Value,
+) -> Result<String, (String, StatusCode)> {
+    let mail_text = parse(template_html).unwrap();
+    let opts = RenderOptions::default();
     let content = match mail_text.render(&opts) {
         Ok(content) => content,
-        Err(_) => return Err(StatusCode::INTERNAL_SERVER_ERROR),
+        Err(_) => {
+            return Err((
+                String::from("Failed to render template"),
+                StatusCode::INTERNAL_SERVER_ERROR,
+            ))
+        }
     };
 
     let reg = Handlebars::new();
-    let template = reg
-        .render_template(
-            &content,
-            &json!(
-                {
-                    "firstName": "John Doe",
-                    "address": "test@email.com",
-                    "date": chrono::Local::now().format("%m/%d/%Y").to_string(),
-                }
-            ),
-        )
-        .unwrap();
-
-    let mail_entity = Mail::new()
-        .add_from("")
-        .add_to(Destination {
-            address: "",
-            name: "",
-        })
-        .add_subject("HackPSU API Rust Test Email")
-        .add_html(template.as_str());
-
-    state.send_grid.send(mail_entity).await.unwrap();
-
-    Ok(StatusCode::OK)
+    match reg.render_template(&content, &template_data) {
+        Ok(template) => Ok(template),
+        Err(_) => Err((
+            String::from("Failed to render template"),
+            StatusCode::INTERNAL_SERVER_ERROR,
+        )),
+    }
 }

@@ -2,6 +2,7 @@ use std::fmt::{Display, Formatter};
 
 use serde_json::Value;
 use socketioxide::extract::{Data, SocketRef};
+use std::fmt;
 
 use crate::{auth_guard::permission_check_socket, prisma::Role};
 
@@ -12,22 +13,22 @@ pub enum Rooms {
 }
 
 impl Rooms {
-    fn _from_string(room: &str) -> Option<Rooms> {
+    fn _from_string(room: &str) -> Option<Self> {
         match room {
-            "mobile" => Some(Rooms::Mobile),
-            "admin" => Some(Rooms::Admin),
-            "exec" => Some(Rooms::Exec),
+            "mobile" => Some(Self::Mobile),
+            "admin" => Some(Self::Admin),
+            "exec" => Some(Self::Exec),
             _ => None,
         }
     }
 }
 
 impl Display for Rooms {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result {
         match self {
-            Rooms::Mobile => write!(f, "mobile"),
-            Rooms::Admin => write!(f, "admin"),
-            Rooms::Exec => write!(f, "exec"),
+            Self::Mobile => write!(formatter, "mobile"),
+            Self::Admin => write!(formatter, "admin"),
+            Self::Exec => write!(formatter, "exec"),
         }
     }
 }

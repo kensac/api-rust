@@ -4,14 +4,14 @@ use crate::prisma::Role;
 
 impl Role {
     // Helper function to get the numeric value of each variant
-    fn value(&self) -> i32 {
+    const fn value(self) -> i32 {
         match self {
-            Role::None => 0,
-            Role::Volunteer => 1,
-            Role::Team => 2,
-            Role::Exec => 3,
-            Role::Tech => 4,
-            Role::Finance => 5,
+            Self::None => 0,
+            Self::Volunteer => 1,
+            Self::Team => 2,
+            Self::Exec => 3,
+            Self::Tech => 4,
+            Self::Finance => 5,
         }
     }
 }

@@ -58,9 +58,7 @@ async fn fetch_firebase_user(
         .await
         .map_err(|_| StatusCode::UNAUTHORIZED)?;
 
-    if user_data.status() != reqwest::StatusCode::OK {
-        Err(StatusCode::UNAUTHORIZED)
-    } else {
+    if user_data.status() == reqwest::StatusCode::OK {
         serde_json::from_str(
             &user_data
                 .text()
@@ -68,6 +66,8 @@ async fn fetch_firebase_user(
                 .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?,
         )
         .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)
+    } else {
+        Err(StatusCode::UNAUTHORIZED)
     }
 }
 

@@ -23,7 +23,10 @@
     clippy::mod_module_files,
     clippy::std_instead_of_alloc,
     clippy::std_instead_of_core,
-    clippy::cargo_common_metadata
+    clippy::cargo_common_metadata,
+    clippy::shadow_unrelated,
+    clippy::exhaustive_enums,
+    clippy::default_numeric_fallback
 )]
 
 pub mod app;
