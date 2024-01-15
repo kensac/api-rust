@@ -9,5 +9,5 @@ pub mod entities;
 pub mod prisma;
 pub mod routes;
 pub mod socket;
-pub mod upload_service;
+pub mod storage_bucket_service;
 pub mod utils;

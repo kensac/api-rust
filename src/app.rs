@@ -15,7 +15,7 @@ use crate::{
     docs::ApiDoc,
     routes,
     socket::on_connect,
-    upload_service::test_file,
+    storage_bucket_service::test_file,
     utils,
 };
 

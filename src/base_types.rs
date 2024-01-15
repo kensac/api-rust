@@ -6,7 +6,7 @@ use sendgrid::SGClient;
 use socketioxide::SocketIo;
 use utoipa::ToSchema;
 
-use crate::{prisma::PrismaClient, upload_service::UploadService};
+use crate::{prisma::PrismaClient, storage_bucket_service::StorageBucketService};
 
 #[derive(ToSchema)]
 pub struct BaseError {
@@ -78,7 +78,7 @@ pub struct AppState {
     pub reqwest_client: reqwest::Client,
     pub io: Arc<SocketIo>,
     pub send_grid: sendgrid::SGClient,
-    pub upload_service: Arc<UploadService>,
+    pub storage_bucket_service: Arc<StorageBucketService>,
 }
 
 impl AppState {
@@ -95,7 +95,7 @@ impl AppState {
             reqwest_client: reqwest::Client::new(),
             io: Arc::new(socket),
             send_grid: SGClient::new(sendgrid_key),
-            upload_service: Arc::new(UploadService::new()),
+            storage_bucket_service: Arc::new(StorageBucketService::new()),
         }
     }
 }
