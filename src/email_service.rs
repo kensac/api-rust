@@ -63,7 +63,7 @@ pub fn render_template(
     match reg.render_template(&content, &template_data) {
         Ok(template) => Ok(template),
         Err(_) => Err((
-            String::from("Failed to render template"),
+            String::from("Failed to populate template"),
             StatusCode::INTERNAL_SERVER_ERROR,
         )),
     }
