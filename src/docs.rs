@@ -51,7 +51,7 @@ use crate::{prisma, utils};
     ),
     modifiers(&SecurityAddon),
     tags(
-/*         (name = "hackathons", description = "Hackathon related operations"),
+/*      (name = "hackathons", description = "Hackathon related operations"),
         (name = "extra_credit_class", description = "Extra Credit Class related operations"),
         (name = "locations", description = "Location related operations") */
     )

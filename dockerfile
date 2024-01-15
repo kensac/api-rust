@@ -31,7 +31,7 @@ RUN apt-get install -y ca-certificates
 
 
 # Copy the build artifact from the builder stage
-COPY --from=builder api-rust/target/release/api-rust /usr/local/bin
+COPY --from=builder api-rust/target/release/api-rust /usr/local/bin/
 
 # Expose the port your application runs on
 EXPOSE 3000
