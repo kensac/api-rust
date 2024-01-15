@@ -65,8 +65,6 @@ async fn main() {
     let app = new_app().await;
     let address = SocketAddr::from(([0, 0, 0, 0], port));
     let listener = TcpListener::bind(address).await.unwrap();
-    let key = upload_service::create_jwt().await;
-    println!("{}", key);
 
     axum::serve(listener, app).await.unwrap();
 }
