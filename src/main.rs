@@ -26,7 +26,10 @@
     clippy::cargo_common_metadata,
     clippy::shadow_unrelated,
     clippy::exhaustive_enums,
-    clippy::default_numeric_fallback
+    clippy::default_numeric_fallback,
+    clippy::missing_panics_doc,
+    clippy::question_mark_used,
+    clippy::absolute_paths
 )]
 
 pub mod app;

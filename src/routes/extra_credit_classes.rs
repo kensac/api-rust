@@ -96,7 +96,7 @@ async fn get_extra_credit_class_by_id(
     {
         Ok(extra_credit_class) => match extra_credit_class {
             Some(extra_credit_class) => Ok(Json(extra_credit_class)),
-            None => Err((StatusCode::NOT_FOUND, "".to_owned())),
+            None => Err((StatusCode::NOT_FOUND, "Not FOund".to_owned())),
         },
         Err(err) => Err((StatusCode::BAD_REQUEST, err.to_string())),
     }

@@ -1,4 +1,5 @@
-use axum::extract::State;
+use std::path::Path;
+
 use gcp_auth::{AuthenticationManager, CustomServiceAccount};
 use hyper::body::Bytes;
 use urlencoding::encode;
@@ -20,15 +21,15 @@ const FILE_PATH: &'static str = "./google-service-account.json";
 
 impl StorageBucketService {
     pub fn new() -> Self {
-        let path = std::path::Path::new(FILE_PATH);
+        let path = Path::new(FILE_PATH);
         // I left this in so that we can cause a runtime error if the file is not found. This makes sure that none of the services fail silently.
         let _service_account = CustomServiceAccount::from_file(path).unwrap();
         let client = reqwest::Client::new();
-        StorageBucketService { client }
+        Self { client }
     }
 
     pub async fn create_jwt() -> String {
-        let path = std::path::Path::new(FILE_PATH);
+        let path = Path::new(FILE_PATH);
         let service_account = CustomServiceAccount::from_file(path).unwrap();
         let authentication_manager = AuthenticationManager::from(service_account);
         let scopes = &["https://www.googleapis.com/auth/devstorage.full_control"];
@@ -48,13 +49,10 @@ pub async fn upload_file(
 
     // https://cloud.google.com/storage/docs/json_api/v1/objects/insert#request
 
-    let url = format!(
-        "https://storage.googleapis.com/upload/storage/v1/b/{}/o",
-        bucket_name
-    );
+    let url = format!("https://storage.googleapis.com/upload/storage/v1/b/{bucket_name}/o",);
 
     let name = match folder {
-        Some(folder) => format!("{}/{}", folder, file_name),
+        Some(folder) => format!("{folder}/{file_name}"),
         None => file_name.to_string(),
     };
 
@@ -62,7 +60,7 @@ pub async fn upload_file(
         .storage_bucket_service
         .client
         .post(&url)
-        .header("Authorization", format!("Bearer {}", jwt))
+        .header("Authorization", format!("Bearer {jwt}"))
         .header("Content-Length", file.len())
         .query(&[("uploadType", "media"), ("name", &name)])
         .body(file)
@@ -77,9 +75,9 @@ pub async fn upload_file(
     } else {
         Err((
             hyper::StatusCode::INTERNAL_SERVER_ERROR,
-            res.text()
-                .await
-                .unwrap_or("Failed to Upload File and convert error to string.".to_string()),
+            res.text().await.unwrap_or_else(|_| {
+                "Failed to Upload File and convert error to string.".to_string()
+            }),
         ))
     }
 }
@@ -95,7 +93,7 @@ pub async fn download_file(
     // https://cloud.google.com/storage/docs/json_api/v1/objects/get#request
 
     let name = match folder {
-        Some(folder) => format!("{}/{}", folder, file_name),
+        Some(folder) => format!("{folder}/{file_name}"),
         None => file_name.to_string(),
     };
 
@@ -110,7 +108,7 @@ pub async fn download_file(
         .storage_bucket_service
         .client
         .get(&url)
-        .header("Authorization", format!("Bearer {}", jwt))
+        .header("Authorization", format!("Bearer {jwt}"))
         .query(&[("alt", "media")])
         .send()
         .await
@@ -122,21 +120,10 @@ pub async fn download_file(
         Ok(res.bytes().await.unwrap())
     } else {
         Err((
-            res.text()
-                .await
-                .unwrap_or("Failed to Download File and convert error to string.".to_string()),
+            res.text().await.unwrap_or_else(|_| {
+                "Failed to Download File and convert error to string.".to_string()
+            }),
             hyper::StatusCode::INTERNAL_SERVER_ERROR,
         ))
-    }
-}
-
-pub async fn test_file(State(app_state): State<AppState>) -> CreateResponse {
-    match download_file(Buckets::RESUME, Some("test"), "test.txt", app_state).await {
-        Ok(file) => {
-            println!("File: {:?}", file);
-            std::fs::write("test2.txt", file).unwrap();
-            Ok((hyper::StatusCode::OK, ()))
-        }
-        Err((err, status_code)) => Err((status_code, err)),
     }
 }

@@ -15,7 +15,6 @@ use crate::{
     docs::ApiDoc,
     routes,
     socket::on_connect,
-    storage_bucket_service::test_file,
     utils,
 };
 
@@ -30,7 +29,6 @@ pub async fn new_app() -> Router {
     APP_STATE.set(app_state.clone()).unwrap();
 
     Router::new()
-        .route("/upload", get(test_file))
         .with_state(app_state.clone())
         .route("/shutdown", get(utils::shutdown))
         .route("/", get(utils::hello_world))
