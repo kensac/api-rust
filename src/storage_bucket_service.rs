@@ -16,9 +16,11 @@ pub struct StorageBucketService {
     pub client: reqwest::Client,
 }
 
+const FILE_PATH: &'static str = "./google-service-account.json";
+
 impl StorageBucketService {
     pub fn new() -> Self {
-        let path = std::path::Path::new("./google-service-account.json");
+        let path = std::path::Path::new(FILE_PATH);
         // I left this in so that we can cause a runtime error if the file is not found. This makes sure that none of the services fail silently.
         let _service_account = CustomServiceAccount::from_file(path).unwrap();
         let client = reqwest::Client::new();
@@ -26,7 +28,7 @@ impl StorageBucketService {
     }
 
     pub async fn create_jwt() -> String {
-        let path = std::path::Path::new("./google-service-account.json");
+        let path = std::path::Path::new(FILE_PATH);
         let service_account = CustomServiceAccount::from_file(path).unwrap();
         let authentication_manager = AuthenticationManager::from(service_account);
         let scopes = &["https://www.googleapis.com/auth/devstorage.full_control"];
@@ -43,6 +45,8 @@ pub async fn upload_file(
     app_state: AppState,
 ) -> CreateResponse {
     let jwt = StorageBucketService::create_jwt().await;
+
+    // https://cloud.google.com/storage/docs/json_api/v1/objects/insert#request
 
     let url = format!(
         "https://storage.googleapis.com/upload/storage/v1/b/{}/o",
@@ -88,6 +92,8 @@ pub async fn download_file(
 ) -> Result<Bytes, (String, hyper::StatusCode)> {
     let jwt = StorageBucketService::create_jwt().await;
 
+    // https://cloud.google.com/storage/docs/json_api/v1/objects/get#request
+
     let name = match folder {
         Some(folder) => format!("{}/{}", folder, file_name),
         None => file_name.to_string(),
@@ -96,6 +102,7 @@ pub async fn download_file(
     let url = format!(
         "https://storage.googleapis.com/storage/v1/b/{}/o/{}",
         bucket_name,
+        // https://cloud.google.com/storage/docs/request-endpoints#encoding
         encode(&name)
     );
 
