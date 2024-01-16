@@ -6,45 +6,19 @@ use axum::{
     routing::{get, patch, post},
     Json, Router,
 };
-use chrono::FixedOffset;
 use hyper::StatusCode;
-use utoipa::{IntoParams, ToSchema};
+use utoipa::IntoParams;
 
 use crate::{
     auth_guard::{self, permission_check, RequestUser},
     base_types::AppState,
     base_types::{CreateResponse, DeleteResponse, GetResponse, UpdateResponse},
+    entities::hackathons::CreateHackathonEntity,
     prisma::{
         hackathon::{self, Data, UniqueWhereParam},
         location, EventType, Role,
     },
 };
-
-#[derive(serde::Deserialize, ToSchema)]
-#[serde(rename_all = "camelCase")]
-/* #[serde(remote = "Data")] */
-pub struct HackathonEntity {
-    _id: String,
-    _name: String,
-    _start_time: chrono::DateTime<FixedOffset>,
-    _end_time: chrono::DateTime<FixedOffset>,
-    _active: bool,
-    /*     event: Option<Vec<prisma::event::Data>>,
-    extra_credit_class: Option<Vec<prisma::extra_credit_class::Data>>,
-    project: Option<Vec<prisma::project::Data>>,
-    sponsor: Option<Vec<prisma::sponsor::Data>>,
-    registration: Option<Vec<prisma::registration::Data>>,
-    scan: Option<Vec<prisma::scan::Data>>,
-    score: Option<Vec<prisma::score::Data>>, */
-}
-
-#[derive(serde::Deserialize, ToSchema)]
-#[serde(rename_all = "camelCase")]
-pub struct CreateHackathonEntity {
-    name: String,
-    start_time: chrono::DateTime<FixedOffset>,
-    end_time: chrono::DateTime<FixedOffset>,
-}
 
 #[derive(serde::Deserialize, IntoParams)]
 struct Params {

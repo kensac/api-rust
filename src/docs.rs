@@ -3,7 +3,9 @@ use utoipa::openapi::security::{
 };
 use utoipa::{Modify, OpenApi};
 
+use crate::entities;
 use crate::routes::{events, extra_credit_classes, hackathons, locations};
+
 use crate::{prisma, utils};
 
 #[derive(OpenApi)]
@@ -35,8 +37,8 @@ use crate::{prisma, utils};
     ),
     components(
         schemas(
-            hackathons::CreateHackathonEntity,
-            hackathons::HackathonEntity,
+            entities::hackathons::CreateHackathonEntity,
+            entities::hackathons::HackathonEntity,
 
             locations::CreateLocationEntity,
             locations::LocationEntity,
