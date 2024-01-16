@@ -13,6 +13,7 @@
         "dotenv",
         "hackathon",
         "hackathons",
+        "hackpsu",
         "mjml",
         "mrml",
         "openapi",
@@ -23,6 +24,7 @@
         "socketioxide",
         "struct",
         "structs",
+        "urlencoding",
         "utoipa"
     ]
 }

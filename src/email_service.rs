@@ -1,11 +1,8 @@
-use std::fs;
-
 use axum::extract::State;
-use handlebars::{template, Handlebars};
+use handlebars::Handlebars;
 use hyper::StatusCode;
 use mrml::{self, parse, prelude::render::RenderOptions};
 use sendgrid::{Destination, Mail};
-use serde_json::json;
 
 use crate::base_types::AppState;
 
