@@ -8,7 +8,8 @@ use crate::{
     base_types::{AppState, APP_STATE},
     prisma::{user, Role},
 };
-const FIREBASE_USER_DATA_ENDPOINT: &str = "https://identitytoolkit.googleapis.com/v1/accounts:lookup";
+const FIREBASE_USER_DATA_ENDPOINT: &str =
+    "https://identitytoolkit.googleapis.com/v1/accounts:lookup";
 
 #[derive(Deserialize, Serialize, Debug, Clone, Default)]
 #[serde(rename_all = "camelCase")]
@@ -46,9 +47,7 @@ async fn fetch_firebase_user(
 ) -> Result<FirebaseUserResult, StatusCode> {
     let user_data = app_state
         .reqwest_client
-        .post(
-            FIREBASE_USER_DATA_ENDPOINT
-        )
+        .post(FIREBASE_USER_DATA_ENDPOINT)
         .query(&[(
             "key",
             std::env::var("FIREBASE_API_KEY").map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?,
